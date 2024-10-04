@@ -1,0 +1,525 @@
+﻿@model Fortificar.Models.ViewModels.ProjetoViewModel
+
+@{
+    ViewData["Title"] = "Criar novo projeto";
+}
+
+<h1>@ViewData["Title"]</h1><br />
+
+<form asp-action="SalvarProjeto" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+	<!-- 1. DADOS GERAIS DO PROPONENTE -->
+    <h5 class="font-weight-bold">DADOS GERAIS DO PROPONENTE</h5>
+    <div class="form-group">
+        <label asp-for="Proponente.Nome" class="control-label"></label>
+        <input asp-for="Proponente.Nome" class="form-control" />
+        <span asp-validation-for="Proponente.Nome" class="text-danger">José Maria</span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Proponente.CNPJ" class="control-label"></label>
+        <input asp-for="Proponente.CNPJ" class="form-control" />
+        <span asp-validation-for="Proponente.CNPJ" class="text-danger">98104601000149</span>
+    </div><div class="form-group">
+        <label asp-for="Proponente.Logradouro" class="control-label"></label>
+        <input asp-for="Proponente.Logradouro" class="form-control" />
+        <span asp-validation-for="Proponente.Logradouro" class="text-danger">Rua Rio Quente</span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Proponente.Bairro" class="control-label"></label>
+        <input asp-for="Proponente.Bairro" class="form-control" />
+        <span asp-validation-for="Proponente.Bairro" class="text-danger">Bethaville II</span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Proponente.Cidade" class="control-label"></label>
+        <input asp-for="Proponente.Cidade" class="form-control" />
+        <span asp-validation-for="Proponente.Cidade" class="text-danger">Barueri</span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Proponente.CEP" class="control-label"></label>
+        <input asp-for="Proponente.CEP" class="form-control" />
+        <span asp-validation-for="Proponente.CEP" class="text-danger">06404321</span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Proponente.Email" class="control-label"></label>
+        <input asp-for="Proponente.Email" class="form-control" />
+        <span asp-validation-for="Proponente.Email" class="text-danger">antonella-ramos99@haldex.com</span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Proponente.SiteDivulgacao" class="control-label"></label>
+        <input asp-for="Proponente.SiteDivulgacao" class="form-control" />
+        <span asp-validation-for="Proponente.SiteDivulgacao" class="text-danger">site.com</span>
+	</div>
+    <div class="form-group">
+        <label asp-for="Proponente.Telefone1" class="control-label"></label>
+        <input asp-for="Proponente.Telefone1" class="form-control" />
+        <span asp-validation-for="Proponente.Telefone1" class="text-danger">1127088869</span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Proponente.Telefone2" class="control-label"></label>
+        <input asp-for="Proponente.Telefone2" class="form-control" />
+        <span asp-validation-for="Proponente.Telefone2" class="text-danger">11998924054</span>
+	</div>
+    <div class="form-group">
+        <label asp-for="Proponente.Telefone3" class="control-label"></label>
+        <input asp-for="Proponente.Telefone3" class="form-control" />
+        <span asp-validation-for="Proponente.Telefone3" class="text-danger">84994787355</span>
+    </div>
+	<br />
+
+	<!-- 2. IDENTIFICAÇÃO DO RESPONSÁVEL LEGAL PELO PROPONENTE -->
+    <h4>IDENTIFICAÇÃO DO RESPONSÁVEL LEGAL PELO PROPONENTE</h4>
+    <div class="form-group">
+        <label asp-for="ResponsavelLegal.Nome" class="control-label"></label>
+        <input asp-for="ResponsavelLegal.Nome" class="form-control" />
+        <span asp-validation-for="ResponsavelLegal.Nome" class="text-danger"></span>
+    </div><div class="form-group">
+        <label asp-for="ResponsavelLegal.CPF" class="control-label"></label>
+        <input asp-for="ResponsavelLegal.CPF" class="form-control" />
+        <span asp-validation-for="ResponsavelLegal.CPF" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ResponsavelLegal.RG" class="control-label"></label>
+        <input asp-for="ResponsavelLegal.RG" class="form-control" />
+        <span asp-validation-for="ResponsavelLegal.RG" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ResponsavelLegal.OrgaoExpedidor" class="control-label"></label>
+        <input asp-for="ResponsavelLegal.OrgaoExpedidor" class="form-control" />
+        <span asp-validation-for="ResponsavelLegal.OrgaoExpedidor" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ResponsavelLegal.CargoOSC" class="control-label"></label>
+        <input asp-for="ResponsavelLegal.CargoOSC" class="form-control" />
+        <span asp-validation-for="ResponsavelLegal.CargoOSC" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ResponsavelLegal.MandatoVigente" class="control-label"></label>
+        <input asp-for="ResponsavelLegal.MandatoVigente" class="form-control" />
+        <span asp-validation-for="ResponsavelLegal.MandatoVigente" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ResponsavelLegal.Endereco" class="control-label"></label>
+        <input asp-for="ResponsavelLegal.Endereco" class="form-control" />
+        <span asp-validation-for="ResponsavelLegal.Endereco" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ResponsavelLegal.Telefone1" class="control-label"></label>
+        <input asp-for="ResponsavelLegal.Telefone1" class="form-control" />
+        <span asp-validation-for="ResponsavelLegal.Telefone1" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ResponsavelLegal.Telefone2" class="control-label"></label>
+        <input asp-for="ResponsavelLegal.Telefone2" class="form-control" />
+        <span asp-validation-for="ResponsavelLegal.Telefone2" class="text-danger"></span>
+	</div>
+    <div class="form-group">
+        <label asp-for="ResponsavelLegal.Telefone3" class="control-label"></label>
+        <input asp-for="ResponsavelLegal.Telefone3" class="form-control" />
+        <span asp-validation-for="ResponsavelLegal.Telefone3" class="text-danger"></span>
+	</div>
+
+    <br />
+
+    <!-- 3. IDENTIFICAÇÃO DO RESPONSÁVEL TÉCNICO DO PROJETO -->
+    <h4>IDENTIFICAÇÃO DO RESPONSÁVEL TÉCNICO DO PROJETO</h4>
+    <div class="form-group">
+        <label asp-for="ResponsavelTecnico.Nome" class="control-label"></label>
+        <input asp-for="ResponsavelTecnico.Nome" class="form-control" />
+        <span asp-validation-for="ResponsavelTecnico.Nome" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ResponsavelTecnico.CPF" class="control-label"></label>
+        <input asp-for="ResponsavelTecnico.CPF" class="form-control" />
+        <span asp-validation-for="ResponsavelTecnico.CPF" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ResponsavelTecnico.RG" class="control-label"></label>
+        <input asp-for="ResponsavelTecnico.RG" class="form-control" />
+        <span asp-validation-for="ResponsavelTecnico.RG" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ResponsavelTecnico.OrgaoExpedidor" class="control-label"></label>
+        <input asp-for="ResponsavelTecnico.OrgaoExpedidor" class="form-control" />
+        <span asp-validation-for="ResponsavelTecnico.OrgaoExpedidor" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ResponsavelTecnico.CargoOSC" class="control-label"></label>
+        <input asp-for="ResponsavelTecnico.CargoOSC" class="form-control" />
+        <span asp-validation-for="ResponsavelTecnico.CargoOSC" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ResponsavelTecnico.MandatoVigente" class="control-label"></label>
+        <input asp-for="ResponsavelTecnico.MandatoVigente" class="form-control" />
+        <span asp-validation-for="ResponsavelTecnico.MandatoVigente" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ResponsavelTecnico.Endereco" class="control-label"></label>
+        <input asp-for="ResponsavelTecnico.Endereco" class="form-control" />
+        <span asp-validation-for="ResponsavelTecnico.Endereco" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ResponsavelTecnico.Telefone1" class="control-label"></label>
+        <input asp-for="ResponsavelTecnico.Telefone1" class="form-control" />
+        <span asp-validation-for="ResponsavelTecnico.Telefone1" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ResponsavelTecnico.Telefone2" class="control-label"></label>
+        <input asp-for="ResponsavelTecnico.Telefone2" class="form-control" />
+        <span asp-validation-for="ResponsavelTecnico.Telefone2" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ResponsavelTecnico.Telefone3" class="control-label"></label>
+        <input asp-for="ResponsavelTecnico.Telefone3" class="form-control" />
+        <span asp-validation-for="ResponsavelTecnico.Telefone3" class="text-danger"></span>
+    </div>
+
+    <!-- 4. CONHECENDO O PROPONENTE -->
+    
+    <div class="form-group">
+        <label asp-for="Proponente.Historico" class="control-label"></label>
+        <input asp-for="Proponente.Historico" class="form-control" placeholder="Breve histórico e finalidade da OSC" />
+        <span asp-validation-for="Proponente.Historico" class="text-danger"></span>
+    </div>
+
+    <!-- 5. PRINCIPAIS AÇÕES DESENVOLVIDAS PELA PROPONENTE -->
+    
+    <div class="form-group">
+        <label asp-for="Proponente.PrincipaisAcoes" class="control-label"></label>
+        <input asp-for="Proponente.PrincipaisAcoes" class="form-control" />
+        <span asp-validation-for="Proponente.PrincipaisAcoes" class="text-danger"></span>
+    </div>
+
+    <!-- 6. PÚBLICO ALVO DE ATENDIMENTO DA PROPONENTE -->
+    
+    <div class="form-group">
+        <label asp-for="Proponente.PublicoAlvo" class="control-label"></label>
+        <input asp-for="Proponente.PublicoAlvo" class="form-control" />
+        <span asp-validation-for="Proponente.PublicoAlvo" class="text-danger"></span>
+    </div>
+
+    <!-- 7. REGIÕES DE ALCANCE DAS AÇÕES (BAIRROS -->
+    
+    <div class="form-group">
+        <label asp-for="Proponente.RegioesAtendimento" class="control-label"></label>
+        <input asp-for="Proponente.RegioesAtendimento" class="form-control" />
+        <span asp-validation-for="Proponente.RegioesAtendimento" class="text-danger"></span>
+    </div>
+
+    <!-- 8. INFRAESTRUTURA DA PROPONENTE -->
+    
+    <div class="form-group">
+        <label asp-for="Proponente.Infraestrutura" class="control-label"></label>
+        <input asp-for="Proponente.Infraestrutura" class="form-control" />
+        <span asp-validation-for="Proponente.Infraestrutura" class="text-danger"></span>
+    </div>
+
+	<!-- 9. EQUIPE MULTIDISCIPLINAR DO PROPONENTE ---->
+    
+    <div class="form-group">
+        <label asp-for="Proponente.EquipeMultidisciplinar" class="control-label"></label>
+        <input asp-for="Proponente.EquipeMultidisciplinar" class="form-control" />
+        <span asp-validation-for="Proponente.EquipeMultidisciplinar" class="text-danger"></span>
+	</div>
+    <br />
+
+    <!-- 10. RESUMO DO PROJETO -->
+    <h3>RESUMO DO PROJETO</h3>
+    
+    <div class="form-group">
+        <label asp-for="Projeto.Objeto" class="control-label"></label>
+        <input asp-for="Projeto.Objeto" class="form-control" />
+        <span asp-validation-for="Projeto.Objeto" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="Projeto.ObjetivoGeral" class="control-label"></label>
+        <input asp-for="Projeto.ObjetivoGeral" class="form-control" />
+        <span asp-validation-for="Projeto.ObjetivoGeral" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="Projeto.ObjetivosEspecificos" class="control-label"></label>
+        <input asp-for="Projeto.ObjetivosEspecificos" class="form-control" />
+        <span asp-validation-for="Projeto.ObjetivosEspecificos" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="Projeto.PublicoBeneficiario" class="control-label"></label>
+        <input asp-for="Projeto.PublicoBeneficiario" class="form-control" />
+        <span asp-validation-for="Projeto.PublicoBeneficiario" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="Projeto.Justificativa" class="control-label"></label>
+        <input asp-for="Projeto.Justificativa" class="form-control" />
+        <span asp-validation-for="Projeto.Justificativa" class="text-danger"></span>
+    </div>
+
+    <br />
+
+
+
+
+	<!-- 10.6 Equipe de Profissionais que Atuarão na Execução do Projeto -->
+    <h4>Equipe de Profissionais</h4>
+    <table class="table" id="equipeProfissionaisTable">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Formação</th>
+                <th>Função</th>
+                <th>Carga Horária Semanal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-secondary" onclick="addEquipeProfissionais()">Adicionar Profissional</button>
+    <br />
+
+    <!-- 10.7 Período de Execução do Projeto 
+    <br /><h4>Período de Execução do Projeto</h4>
+    <div class="form-group">
+        <label asp-for="InicioExecucao" class="control-label"></label>
+        <input asp-for="InicioExecucao" class="form-control" placeholder="Início em: " />
+        <span asp-validation-for="InicioExecucao" class="text-danger"></span>
+
+        <label asp-for="TerminoExecucao" class="control-label"></label>
+        <input asp-for="TerminoExecucao" class="form-control" placeholder="Término em: " />
+        <span asp-validation-for="TerminoExecucao" class="text-danger"></span>
+    </div>-->
+    <br />
+
+    <!-- 10.8 CRONOGRAMA FÍSICO-FINANCEIRO DE EXECUÇÃO DO PROJETO 
+    <h4>CRONOGRAMA FÍSICO-FINANCEIRO DE EXECUÇÃO DO PROJETO</h4>
+    <table class="table table-bordered" id="cronogramaFisicoFinanceiroTable">
+        <tbody>
+            -- Meta e Valor --
+            <tr>
+                <td  colspan="2">Meta: <input type="text" name="CronogramaMeta" class="form-control"></td>
+                <td  colspan="2">Valor: <input type="text" name="CronogramaValor" class="form-control"></td>
+            </tr>
+            -- Indicador(es) --
+            <tr>
+                <td colspan="4">Indicador(es): <br />
+                    <textarea name="CronogramaIndicadores" class="form-control" rows="3"></textarea>
+                </td>
+            </tr>
+            -- Etapas/Atividades --
+            <tr>
+                <th rowspan="2" class="align-middle text-center">Etapas/Atividades</th>
+                <th rowspan="2" class="align-middle text-center">Valor</th>
+                <th colspan="2" class="text-center">Período de Execução</th>
+            </tr>
+            <tr>
+                <th>Início</th>
+                <th>Término</th>
+            </tr>
+            <tr>
+                <td><input type="text" name="CronogramaEtapas" class="form-control" placeholder="Etapas/Atividades" style="white-space: nowrap;"></td>
+                <td><input type="text" name="CronogramaValorEtapas" class="form-control" placeholder="Valor" style="white-space: nowrap;"></td>
+                <td>
+                    <input type="date" name="CronogramaInicioEtapas" class="form-control" placeholder="Início">
+                </td>
+                <td>
+                    <input type="date" name="CronogramaTerminoEtapas" class="form-control" placeholder="Término">
+                </td>
+            </tr>
+        </tbody>
+	</table>-->
+
+    <!-- Botão para adicionar novas linhas de Etapas/Atividades 
+    <button type="button" class="btn btn-secondary" onclick="addLinhaEtapas()">Adicionar Etapa/Atividade</button>
+	<br />-->
+
+    <!-- Equipamentos e Materiais Permanentes
+	<br /><h4>Equipamentos e Materiais Permanentes</h4>
+    <table class="table" id="equipamentosTable">
+        <thead>
+            <tr>
+                <th>Especificação</th>
+                <th>Unidade</th>
+                <th>Quantidade</th>
+                <th>Valor Unitário</th>
+                <th>Valor Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+	 <button type="button" class="btn btn-secondary" onclick="addEquipamento()">Adicionar Equipamento</button>
+    <br />
+     Equipe Encarregada pela Execução do Projeto --
+    <br /><h4>Equipe Encarregada pela Execução do Projeto</h4>
+    <table class="table" id="equipeExecucaoTable">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Formação</th>
+                <th>Função</th>
+                <th>Carga Horária Semanal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-secondary" onclick="addEquipeExecucao()">Adicionar Membro</button>
+	<br />-->
+
+    <!-- 12. FOTOS DO PROJETO/INSTITUIÇÃO 
+    <br /><h4>FOTO DO PROJETO/INSTITUIÇÃO</h4>
+    
+    <div class="form-group">
+            <label for="anexo">Selecione um arquivo (imageM ou PDF):</label>
+            <input type="file" name="anexo" id="anexo" class="form-control" accept=".jpg, .jpeg, .png" />
+            <span asp-validation-for="Anexo" class="text-danger"></span>
+            <span class="text-success" id="uploadMessage"></span>
+        </div>
+        <button type="button" id="uploadButton" class="btn btn-primary">Anexar</button>
+		<br />-->
+
+
+    <br />
+
+
+
+    <!-- Botão de Envio -->
+    <div class="form-group">
+        <button type="submit" value="Create" class="btn btn-primary">Criar Projeto</button>
+    </div>
+</form>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    
+    <script>
+        function addEquipeProfissionais() {
+            var container = document.getElementById("equipeProfissionaisTable").getElementsByTagName('tbody')[0];
+            var row = container.insertRow();
+            row.innerHTML = `<td><input name="EquipeExecucao[${container.rows.length}].Nome" class="form-control" /></td>
+                                     <td><input name="EquipeExecucao[${container.rows.length}].Formacao" class="form-control" /></td>
+                                     <td><input name="EquipeExecucao[${container.rows.length}].Funcao" class="form-control" /></td>
+                                     <td><input name="EquipeExecucao[${container.rows.length}].CargaHorariaSemanal" class="form-control" /></td>
+                                     <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button></td>`;
+        }
+
+        function addCronograma() {
+            var container = document.getElementById("cronogramaTable").getElementsByTagName('tbody')[0];
+            var row = container.insertRow();
+            row.innerHTML = `<td><input name="Cronograma[${container.rows.length}].Meta" class="form-control" /></td>
+                                     <td><input name="Cronograma[${container.rows.length}].Valor" class="form-control" /></td>
+                                     <td><input name="Cronograma[${container.rows.length}].Indicadores" class="form-control" /></td>
+                                     <td><input name="Cronograma[${container.rows.length}].Etapas" class="form-control" /></td>
+                                     <td><input type="date" name="Cronograma[${container.rows.length}].Inicio" class="form-control" /></td>
+                                     <td><input type="date" name="Cronograma[${container.rows.length}].Termino" class="form-control" /></td>
+                                     <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button></td>`;
+        }
+
+        function addEquipamento() {
+            var container = document.getElementById("equipamentosTable").getElementsByTagName('tbody')[0];
+            var row = container.insertRow();
+            row.innerHTML = `<td><input name="PlanoAplicacao[${container.rows.length}].Especificacao" class="form-control" /></td>
+                                     <td><input name="PlanoAplicacao[${container.rows.length}].Unidade" class="form-control" /></td>
+                                     <td><input name="PlanoAplicacao[${container.rows.length}].Quantidade" class="form-control" /></td>
+                                     <td><input name="PlanoAplicacao[${container.rows.length}].ValorUnitario" class="form-control" /></td>
+                                     <td><input name="PlanoAplicacao[${container.rows.length}].ValorTotal" class="form-control" /></td>
+                                     <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button></td>`;
+        }
+
+        function addEquipeExecucao() {
+            var container = document.getElementById("equipeExecucaoTable").getElementsByTagName('tbody')[0];
+            var row = container.insertRow();
+            row.innerHTML = `<td><input name="EquipeExecucao[${container.rows.length}].Nome" class="form-control" /></td>
+                                     <td><input name="EquipeExecucao[${container.rows.length}].Formacao" class="form-control" /></td>
+                                     <td><input name="EquipeExecucao[${container.rows.length}].Funcao" class="form-control" /></td>
+                                     <td><input name="EquipeExecucao[${container.rows.length}].CargaHorariaSemanal" class="form-control" /></td>
+                                     <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button></td>`;
+        }
+
+        function removeRow(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        function addLinhaEtapas() {
+            var table = document.getElementById("cronogramaFisicoFinanceiroTable").getElementsByTagName('tbody')[0];
+
+            var row = table.insertRow(-1);
+
+            // Coluna de Etapas/Atividades
+            var etapaCell = row.insertCell(0);
+            var etapaInput = document.createElement("input");
+            etapaInput.type = "text";
+            etapaInput.name = "CronogramaEtapas";
+            etapaInput.className = "form-control";
+            etapaInput.placeholder = "Etapas/Atividades";
+            etapaCell.appendChild(etapaInput);
+
+            // Coluna de Valor
+            var valorCell = row.insertCell(1);
+            var valorInput = document.createElement("input");
+            valorInput.type = "text";
+            valorInput.name = "CronogramaValorEtapas";
+            valorInput.className = "form-control";
+            valorInput.placeholder = "Valor";
+            valorCell.appendChild(valorInput);
+
+            // Coluna de Período de Execução Início
+            var inicioCell = row.insertCell(2);
+            var inicioInput = document.createElement("input");
+            inicioInput.type = "date";
+            inicioInput.name = "CronogramaInicioEtapas";
+            inicioInput.className = "form-control";
+            inicioCell.appendChild(inicioInput);
+
+            // Coluna de Período de Execução Término
+            var terminoCell = row.insertCell(3);
+            var terminoInput = document.createElement("input");
+            terminoInput.type = "date";
+            terminoInput.name = "CronogramaTerminoEtapas";
+            terminoInput.className = "form-control";
+            terminoCell.appendChild(terminoInput);
+        }
+
+        $(document).ready(function () {
+            $('#uploadButton').click(function () {
+                var formData = new FormData();
+                var fileInput = $('#anexo')[0];
+
+                if (fileInput.files.length > 0) {
+                    formData.append('anexo', fileInput.files[0]);
+
+                    $.ajax({
+                        url: '@Url.Action("Upload", "Projetos")',
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            // Verifica se a resposta é um objeto JSON e acessa a propriedade 'message'
+                            if (response.success) {
+                                $('#uploadMessage').text(response.message); // Exibe a mensagem de sucesso
+                                console.log(response);
+                            } else {
+                                $('#uploadMessage').text(response.message); // Exibe a mensagem de erro
+                                console.log(response);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            $('#uploadMessage').text('Erro ao enviar o arquivo: ' + error);
+                        }
+                    });
+                } else {
+                    $('#uploadMessage').text('Por favor, selecione um arquivo para anexar.');
+                }
+            });
+        });
+
+
+    </script>
+
+}
