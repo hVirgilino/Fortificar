@@ -19,7 +19,7 @@ html {
 
 body {
     margin-bottom: 60px;
-    font-family: Roboto,sans-serif;
+    font-family: "Open Sans", 'Helvetica', 'Arial', 'sans-serif';
 }
 
 /*tab navigation*/
@@ -45,3 +45,79 @@ body {
 .login-logout-card .card-body {
     padding: 10px 20px;
 }
+
+
+#scrollTopButton {
+    display: none; /* Escondido inicialmente */
+    position: fixed; /* Fixa no canto da tela */
+    bottom: 20px; /* Espaçamento da parte inferior */
+    right: 30px; /* Espaçamento da parte direita */
+    z-index: 99; /* Aparece na frente de outros elementos */
+    border: none; /* Sem borda */
+    outline: none; /* Sem contorno */
+    background-color: #555; /* Cor do botão */
+    color: white; /* Cor da seta */
+    cursor: pointer; /* Mãozinha no hover */
+    padding: 10px; /* Tamanho do botão */
+    border-radius: 10px; /* Bordas arredondadas */
+    font-size: 18px; /* Tamanho da seta */
+}
+
+#scrollTopButton:hover {
+    background-color: #333; /* Mudança de cor ao passar o mouse */
+}
+
+
+
+.navbar-custom {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 10px 0;
+}
+
+.navbar-brand img {
+    max-height: 40px;
+}
+
+.navbar-nav .nav-link {
+    color: #0C61A4;
+}
+
+.navbar-nav .nav-item:hover .nav-link {
+    color: white;
+}
+    
+
+#scrollTopButton:hover {
+    background-color: #0056b3;
+}
+
+.top-bar {
+    background-color: #0C61A4;
+    color: white;
+    padding: 10px 20px 10px 20px;
+    font-size: 14px;
+}
+
+.top-bar a {
+    color: white !important; /* Mantém os links brancos */
+}
+.top-bar a:hover {
+    text-decoration: underline;
+}
+
+.top-bar text-end {
+    font-weight: bold;
+}
+
+header{
+    margin-bottom: 25px;
+}
+
+.nav-link {
+    color: #515151;
+    font-family: "Archivo", 'Helvetica', 'Arial', 'sans-serif';
+}
+    .nav-link:hover {
+        color: #4fb96a;
+    }

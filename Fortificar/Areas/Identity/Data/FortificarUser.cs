@@ -19,4 +19,5 @@ public class FortificarUser : IdentityUser
     [PersonalData]
     [Column(TypeName = "tinyint")]
     public int Tipo { get; set; }
+    public int ProponenteId { get; set; }
 }

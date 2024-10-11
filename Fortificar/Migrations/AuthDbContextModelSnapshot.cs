@@ -72,6 +72,9 @@ namespace Fortificar.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int>("ProponenteId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -96,6 +99,75 @@ namespace Fortificar.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Fortificar.Models.Anexo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<byte[]>("Imagem")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProjetoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tipo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjetoId");
+
+                    b.ToTable("Anexo");
+                });
+
+            modelBuilder.Entity("Fortificar.Models.CronogramaMeta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Etapas")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Indicadores")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Inicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Meta")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProjetoId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("Termino")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("ValorEtapa")
+                        .HasColumnType("real");
+
+                    b.Property<float>("ValorMeta")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjetoId");
+
+                    b.ToTable("CronogramaMeta");
                 });
 
             modelBuilder.Entity("Fortificar.Models.MembroEquipe", b =>
@@ -131,6 +203,41 @@ namespace Fortificar.Migrations
                     b.ToTable("MembroEquipe");
                 });
 
+            modelBuilder.Entity("Fortificar.Models.PlanoAplicacaoItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Especificacao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProjetoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Unidade")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("ValorTotal")
+                        .HasColumnType("real");
+
+                    b.Property<float>("ValorUnitario")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjetoId");
+
+                    b.ToTable("PlanoAplicacaoItem");
+                });
+
             modelBuilder.Entity("Fortificar.Models.Projeto", b =>
                 {
                     b.Property<int>("Id")
@@ -138,6 +245,9 @@ namespace Fortificar.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("InicioExecucao")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Justificativa")
                         .IsRequired()
@@ -168,6 +278,9 @@ namespace Fortificar.Migrations
                     b.Property<int>("ResponsavelTecnicoId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("TerminoExecucao")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("Projeto");
@@ -181,27 +294,44 @@ namespace Fortificar.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Agencia")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Bairro")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Banco")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CEP")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CNPJ")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Cidade")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Complemento")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContaCorrente")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Endereco")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EquipeMultidisciplinar")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Estado")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FortificarUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -213,12 +343,19 @@ namespace Fortificar.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Logradouro")
-                        .IsRequired()
+                    b.Property<string>("InscricaoEstadual")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
+                    b.Property<string>("InscricaoMunicipal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NomeEmpresa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NomeFantasia")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Numero")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PrincipaisAcoes")
@@ -233,23 +370,33 @@ namespace Fortificar.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("RepresentanteLegalId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SiteDivulgacao")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefone1")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefone2")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefone3")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TipoConta")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Website")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Proponente");
                 });
@@ -495,6 +642,28 @@ namespace Fortificar.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Fortificar.Models.Anexo", b =>
+                {
+                    b.HasOne("Fortificar.Models.Projeto", "Projeto")
+                        .WithMany()
+                        .HasForeignKey("ProjetoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Projeto");
+                });
+
+            modelBuilder.Entity("Fortificar.Models.CronogramaMeta", b =>
+                {
+                    b.HasOne("Fortificar.Models.Projeto", "Projeto")
+                        .WithMany("Cronograma")
+                        .HasForeignKey("ProjetoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Projeto");
+                });
+
             modelBuilder.Entity("Fortificar.Models.MembroEquipe", b =>
                 {
                     b.HasOne("Fortificar.Models.Projeto", "Projeto")
@@ -504,6 +673,26 @@ namespace Fortificar.Migrations
                         .IsRequired();
 
                     b.Navigation("Projeto");
+                });
+
+            modelBuilder.Entity("Fortificar.Models.PlanoAplicacaoItem", b =>
+                {
+                    b.HasOne("Fortificar.Models.Projeto", "Projeto")
+                        .WithMany("PlanoAplicacao")
+                        .HasForeignKey("ProjetoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Projeto");
+                });
+
+            modelBuilder.Entity("Fortificar.Models.Proponente", b =>
+                {
+                    b.HasOne("Fortificar.Areas.Identity.Data.FortificarUser", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -559,7 +748,11 @@ namespace Fortificar.Migrations
 
             modelBuilder.Entity("Fortificar.Models.Projeto", b =>
                 {
+                    b.Navigation("Cronograma");
+
                     b.Navigation("EquipeExecucao");
+
+                    b.Navigation("PlanoAplicacao");
                 });
 #pragma warning restore 612, 618
         }

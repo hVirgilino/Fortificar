@@ -14,9 +14,12 @@ public class AuthDbContext : IdentityDbContext<FortificarUser>
 	public DbSet<Proponente> Proponente { get; set; }
 	public DbSet<ResponsavelLegal> ResponsavelLegal { get; set; }
 	public DbSet<ResponsavelTecnico> ResponsavelTecnico { get; set; }
-	public DbSet<MembroEquipe> MembroEquipe { get; set; }
+    public DbSet<MembroEquipe> MembroEquipe { get; set; }
+    public DbSet<CronogramaMeta> CronogramaMeta { get; set; }
+    public DbSet<PlanoAplicacaoItem> PlanoAplicacaoItem { get; set; }
+    public DbSet<Anexo> Anexo { get; set; }
 
-	public AuthDbContext(DbContextOptions<AuthDbContext> options)
+    public AuthDbContext(DbContextOptions<AuthDbContext> options)
         : base(options)
     {
     }
@@ -27,6 +30,18 @@ public class AuthDbContext : IdentityDbContext<FortificarUser>
 		builder.Entity<Projeto>()
 			.HasMany(p => p.EquipeExecucao)
 			.WithOne(m => m.Projeto)
+			.HasForeignKey(m => m.ProjetoId)
+			.OnDelete(DeleteBehavior.Cascade);
+
+		builder.Entity<Projeto>()
+			.HasMany(p => p.Cronograma)
+			.WithOne(c => c.Projeto)
+			.HasForeignKey(m => m.ProjetoId)
+			.OnDelete(DeleteBehavior.Cascade);
+
+		builder.Entity<Projeto>()
+			.HasMany(p => p.PlanoAplicacao)
+			.WithOne(pl => pl.Projeto)
 			.HasForeignKey(m => m.ProjetoId)
 			.OnDelete(DeleteBehavior.Cascade);
 

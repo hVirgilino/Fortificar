@@ -37,19 +37,22 @@ namespace Fortificar.Models
 		public string PublicoBeneficiario { get; set; }
         public string Justificativa { get; set; }
 
-        //[Display(Name = "Início em:")]
-        //public DateTime InicioExecucao { get; set; }
-        //[Display(Name = "Término em:")]
-        //public DateTime TerminoExecucao { get; set; }
+        [DataType(DataType.Date)]
+        [Display(Name = "Início em:")]
+        public DateTime InicioExecucao { get; set; }
+
+        [DataType(DataType.Date)]
+        [Display(Name = "Término em:")]
+        public DateTime TerminoExecucao { get; set; }
 
         // Lista de profissionais que atuarão na execução do projeto
         public List<MembroEquipe> EquipeExecucao { get; set; } = new List<MembroEquipe>();
 
         // Cronograma físico-financeiro e metas
-       // public List<CronogramaMeta> Cronograma { get; set; } = new List<CronogramaMeta>();
+        public List<CronogramaMeta> Cronograma { get; set; } = new List<CronogramaMeta>();
 
         // Plano de aplicação
-        //public List<PlanoAplicacaoItem> PlanoAplicacao { get; set; } = new List<PlanoAplicacaoItem>();
+        public List<PlanoAplicacaoItem> PlanoAplicacao { get; set; } = new List<PlanoAplicacaoItem>();
 
         
 
@@ -73,21 +76,32 @@ namespace Fortificar.Models
         public int CargaHorariaSemanal { get; set; }
 
         public int ProjetoId { get; set; }
-        public Projeto Projeto { get; set; }
+        [NotMapped]
+        public Projeto? Projeto { get; set; }
     }
- /*
+ 
     public class CronogramaMeta
     {
         public int Id { get; set; }
         public string Meta { get; set; }
 
-        public float Valor { get; set; }
+        public float ValorMeta { get; set; }
+        public float ValorEtapa { get; set; }
         public string Indicadores { get; set; }
         public string Etapas { get; set; }
+
+        [DataType(DataType.Date)]  
         [Display(Name = "Início")]
-        public DateTime Inicio { get; set; }
+        public DateTime? Inicio { get; set; }
+
+
         [Display(Name = "Término")]
-        public DateTime Termino { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? Termino { get; set; }
+
+        public int ProjetoId { get; set; }
+        [NotMapped]
+        public Projeto? Projeto { get; set; }
     }
 
     public class PlanoAplicacaoItem
@@ -102,5 +116,9 @@ namespace Fortificar.Models
 
         [Display(Name = "Valor Total")]
         public float ValorTotal { get; set; }
-    }*/
+
+        public int ProjetoId { get; set; }
+        [NotMapped]
+        public Projeto? Projeto { get; set; }
+    }
 }

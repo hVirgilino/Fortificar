@@ -19,6 +19,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Fortificar.Models;
+using Fortificar.Models.ViewModels;
+using Fortificar.Data;
 
 namespace Fortificar.Areas.Identity.Pages.Account
 {
@@ -46,6 +49,8 @@ namespace Fortificar.Areas.Identity.Pages.Account
             _emailSender = emailSender;
         }
 
+        private readonly AuthDbContext _context;
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -58,6 +63,7 @@ namespace Fortificar.Areas.Identity.Pages.Account
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string ReturnUrl { get; set; }
+        RegistroViewModel RegistroViewModel { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -114,15 +120,29 @@ namespace Fortificar.Areas.Identity.Pages.Account
             if (User.Identity.IsAuthenticated)
             {
                 Response.Redirect("/");
-            } 
+            }
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            RegistroViewModel = new RegistroViewModel
+            {
+                Registro = this, // ou outra inicialização, se necessário
+                Proponente = new Proponente(),
+                ResponsavelLegal = new ResponsavelLegal()
+            };
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null, RegistroViewModel registroViewModel = null)
         {
+
+
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            registroViewModel ??= new RegistroViewModel
+            {
+                Registro = this,
+                Proponente = new Proponente(),
+                ResponsavelLegal = new ResponsavelLegal()
+            };
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
@@ -132,6 +152,66 @@ namespace Fortificar.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+                
+                var responsavelLegal = new ResponsavelLegal
+                {
+                    Nome = registroViewModel.ResponsavelLegal.Nome,
+                    CPF = registroViewModel.ResponsavelLegal.CPF,
+                    RG = registroViewModel.ResponsavelLegal.RG,
+                    Endereco = registroViewModel.ResponsavelLegal.Endereco,
+                    MandatoVigente = registroViewModel.ResponsavelLegal.MandatoVigente,
+                    OrgaoExpedidor = registroViewModel.ResponsavelLegal.OrgaoExpedidor,
+                    Telefone1 = registroViewModel.ResponsavelLegal.Telefone1,
+                    Telefone2 = registroViewModel.ResponsavelLegal.Telefone2,
+                    Telefone3 = registroViewModel.ResponsavelLegal.Telefone3
+                };
+
+                var proponente = new Proponente
+                {
+                    NomeEmpresa = registroViewModel.Proponente.NomeEmpresa,
+                    NomeFantasia = registroViewModel.Proponente.NomeFantasia,
+                    CNPJ = registroViewModel.Proponente.CNPJ,
+                    InscricaoEstadual = registroViewModel.Proponente.InscricaoEstadual,
+                    InscricaoMunicipal = registroViewModel.Proponente.InscricaoMunicipal,
+                    Endereco = registroViewModel.Proponente.Endereco,
+                    Numero = registroViewModel.Proponente.Numero,
+                    Complemento = registroViewModel.Proponente.Complemento,
+                    Bairro = registroViewModel.Proponente.Bairro,
+                    Cidade = registroViewModel.Proponente.Cidade,
+                    Estado = registroViewModel.Proponente.Estado,
+                    CEP = registroViewModel.Proponente.CEP,
+                    SiteDivulgacao = registroViewModel.Proponente.SiteDivulgacao,
+                    Telefone1 = registroViewModel.Proponente.Telefone1,
+                    Telefone2 = registroViewModel.Proponente.Telefone2,
+                    Telefone3 = registroViewModel.Proponente.Telefone3,
+                    Email = registroViewModel.Proponente.Email,
+                    Website = registroViewModel.Proponente.Website,
+                    Banco = registroViewModel.Proponente.Banco,
+                    Agencia = registroViewModel.Proponente.Agencia,
+                    ContaCorrente = registroViewModel.Proponente.ContaCorrente,
+                    TipoConta = registroViewModel.Proponente.TipoConta,
+                    RepresentanteLegalId = responsavelLegal.Id,
+                    Historico = registroViewModel.Proponente.Historico,
+                    PrincipaisAcoes = registroViewModel.Proponente.PrincipaisAcoes,
+                    PublicoAlvo = registroViewModel.Proponente.PublicoAlvo,
+                    RegioesAtendimento = registroViewModel.Proponente.RegioesAtendimento,
+                    Infraestrutura = registroViewModel.Proponente.Infraestrutura,
+                    EquipeMultidisciplinar = registroViewModel.Proponente.EquipeMultidisciplinar
+                };
+
+                // Salvar objetos no banco
+                _context.Proponente.Add(proponente);
+                await _context.SaveChangesAsync();
+
+                _context.ResponsavelLegal.Add(responsavelLegal);
+                await _context.SaveChangesAsync();
+
+                
+                //user.Tipo = registroViewModel.Tipo;
+                user.ProponenteId = proponente.Id;
+
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -169,6 +249,7 @@ namespace Fortificar.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
 
         private FortificarUser CreateUser()
         {

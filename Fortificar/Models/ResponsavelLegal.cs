@@ -12,7 +12,9 @@ namespace Fortificar.Models
 		public string OrgaoExpedidor { get; set; }
 		[Display(Name = "Cargo na OSC")]
 		public string CargoOSC { get; set; }
-		[Display(Name = "Mandato vigente")]
+
+        [DataType(DataType.Date)]
+        [Display(Name = "Mandato vigente")]  
 		public DateTime MandatoVigente { get; set; }
 		[Display(Name = "Endereço")]
 		public string Endereco { get; set; }
