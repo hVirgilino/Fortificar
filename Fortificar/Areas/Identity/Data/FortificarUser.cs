@@ -10,13 +10,6 @@ namespace Fortificar.Areas.Identity.Data;
 public class FortificarUser : IdentityUser
 {
     [PersonalData]
-    [Column(TypeName = "nvarchar(100)")]
-    public string Name { get; set; }
-
-    [PersonalData]
-    [Column(TypeName = "nvarchar(100)")]
-    public string LastName { get; set; }
-    [PersonalData]
     [Column(TypeName = "tinyint")]
     public int Tipo { get; set; }
     public int ProponenteId { get; set; }

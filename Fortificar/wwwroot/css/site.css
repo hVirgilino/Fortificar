@@ -121,3 +121,16 @@ header{
     .nav-link:hover {
         color: #4fb96a;
     }
+
+
+footer {
+    color: #3C4349;
+    background-color: #f4f4f4;
+}
+
+.footer-logo {
+    flex: 1;
+    margin: 20px;
+    height: 75px;
+    display: flex;
+}

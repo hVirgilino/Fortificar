@@ -7,7 +7,7 @@ namespace Fortificar.Models
     {
         public int Id { get; set; }
         // Informações básicas
-        public string? NomeEmpresa { get; set; }
+        public string? RazaoSocial { get; set; }
         public string? NomeFantasia { get; set; }
         public string? CNPJ { get; set; }
         public string? InscricaoEstadual { get; set; }
@@ -25,7 +25,7 @@ namespace Fortificar.Models
 
         // Contato
         [Display(Name = "Sítio eletrônico de divulgação de parceria")]
-        public string? SiteDivulgacao { get; set; }
+        public string? Site { get; set; }
         [Display(Name = "Telefone 1")]
         public string? Telefone1 { get; set; }
 
@@ -34,8 +34,6 @@ namespace Fortificar.Models
 
         [Display(Name = "Telefone 3")]
         public string? Telefone3 { get; set; }
-        public string? Email { get; set; }
-        public string? Website { get; set; }
 
         // Informações Financeiras (para desembolso)
         public string? Banco { get; set; }

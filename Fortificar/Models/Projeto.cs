@@ -68,6 +68,7 @@ namespace Fortificar.Models
     {
         public int Id { get; set; }
         public string Nome { get; set; }
+        public int CPF { get; set; }
         [Display(Name = "Formação")]
         public string Formacao { get; set; }
         [Display(Name = "Função")]

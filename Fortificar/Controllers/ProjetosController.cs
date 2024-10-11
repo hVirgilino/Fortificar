@@ -68,7 +68,6 @@ namespace Fortificar.Controllers
 		{
 			if (ModelState.IsValid)
 			{//MIGRATION
-			 // Associa o Proponente ao Projeto
 				viewModel.Projeto.ProponenteId = viewModel.Proponente.Id;
 				viewModel.Projeto.ResponsavelLegalId = viewModel.ResponsavelLegal.Id;
 				viewModel.Projeto.ResponsavelTecnicoId = viewModel.ResponsavelTecnico.Id;
@@ -78,25 +77,21 @@ namespace Fortificar.Controllers
 				return RedirectToAction(nameof(Index));
 			}
 
-            // Supondo que o usuário esteja logado e seu ID esteja disponível
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Obtenha o ID do usuário logado
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); 
 
-            // Buscar o Proponente associado ao usuário
-            var proponente = _context.Proponente
-                .FirstOrDefault(p => p.FortificarUserId == userId);
+            
+            var proponente = _context.Proponente.FirstOrDefault(p => p.FortificarUserId == userId);
 
             if (proponente == null)
             {
-                // Se não encontrar um proponente, redireciona para uma página de erro ou realiza outra ação
                 return RedirectToAction("Error");
             }
 
-            // Criar o ViewModel e preencher com os dados do Proponente
             var view = new ProjetoViewModel
             {
                 Proponente = new Proponente
                 {
-                    NomeEmpresa = proponente.NomeEmpresa,
+                    RazaoSocial = proponente.RazaoSocial,
                     NomeFantasia = proponente.NomeFantasia,
                     CNPJ = proponente.CNPJ,
                     InscricaoEstadual = proponente.InscricaoEstadual,
@@ -108,12 +103,10 @@ namespace Fortificar.Controllers
                     Cidade = proponente.Cidade,
                     Estado = proponente.Estado,
                     CEP = proponente.CEP,
-                    SiteDivulgacao = proponente.SiteDivulgacao,
                     Telefone1 = proponente.Telefone1,
                     Telefone2 = proponente.Telefone2,
                     Telefone3 = proponente.Telefone3,
-                    Email = proponente.Email,
-                    Website = proponente.Website
+                    Site = proponente.Site
                 }
             };
             return View(view);
@@ -126,10 +119,9 @@ namespace Fortificar.Controllers
             if (ModelState.IsValid)
             {//MIGRATION
              
-                // Criar novos objetos com os dados do ViewModel
                 var proponente = new Proponente
                 {
-                    NomeEmpresa = projetoViewModel.Proponente.NomeEmpresa,
+                    RazaoSocial = projetoViewModel.Proponente.RazaoSocial,
                     NomeFantasia = projetoViewModel.Proponente.NomeFantasia,
                     CNPJ = projetoViewModel.Proponente.CNPJ,
                     InscricaoEstadual = projetoViewModel.Proponente.InscricaoEstadual,
@@ -143,12 +135,10 @@ namespace Fortificar.Controllers
                     Estado = projetoViewModel.Proponente.Estado,
                     CEP = projetoViewModel.Proponente.CEP,
 
-                    SiteDivulgacao = projetoViewModel.Proponente.SiteDivulgacao,
+                    Site = projetoViewModel.Proponente.Site,
                     Telefone1 = projetoViewModel.Proponente.Telefone1,
                     Telefone2 = projetoViewModel.Proponente.Telefone2,
                     Telefone3 = projetoViewModel.Proponente.Telefone3,
-                    Email = projetoViewModel.Proponente.Email,
-                    Website = projetoViewModel.Proponente.Website,
 
                     Banco = projetoViewModel.Proponente.Banco,
                     Agencia = projetoViewModel.Proponente.Agencia,
@@ -211,9 +201,9 @@ namespace Fortificar.Controllers
                     PublicoBeneficiario = projetoViewModel.Projeto.PublicoBeneficiario  ,
                     Justificativa = projetoViewModel.Projeto.Justificativa  ,
 
-                    ProponenteId = proponente.Id,  // Associando o ID do Proponente ao Projeto
-                    ResponsavelLegalId = responsavelLegal.Id , // Associando o ID do ResponsavelLegal ao Projeto
-					ResponsavelTecnicoId = responsavelTecnico.Id  // Associando o ID do ResponsavelTecnico ao Projeto
+                    ProponenteId = proponente.Id,  
+                    ResponsavelLegalId = responsavelLegal.Id , 
+					ResponsavelTecnicoId = responsavelTecnico.Id  
                                                   
                 };
 
@@ -232,7 +222,7 @@ namespace Fortificar.Controllers
                             Formacao = membro.Formacao,
                             Funcao = membro.Funcao,
                             CargaHorariaSemanal = membro.CargaHorariaSemanal,
-                            ProjetoId = projeto.Id // Associar o ID do projeto ao Membro da equipe
+                            ProjetoId = projeto.Id 
                         };
                         _context.MembroEquipe.Add(_membro); // Adicionar cada membro individualmente
                         await _context.SaveChangesAsync();
@@ -254,7 +244,7 @@ namespace Fortificar.Controllers
                             Etapas = cronograma.Etapas,
                             Inicio = cronograma.Inicio,
                             Termino = cronograma.Termino,
-                            ProjetoId = projeto.Id // Associar o ID do projeto ao Membro da equipe
+                            ProjetoId = projeto.Id 
                         };
                         _context.CronogramaMeta.Add(_cronograma); // Adicionar cada membro individualmente
                         await _context.SaveChangesAsync();
@@ -272,7 +262,7 @@ namespace Fortificar.Controllers
                             Quantidade = plano.Quantidade,
                             ValorUnitario = plano.ValorUnitario,
                             ValorTotal = plano.ValorTotal,
-                            ProjetoId = projeto.Id // Associar o ID do projeto ao Membro da equipe
+                            ProjetoId = projeto.Id 
                         };
                         _context.PlanoAplicacaoItem.Add(_plano); // Adicionar cada membro individualmente
                         await _context.SaveChangesAsync();
@@ -291,13 +281,13 @@ namespace Fortificar.Controllers
                         {
                             Nome = anexo.FileName,
                             Tipo = anexo.ContentType,
-                            ProjetoId = projeto.Id, //Depois colocamos o certo
+                            ProjetoId = projeto.Id, 
                             Imagem = arquivo
                         };
 
                         imagem = novoAnexo;
 
-                        // Salvar no banco de dados (por exemplo, usando Entity Framework)
+                        // Salvar no BD
                         _context.Anexo.Add(novoAnexo);
                         _context.SaveChanges();
                     }
@@ -324,7 +314,7 @@ namespace Fortificar.Controllers
             var anexo = _context.Anexo.Find(id); // Buscando a imagem no banco
             if (anexo != null)
             {
-                return File(anexo.Imagem, "image/png"); // Retornando os dados da imagem
+                return File(anexo.Imagem, "image/png"); // Retornando a imagem
             }
 
             return NotFound();
@@ -336,7 +326,7 @@ namespace Fortificar.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Upload(IFormFile anexo)
-        {
+        {//APENAS VERIFICAÇÃO, A FOTO É SALVA QUANDO O PROJETO É CADASTRADO
             try
             {
                 if (anexo != null && anexo.Length > 0)
@@ -463,27 +453,7 @@ namespace Fortificar.Controllers
           return (_context.Projeto?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        public IActionResult VisualizarAnexo(string caminho)
-        {
-            var caminhoArq = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", caminho);
-
-            if (!System.IO.File.Exists(caminhoArq))
-            {
-                return NotFound();
-            }
-
-            var fileBytes = System.IO.File.ReadAllBytes(caminhoArq);
-            var contentType = "application/octet-stream"; // tipo genérico
-
-            // Verifica a extensão do arquivo para definir o tipo de conteúdo adequado
-            var extension = Path.GetExtension(caminhoArq).ToLower();
-            if (extension == ".jpg" || extension == ".jpeg" || extension == ".png")
-            {
-                contentType = "image/png"; // ou "image/png"
-            }
-
-            return File(fileBytes, contentType);
-        }
+       
 
 
     }

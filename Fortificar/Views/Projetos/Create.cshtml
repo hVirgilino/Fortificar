@@ -12,9 +12,9 @@
 	<!-- 1. DADOS GERAIS DO PROPONENTE -->
     <h5 class="font-weight-bold">DADOS GERAIS DO PROPONENTE</h5>
     <div class="form-group">
-        <label asp-for="Proponente.NomeEmpresa" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.NomeEmpresa</span>
-        <span asp-validation-for="Proponente.NomeEmpresa" class="text-danger"></span>
+        <label asp-for="Proponente.RazaoSocial" class="control-label"></label>
+        <span class="form-control-plaintext">@Model.Proponente.RazaoSocial</span>
+        <span asp-validation-for="Proponente.RazaoSocial" class="text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -86,9 +86,9 @@
 
     <!-- Contato -->
     <div class="form-group">
-        <label asp-for="Proponente.SiteDivulgacao" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.SiteDivulgacao</span>
-        <span asp-validation-for="Proponente.SiteDivulgacao" class="text-danger"></span>
+        <label asp-for="Proponente.Site" class="control-label"></label>
+        <span class="form-control-plaintext">@Model.Proponente.Site</span>
+        <span asp-validation-for="Proponente.Site" class="text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -109,17 +109,6 @@
         <span asp-validation-for="Proponente.Telefone3" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Proponente.Email" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.Email</span>
-        <span asp-validation-for="Proponente.Email" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Proponente.Website" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.Website</span>
-        <span asp-validation-for="Proponente.Website" class="text-danger"></span>
-    </div>
 
     <!-- Informações Financeiras -->
     <div class="form-group">
@@ -385,6 +374,7 @@
         <thead>
             <tr>
                 <th>Nome</th>
+                <th>CPF</th>
                 <th>Formação</th>
                 <th>Função</th>
                 <th>Carga Horária Semanal</th>
@@ -395,6 +385,10 @@
         <td>
             <input asp-for="EquipeExecucao[0].Nome" class="form-control" />
             <span asp-validation-for="EquipeExecucao[0].Nome" class="text-danger"></span>
+        </td>
+        <td>
+            <input asp-for="EquipeExecucao[0].CPF" class="form-control" />
+            <span asp-validation-for="EquipeExecucao[0].CPF" class="text-danger"></span>
         </td>
         <td>
             <input asp-for="EquipeExecucao[0].Formacao" class="form-control" />

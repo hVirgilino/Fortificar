@@ -147,8 +147,6 @@ namespace Fortificar.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                user.Name = Input.Name;
-                user.LastName = Input.LastName;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -169,7 +167,7 @@ namespace Fortificar.Areas.Identity.Pages.Account
 
                 var proponente = new Proponente
                 {
-                    NomeEmpresa = registroViewModel.Proponente.NomeEmpresa,
+                    RazaoSocial = registroViewModel.Proponente.RazaoSocial,
                     NomeFantasia = registroViewModel.Proponente.NomeFantasia,
                     CNPJ = registroViewModel.Proponente.CNPJ,
                     InscricaoEstadual = registroViewModel.Proponente.InscricaoEstadual,
@@ -181,12 +179,10 @@ namespace Fortificar.Areas.Identity.Pages.Account
                     Cidade = registroViewModel.Proponente.Cidade,
                     Estado = registroViewModel.Proponente.Estado,
                     CEP = registroViewModel.Proponente.CEP,
-                    SiteDivulgacao = registroViewModel.Proponente.SiteDivulgacao,
+                    Site = registroViewModel.Proponente.Site,
                     Telefone1 = registroViewModel.Proponente.Telefone1,
                     Telefone2 = registroViewModel.Proponente.Telefone2,
                     Telefone3 = registroViewModel.Proponente.Telefone3,
-                    Email = registroViewModel.Proponente.Email,
-                    Website = registroViewModel.Proponente.Website,
                     Banco = registroViewModel.Proponente.Banco,
                     Agencia = registroViewModel.Proponente.Agencia,
                     ContaCorrente = registroViewModel.Proponente.ContaCorrente,

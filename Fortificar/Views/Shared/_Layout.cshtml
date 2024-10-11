@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Fortificar.styles.css" asp-append-version="true" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/img/fortes icon.png">
 </head>
 <body>
     <header>
@@ -45,15 +46,19 @@
             @RenderBody()
         </main>
     </div>
-    <h1 class="container">Bem-vindo à Página de Teste</h1>
-    <p class="container">Abaixo está um conteúdo dummy para você rolar e testar o botão de subir ao topo.</p>
 
     
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - Fortes Engenharia. Todos os direitos reservados. - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        
+        <div class="footer-logo">
+            <img src="~/img/FORTES_LOGOMARCA.png" alt="Fortes Engenharia">
+            &copy; 2024 - Fortes Engenharia. Todos os direitos reservados. - 
+            <a asp-area="" asp-controller="Home" asp-action="Privacy"> Privacidade.</a>
+        
         </div>
+
+       
         <div class="collapse d-sm-inline-flex flex-sm-row-reverse">
             <!-- Botão de subir -->
             <button id="scrollTopButton" title="Voltar ao topo">
