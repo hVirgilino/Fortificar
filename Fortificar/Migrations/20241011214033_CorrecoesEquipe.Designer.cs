@@ -313,7 +313,7 @@ namespace Fortificar.Migrations
                     b.Property<string>("Complemento")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ContaCorrente")
+                    b.Property<string>("Conta")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Endereco")

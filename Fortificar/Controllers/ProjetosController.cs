@@ -77,10 +77,17 @@ namespace Fortificar.Controllers
 				return RedirectToAction(nameof(Index));
 			}
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            
-            var proponente = _context.Proponente.FirstOrDefault(p => p.FortificarUserId == userId);
+
+            var proponenteId = _context.FortificarUser
+            .Where(fu => fu.Id == userId)
+            .Select(fu => fu.ProponenteId)
+            .FirstOrDefault();
+
+            var proponente = _context.Proponente
+                .FirstOrDefault(p => p.Id == proponenteId);
+
 
             if (proponente == null)
             {
@@ -142,10 +149,10 @@ namespace Fortificar.Controllers
 
                     Banco = projetoViewModel.Proponente.Banco,
                     Agencia = projetoViewModel.Proponente.Agencia,
-                    ContaCorrente = projetoViewModel.Proponente.ContaCorrente,
+                    Conta = projetoViewModel.Proponente.Conta,
                     TipoConta = projetoViewModel.Proponente.TipoConta,
 
-                    RepresentanteLegalId = projetoViewModel.Proponente.RepresentanteLegalId,
+                    ResponsavelLegalId = projetoViewModel.Proponente.ResponsavelLegalId,
 
                     Historico = projetoViewModel.Proponente.Historico,
                     PrincipaisAcoes = projetoViewModel.Proponente.PrincipaisAcoes,

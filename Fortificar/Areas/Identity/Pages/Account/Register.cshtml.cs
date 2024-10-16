@@ -63,7 +63,8 @@ namespace Fortificar.Areas.Identity.Pages.Account
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string ReturnUrl { get; set; }
-        RegistroViewModel RegistroViewModel { get; set; }
+
+        public Proponente Proponente { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -123,12 +124,7 @@ namespace Fortificar.Areas.Identity.Pages.Account
             }
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            RegistroViewModel = new RegistroViewModel
-            {
-                Registro = this, // ou outra inicialização, se necessário
-                Proponente = new Proponente(),
-                ResponsavelLegal = new ResponsavelLegal()
-            };
+            
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null, RegistroViewModel registroViewModel = null)
@@ -185,9 +181,9 @@ namespace Fortificar.Areas.Identity.Pages.Account
                     Telefone3 = registroViewModel.Proponente.Telefone3,
                     Banco = registroViewModel.Proponente.Banco,
                     Agencia = registroViewModel.Proponente.Agencia,
-                    ContaCorrente = registroViewModel.Proponente.ContaCorrente,
+                    Conta = registroViewModel.Proponente.Conta,
                     TipoConta = registroViewModel.Proponente.TipoConta,
-                    RepresentanteLegalId = responsavelLegal.Id,
+                    ResponsavelLegalId = responsavelLegal.Id,
                     Historico = registroViewModel.Proponente.Historico,
                     PrincipaisAcoes = registroViewModel.Proponente.PrincipaisAcoes,
                     PublicoAlvo = registroViewModel.Proponente.PublicoAlvo,

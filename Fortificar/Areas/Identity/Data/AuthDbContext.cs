@@ -11,6 +11,7 @@ public class AuthDbContext : IdentityDbContext<FortificarUser>
 {
 	//MIGRATION
 	public DbSet<Projeto> Projeto { get; set; }
+	public DbSet<FortificarUser> FortificarUser { get; set; }
 	public DbSet<Proponente> Proponente { get; set; }
 	public DbSet<ResponsavelLegal> ResponsavelLegal { get; set; }
 	public DbSet<ResponsavelTecnico> ResponsavelTecnico { get; set; }

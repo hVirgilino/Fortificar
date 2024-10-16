@@ -7,8 +7,8 @@ namespace Fortificar.Models
     {
         public int Id { get; set; }
         // Informações básicas
-        public string? RazaoSocial { get; set; }
         public string? NomeFantasia { get; set; }
+        public string? RazaoSocial { get; set; }
         public string? CNPJ { get; set; }
         public string? InscricaoEstadual { get; set; }
         public string? InscricaoMunicipal { get; set; }
@@ -41,21 +41,22 @@ namespace Fortificar.Models
         [Display(Name = "Agência")]
         public string? Agencia { get; set; }
 
-        [Display(Name = "Conta Corrente")]
-        public string? ContaCorrente { get; set; }
+        [Display(Name = "Conta")]
+        public string? Conta { get; set; }
 
         [Display(Name = "Tipo da conta")]
         public string? TipoConta { get; set; }
 
         // Representante Legal
 
-        public int RepresentanteLegalId{ get; set; }
+        public int ResponsavelLegalId{ get; set; }
+        public ResponsavelLegal? ResponsavelLegal { get; set; }
 
 
 
-		// Seção de projetos
+        // Seção de projetos
 
-		[Display(Name = "CONHECENDO O PROPONENTE")]
+        [Display(Name = "CONHECENDO O PROPONENTE")]
 		public string Historico { get; set; }
 
 		[Display(Name = "PRINCIPAIS AÇÕES DESENVOLVIDAS PELA PROPONENTE")]
@@ -75,9 +76,6 @@ namespace Fortificar.Models
 		public string EquipeMultidisciplinar { get; set; }
         //public List<Projeto> Projetos { get;  set; }
 
-        //Usuário
-        public string FortificarUserId { get; set; }
-        public FortificarUser Usuario { get; set; }
     }
 
 }

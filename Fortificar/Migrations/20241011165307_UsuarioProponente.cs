@@ -111,7 +111,7 @@ namespace Fortificar.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "ContaCorrente",
+                name: "Conta",
                 table: "Proponente",
                 type: "nvarchar(max)",
                 nullable: true);
@@ -251,7 +251,7 @@ namespace Fortificar.Migrations
                 table: "Proponente");
 
             migrationBuilder.DropColumn(
-                name: "ContaCorrente",
+                name: "Conta",
                 table: "Proponente");
 
             migrationBuilder.DropColumn(

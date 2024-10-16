@@ -134,3 +134,7 @@ footer {
     height: 75px;
     display: flex;
 }
+
+.marginB{
+    margin-bottom:100px;
+}

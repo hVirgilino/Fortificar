@@ -6,587 +6,614 @@
 
 <h1>@ViewData["Title"]</h1><br />
 
-<form asp-action="SalvarProjeto" method="post" enctype="multipart/form-data">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-	<!-- 1. DADOS GERAIS DO PROPONENTE -->
-    <h5 class="font-weight-bold">DADOS GERAIS DO PROPONENTE</h5>
-    <div class="form-group">
-        <label asp-for="Proponente.RazaoSocial" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.RazaoSocial</span>
-        <span asp-validation-for="Proponente.RazaoSocial" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Proponente.NomeFantasia" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.NomeFantasia</span>
-        <span asp-validation-for="Proponente.NomeFantasia" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Proponente.CNPJ" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.CNPJ</span>
-        <span asp-validation-for="Proponente.CNPJ" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Proponente.InscricaoEstadual" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.InscricaoEstadual</span>
-        <span asp-validation-for="Proponente.InscricaoEstadual" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Proponente.InscricaoMunicipal" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.InscricaoMunicipal</span>
-        <span asp-validation-for="Proponente.InscricaoMunicipal" class="text-danger"></span>
-    </div>
-
-    <!-- Endereço -->
-    <div class="form-group">
-        <label asp-for="Proponente.Endereco" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.Endereco</span>
-        <span asp-validation-for="Proponente.Endereco" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Proponente.Numero" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.Numero</span>
-        <span asp-validation-for="Proponente.Numero" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Proponente.Complemento" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.Complemento</span>
-        <span asp-validation-for="Proponente.Complemento" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Proponente.Bairro" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.Bairro</span>
-        <span asp-validation-for="Proponente.Bairro" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Proponente.Cidade" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.Cidade</span>
-        <span asp-validation-for="Proponente.Cidade" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Proponente.Estado" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.Estado</span>
-        <span asp-validation-for="Proponente.Estado" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Proponente.CEP" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.CEP</span>
-        <span asp-validation-for="Proponente.CEP" class="text-danger"></span>
-    </div>
-
-    <!-- Contato -->
-    <div class="form-group">
-        <label asp-for="Proponente.Site" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.Site</span>
-        <span asp-validation-for="Proponente.Site" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Proponente.Telefone1" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.Telefone1</span>
-        <span asp-validation-for="Proponente.Telefone1" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Proponente.Telefone2" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.Telefone2</span>
-        <span asp-validation-for="Proponente.Telefone2" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Proponente.Telefone3" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.Telefone3</span>
-        <span asp-validation-for="Proponente.Telefone3" class="text-danger"></span>
-    </div>
 
 
-    <!-- Informações Financeiras -->
-    <div class="form-group">
-        <label asp-for="Proponente.Banco" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.Banco</span>
-        <span asp-validation-for="Proponente.Banco" class="text-danger"></span>
-    </div>
+    <div class="row justify-content-center">
+    <div class="col-10 mt-10">         
+        <div class="marginB card-body">
+            <div class="row justify-content-center">
+                <div class="col-10 mt-6">
+                    <form asp-action="SalvarProjeto" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <!-- 1. DADOS GERAIS DO PROPONENTE -->
+                        <h5 class="font-weight-bold">DADOS GERAIS DO PROPONENTE</h5>
+                        <div class="form-floating mb-3">
+    <input asp-for="Proponente.RazaoSocial" class="form-control" placeholder="Razão Social da Empresa" />
+    <label asp-for="Proponente.RazaoSocial">Razão Social da Empresa</label>
+    <span asp-validation-for="Proponente.RazaoSocial" class="text-danger"></span>
+</div>
 
-    <div class="form-group">
-        <label asp-for="Proponente.Agencia" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.Agencia</span>
-        <span asp-validation-for="Proponente.Agencia" class="text-danger"></span>
-    </div>
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.NomeFantasia" class="form-control" placeholder="Nome Fantasia da Empresa" />
+    <label asp-for="Proponente.NomeFantasia">Nome Fantasia da Empresa</label>
+    <span asp-validation-for="Proponente.NomeFantasia" class="text-danger"></span>
+</div>
 
-    <div class="form-group">
-        <label asp-for="Proponente.ContaCorrente" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.ContaCorrente</span>
-        <span asp-validation-for="Proponente.ContaCorrente" class="text-danger"></span>
-    </div>
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.CNPJ" class="form-control" placeholder="CNPJ da Empresa" />
+    <label asp-for="Proponente.CNPJ">CNPJ da Empresa</label>
+    <span asp-validation-for="Proponente.CNPJ" class="text-danger"></span>
+</div>
 
-    <div class="form-group">
-        <label asp-for="Proponente.TipoConta" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.TipoConta</span>
-        <span asp-validation-for="Proponente.TipoConta" class="text-danger"></span>
-    </div>
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.InscricaoEstadual" class="form-control" placeholder="Inscrição Estadual" />
+    <label asp-for="Proponente.InscricaoEstadual">Inscrição Estadual</label>
+    <span asp-validation-for="Proponente.InscricaoEstadual" class="text-danger"></span>
+</div>
 
-    <!-- Histórico e Informações da Proponente -->
-    <div class="form-group">
-        <label asp-for="Proponente.Historico" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.Historico</span>
-        <span asp-validation-for="Proponente.Historico" class="text-danger"></span>
-    </div>
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.InscricaoMunicipal" class="form-control" placeholder="Inscrição Municipal" />
+    <label asp-for="Proponente.InscricaoMunicipal">Inscrição Municipal</label>
+    <span asp-validation-for="Proponente.InscricaoMunicipal" class="text-danger"></span>
+</div>
 
-    <div class="form-group">
-        <label asp-for="Proponente.PrincipaisAcoes" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.PrincipaisAcoes</span>
-        <span asp-validation-for="Proponente.PrincipaisAcoes" class="text-danger"></span>
-    </div>
+<!-- Endereço -->
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.Endereco" class="form-control" placeholder="Endereço" />
+    <label asp-for="Proponente.Endereco">Endereço</label>
+    <span asp-validation-for="Proponente.Endereco" class="text-danger"></span>
+</div>
 
-    <div class="form-group">
-        <label asp-for="Proponente.PublicoAlvo" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.PublicoAlvo</span>
-        <span asp-validation-for="Proponente.PublicoAlvo" class="text-danger"></span>
-    </div>
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.Numero" class="form-control" placeholder="Número" />
+    <label asp-for="Proponente.Numero">Número</label>
+    <span asp-validation-for="Proponente.Numero" class="text-danger"></span>
+</div>
 
-    <div class="form-group">
-        <label asp-for="Proponente.RegioesAtendimento" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.RegioesAtendimento</span>
-        <span asp-validation-for="Proponente.RegioesAtendimento" class="text-danger"></span>
-    </div>
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.Complemento" class="form-control" placeholder="Complemento" />
+    <label asp-for="Proponente.Complemento">Complemento</label>
+    <span asp-validation-for="Proponente.Complemento" class="text-danger"></span>
+</div>
 
-    <div class="form-group">
-        <label asp-for="Proponente.Infraestrutura" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.Infraestrutura</span>
-        <span asp-validation-for="Proponente.Infraestrutura" class="text-danger"></span>
-    </div>
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.Bairro" class="form-control" placeholder="Bairro" />
+    <label asp-for="Proponente.Bairro">Bairro</label>
+    <span asp-validation-for="Proponente.Bairro" class="text-danger"></span>
+</div>
 
-    <div class="form-group">
-        <label asp-for="Proponente.EquipeMultidisciplinar" class="control-label"></label>
-        <span class="form-control-plaintext">@Model.Proponente.EquipeMultidisciplinar</span>
-        <span asp-validation-for="Proponente.EquipeMultidisciplinar" class="text-danger"></span>
-    </div>
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.Cidade" class="form-control" placeholder="Cidade" />
+    <label asp-for="Proponente.Cidade">Cidade</label>
+    <span asp-validation-for="Proponente.Cidade" class="text-danger"></span>
+</div>
 
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.Estado" class="form-control" placeholder="Estado" />
+    <label asp-for="Proponente.Estado">Estado</label>
+    <span asp-validation-for="Proponente.Estado" class="text-danger"></span>
+</div>
 
-	<br />
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.CEP" class="form-control" placeholder="CEP" />
+    <label asp-for="Proponente.CEP">CEP</label>
+    <span asp-validation-for="Proponente.CEP" class="text-danger"></span>
+</div>
 
-	<!-- 2. IDENTIFICAÇÃO DO RESPONSÁVEL LEGAL PELO PROPONENTE -->
-    <h4>IDENTIFICAÇÃO DO RESPONSÁVEL LEGAL PELO PROPONENTE</h4>
-    <div class="form-group">
-        <label asp-for="ResponsavelLegal.Nome" class="control-label"></label>
-        <input asp-for="ResponsavelLegal.Nome" class="form-control" />
-        <span asp-validation-for="ResponsavelLegal.Nome" class="text-danger"></span>
-    </div><div class="form-group">
-        <label asp-for="ResponsavelLegal.CPF" class="control-label"></label>
-        <input asp-for="ResponsavelLegal.CPF" class="form-control" />
-        <span asp-validation-for="ResponsavelLegal.CPF" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ResponsavelLegal.RG" class="control-label"></label>
-        <input asp-for="ResponsavelLegal.RG" class="form-control" />
-        <span asp-validation-for="ResponsavelLegal.RG" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ResponsavelLegal.OrgaoExpedidor" class="control-label"></label>
-        <input asp-for="ResponsavelLegal.OrgaoExpedidor" class="form-control" />
-        <span asp-validation-for="ResponsavelLegal.OrgaoExpedidor" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ResponsavelLegal.CargoOSC" class="control-label"></label>
-        <input asp-for="ResponsavelLegal.CargoOSC" class="form-control" />
-        <span asp-validation-for="ResponsavelLegal.CargoOSC" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ResponsavelLegal.MandatoVigente" class="control-label"></label>
-        <input asp-for="ResponsavelLegal.MandatoVigente" class="form-control" />
-        <span asp-validation-for="ResponsavelLegal.MandatoVigente" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ResponsavelLegal.Endereco" class="control-label"></label>
-        <input asp-for="ResponsavelLegal.Endereco" class="form-control" />
-        <span asp-validation-for="ResponsavelLegal.Endereco" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ResponsavelLegal.Telefone1" class="control-label"></label>
-        <input asp-for="ResponsavelLegal.Telefone1" class="form-control" />
-        <span asp-validation-for="ResponsavelLegal.Telefone1" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ResponsavelLegal.Telefone2" class="control-label"></label>
-        <input asp-for="ResponsavelLegal.Telefone2" class="form-control" />
-        <span asp-validation-for="ResponsavelLegal.Telefone2" class="text-danger"></span>
-	</div>
-    <div class="form-group">
-        <label asp-for="ResponsavelLegal.Telefone3" class="control-label"></label>
-        <input asp-for="ResponsavelLegal.Telefone3" class="form-control" />
-        <span asp-validation-for="ResponsavelLegal.Telefone3" class="text-danger"></span>
-	</div>
+<!-- Contato -->
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.Site" class="form-control" placeholder="Site" />
+    <label asp-for="Proponente.Site">Site</label>
+    <span asp-validation-for="Proponente.Site" class="text-danger"></span>
+</div>
 
-    <br />
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.Telefone1" class="form-control" placeholder="Telefone 1" />
+    <label asp-for="Proponente.Telefone1">Telefone 1</label>
+    <span asp-validation-for="Proponente.Telefone1" class="text-danger"></span>
+</div>
 
-    <!-- 3. IDENTIFICAÇÃO DO RESPONSÁVEL TÉCNICO DO PROJETO -->
-    <h4>IDENTIFICAÇÃO DO RESPONSÁVEL TÉCNICO DO PROJETO</h4>
-    <div class="form-group">
-        <label asp-for="ResponsavelTecnico.Nome" class="control-label"></label>
-        <input asp-for="ResponsavelTecnico.Nome" class="form-control" />
-        <span asp-validation-for="ResponsavelTecnico.Nome" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ResponsavelTecnico.CPF" class="control-label"></label>
-        <input asp-for="ResponsavelTecnico.CPF" class="form-control" />
-        <span asp-validation-for="ResponsavelTecnico.CPF" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ResponsavelTecnico.RG" class="control-label"></label>
-        <input asp-for="ResponsavelTecnico.RG" class="form-control" />
-        <span asp-validation-for="ResponsavelTecnico.RG" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ResponsavelTecnico.OrgaoExpedidor" class="control-label"></label>
-        <input asp-for="ResponsavelTecnico.OrgaoExpedidor" class="form-control" />
-        <span asp-validation-for="ResponsavelTecnico.OrgaoExpedidor" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ResponsavelTecnico.CargoOSC" class="control-label"></label>
-        <input asp-for="ResponsavelTecnico.CargoOSC" class="form-control" />
-        <span asp-validation-for="ResponsavelTecnico.CargoOSC" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ResponsavelTecnico.MandatoVigente" class="control-label"></label>
-        <input asp-for="ResponsavelTecnico.MandatoVigente" class="form-control" />
-        <span asp-validation-for="ResponsavelTecnico.MandatoVigente" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ResponsavelTecnico.Endereco" class="control-label"></label>
-        <input asp-for="ResponsavelTecnico.Endereco" class="form-control" />
-        <span asp-validation-for="ResponsavelTecnico.Endereco" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ResponsavelTecnico.Telefone1" class="control-label"></label>
-        <input asp-for="ResponsavelTecnico.Telefone1" class="form-control" />
-        <span asp-validation-for="ResponsavelTecnico.Telefone1" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ResponsavelTecnico.Telefone2" class="control-label"></label>
-        <input asp-for="ResponsavelTecnico.Telefone2" class="form-control" />
-        <span asp-validation-for="ResponsavelTecnico.Telefone2" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ResponsavelTecnico.Telefone3" class="control-label"></label>
-        <input asp-for="ResponsavelTecnico.Telefone3" class="form-control" />
-        <span asp-validation-for="ResponsavelTecnico.Telefone3" class="text-danger"></span>
-    </div>
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.Telefone2" class="form-control" placeholder="Telefone 2" />
+    <label asp-for="Proponente.Telefone2">Telefone 2</label>
+    <span asp-validation-for="Proponente.Telefone2" class="text-danger"></span>
+</div>
 
-    <!-- 4. CONHECENDO O PROPONENTE -->
-    
-    <div class="form-group">
-        <label asp-for="Proponente.Historico" class="control-label"></label>
-        <input asp-for="Proponente.Historico" class="form-control" placeholder="Breve histórico e finalidade da OSC" />
-        <span asp-validation-for="Proponente.Historico" class="text-danger"></span>
-    </div>
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.Telefone3" class="form-control" placeholder="Telefone 3" />
+    <label asp-for="Proponente.Telefone3">Telefone 3</label>
+    <span asp-validation-for="Proponente.Telefone3" class="text-danger"></span>
+</div>
 
-    <!-- 5. PRINCIPAIS AÇÕES DESENVOLVIDAS PELA PROPONENTE -->
-    
-    <div class="form-group">
-        <label asp-for="Proponente.PrincipaisAcoes" class="control-label"></label>
-        <input asp-for="Proponente.PrincipaisAcoes" class="form-control" />
-        <span asp-validation-for="Proponente.PrincipaisAcoes" class="text-danger"></span>
-    </div>
+<!-- Informações Financeiras -->
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.Banco" class="form-control" placeholder="Banco" />
+    <label asp-for="Proponente.Banco">Banco</label>
+    <span asp-validation-for="Proponente.Banco" class="text-danger"></span>
+</div>
 
-    <!-- 6. PÚBLICO ALVO DE ATENDIMENTO DA PROPONENTE -->
-    
-    <div class="form-group">
-        <label asp-for="Proponente.PublicoAlvo" class="control-label"></label>
-        <input asp-for="Proponente.PublicoAlvo" class="form-control" />
-        <span asp-validation-for="Proponente.PublicoAlvo" class="text-danger"></span>
-    </div>
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.Agencia" class="form-control" placeholder="Agência" />
+    <label asp-for="Proponente.Agencia">Agência</label>
+    <span asp-validation-for="Proponente.Agencia" class="text-danger"></span>
+</div>
 
-    <!-- 7. REGIÕES DE ALCANCE DAS AÇÕES (BAIRROS -->
-    
-    <div class="form-group">
-        <label asp-for="Proponente.RegioesAtendimento" class="control-label"></label>
-        <input asp-for="Proponente.RegioesAtendimento" class="form-control" />
-        <span asp-validation-for="Proponente.RegioesAtendimento" class="text-danger"></span>
-    </div>
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.Conta" class="form-control" placeholder="Conta" />
+    <label asp-for="Proponente.Conta">Conta</label>
+    <span asp-validation-for="Proponente.Conta" class="text-danger"></span>
+</div>
 
-    <!-- 8. INFRAESTRUTURA DA PROPONENTE -->
-    
-    <div class="form-group">
-        <label asp-for="Proponente.Infraestrutura" class="control-label"></label>
-        <input asp-for="Proponente.Infraestrutura" class="form-control" />
-        <span asp-validation-for="Proponente.Infraestrutura" class="text-danger"></span>
-    </div>
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.TipoConta" class="form-control" placeholder="Tipo de Conta" />
+    <label asp-for="Proponente.TipoConta">Tipo de Conta</label>
+    <span asp-validation-for="Proponente.TipoConta" class="text-danger"></span>
+</div>
 
-	<!-- 9. EQUIPE MULTIDISCIPLINAR DO PROPONENTE ---->
-    
-    <div class="form-group">
-        <label asp-for="Proponente.EquipeMultidisciplinar" class="control-label"></label>
-        <input asp-for="Proponente.EquipeMultidisciplinar" class="form-control" />
-        <span asp-validation-for="Proponente.EquipeMultidisciplinar" class="text-danger"></span>
-	</div>
-    <br />
+<!-- Histórico e Informações da Proponente -->
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.Historico" class="form-control" placeholder="Histórico" />
+    <label asp-for="Proponente.Historico">Histórico</label>
+    <span asp-validation-for="Proponente.Historico" class="text-danger"></span>
+</div>
 
-    <!-- 10. RESUMO DO PROJETO -->
-    <h3>RESUMO DO PROJETO</h3>
-    
-    <div class="form-group">
-        <label asp-for="Projeto.Objeto" class="control-label"></label>
-        <input asp-for="Projeto.Objeto" class="form-control" />
-        <span asp-validation-for="Projeto.Objeto" class="text-danger"></span>
-    </div>
-    
-    <div class="form-group">
-        <label asp-for="Projeto.ObjetivoGeral" class="control-label"></label>
-        <input asp-for="Projeto.ObjetivoGeral" class="form-control" />
-        <span asp-validation-for="Projeto.ObjetivoGeral" class="text-danger"></span>
-    </div>
-    
-    <div class="form-group">
-        <label asp-for="Projeto.ObjetivosEspecificos" class="control-label"></label>
-        <input asp-for="Projeto.ObjetivosEspecificos" class="form-control" />
-        <span asp-validation-for="Projeto.ObjetivosEspecificos" class="text-danger"></span>
-    </div>
-    
-    <div class="form-group">
-        <label asp-for="Projeto.PublicoBeneficiario" class="control-label"></label>
-        <input asp-for="Projeto.PublicoBeneficiario" class="form-control" />
-        <span asp-validation-for="Projeto.PublicoBeneficiario" class="text-danger"></span>
-    </div>
-    
-    <div class="form-group">
-        <label asp-for="Projeto.Justificativa" class="control-label"></label>
-        <input asp-for="Projeto.Justificativa" class="form-control" />
-        <span asp-validation-for="Projeto.Justificativa" class="text-danger"></span>
-    </div>
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.PrincipaisAcoes" class="form-control" placeholder="Principais Ações" />
+    <label asp-for="Proponente.PrincipaisAcoes">Principais Ações</label>
+    <span asp-validation-for="Proponente.PrincipaisAcoes" class="text-danger"></span>
+</div>
 
-    <br />
-    
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.PublicoAlvo" class="form-control" placeholder="Público Alvo" />
+    <label asp-for="Proponente.PublicoAlvo">Público Alvo</label>
+    <span asp-validation-for="Proponente.PublicoAlvo" class="text-danger"></span>
+</div>
 
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.RegioesAtendimento" class="form-control" placeholder="Regiões de Atendimento" />
+    <label asp-for="Proponente.RegioesAtendimento">Regiões de Atendimento</label>
+    <span asp-validation-for="Proponente.RegioesAtendimento" class="text-danger"></span>
+</div>
 
-	<!-- 10.6 Equipe de Profissionais que Atuarão na Execução do Projeto -->
-    <h4>Equipe de Profissionais</h4>
-    <table class="table" id="equipeProfissionaisTable">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Formação</th>
-                <th>Função</th>
-                <th>Carga Horária Semanal</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        <td>
-            <input asp-for="EquipeExecucao[0].Nome" class="form-control" />
-            <span asp-validation-for="EquipeExecucao[0].Nome" class="text-danger"></span>
-        </td>
-        <td>
-            <input asp-for="EquipeExecucao[0].CPF" class="form-control" />
-            <span asp-validation-for="EquipeExecucao[0].CPF" class="text-danger"></span>
-        </td>
-        <td>
-            <input asp-for="EquipeExecucao[0].Formacao" class="form-control" />
-            <span asp-validation-for="EquipeExecucao[0].Formacao" class="text-danger"></span>
-        </td>
-        <td>
-            <input asp-for="EquipeExecucao[0].Funcao" class="form-control" />
-            <span asp-validation-for="EquipeExecucao[0].Funcao" class="text-danger"></span>
-        </td>
-        <td>
-            <input asp-for="EquipeExecucao[0].CargaHorariaSemanal" class="form-control" />
-            <span asp-validation-for="EquipeExecucao[0].CargaHorariaSemanal" class="text-danger"></span>
-        </td>
-        <td>
-            <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button>
-        </td>
-        </tbody>
-    </table>
-    <button type="button" class="btn btn-secondary" onclick="addEquipeProfissionais()">Adicionar Profissional</button>
-    <br />
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.Infraestrutura" class="form-control" placeholder="Infraestrutura" />
+    <label asp-for="Proponente.Infraestrutura">Infraestrutura</label>
+    <span asp-validation-for="Proponente.Infraestrutura" class="text-danger"></span>
+</div>
 
-	<!-- 10.7 Período de Execução do Projeto -->
-    <br /><h4>Período de Execução do Projeto</h4>
-    <div class="form-group">
-        <label asp-for="Projeto.InicioExecucao" class="control-label"></label>
-        <input asp-for="Projeto.InicioExecucao" class="form-control" placeholder="Início em: " />
-        <span asp-validation-for="Projeto.InicioExecucao" class="text-danger"></span>
-
-        <label asp-for="Projeto.TerminoExecucao" class="control-label"></label>
-        <input asp-for="Projeto.TerminoExecucao" class="form-control" placeholder="Término em: " />
-        <span asp-validation-for="Projeto.TerminoExecucao" class="text-danger"></span>
-    </div>
-    <br />
-
-    <!-- 10.8 CRONOGRAMA FÍSICO-FINANCEIRO DE EXECUÇÃO DO PROJETO -->
-    <h4>CRONOGRAMA FÍSICO-FINANCEIRO DE EXECUÇÃO DO PROJETO</h4>
-    <table class="table table-bordered" id="cronogramaFisicoFinanceiroTable">
-        <tbody>
-            
-            <tr>
-                <td colspan="2">Meta:<br>
-                    <input asp-for="Cronograma[0].Meta" class="form-control" />
-                    <span asp-validation-for="Cronograma[0].Meta" class="text-danger"></span>
-                </td>
-                <td colspan="2">Valor:<br>
-                    <input asp-for="Cronograma[0].ValorMeta" class="form-control" />
-                    <span asp-validation-for="Cronograma[0].ValorMeta" class="text-danger"></span>
-                </td>  
-                <th></th>
-            </tr>
-            
-            <tr>
-                <td colspan="4">Indicador(es): <br />
-                    <textarea asp-for="Cronograma[0].Indicadores" class="form-control" rows="3"></textarea>
-                    <span asp-validation-for="Cronograma[0].Indicadores" class="text-danger"></span>
-                </td>
-            </tr>
-            
-            <tr>
-                <th rowspan="2" class="align-middle text-center">Etapas/Atividades</th>
-                <th rowspan="2" class="align-middle text-center">Valor</th>
-                <th colspan="2" class="text-center">Período de Execução</th>
-            </tr>
-            <tr>
-                <th>Início</th>
-                <th>Término</th>
-
-                <th></th>
-            </tr>                    
-            
-            
-            <td>
-                <input asp-for="Cronograma[0].Etapas" class="form-control" />
-                <span asp-validation-for="Cronograma[0].Etapas" class="text-danger"></span>
-            </td>
-            <td>
-                <input asp-for="Cronograma[0].ValorEtapa" class="form-control" />
-                <span asp-validation-for="Cronograma[0].ValorEtapa" class="text-danger"></span>
-            </td>
-            <td>
-                <input asp-for="Cronograma[0].Inicio" class="form-control" type="date" />
-                <span asp-validation-for="Cronograma[0].Inicio" class="text-danger"></span>
-            </td>
-            <td>
-                <input asp-for="Cronograma[0].Termino" class="form-control" type="date" />
-                <span asp-validation-for="Cronograma[0].Termino" class="text-danger"></span>
-            </td>
-            <td>
-                <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button>
-            </td>
-        </tbody>
-	</table>
-
-    <!-- Botão para adicionar novas linhas de Etapas/Atividades -->
-    <button type="button" class="btn btn-secondary" onclick="addCronograma()">Adicionar Etapa/Atividade</button>
-	<br />
-
-    <!-- Equipamentos e Materiais Permanentes-->
-	<br /><h4>Equipamentos e Materiais Permanentes</h4>
-    <table class="table" id="equipamentosTable">
-        <thead>
-            <tr>
-                <th>Especificação</th>
-                <th>Unidade</th>
-                <th>Quantidade</th>
-                <th>Valor Unitário</th>
-                <th>Valor Total</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        <td>
-            <input asp-for="PlanoAplicacao[0].Especificacao" class="form-control" />
-            <span asp-validation-for="PlanoAplicacao[0].Especificacao" class="text-danger"></span>
-        </td>
-        <td>
-            <input asp-for="PlanoAplicacao[0].Unidade" class="form-control" />
-            <span asp-validation-for="PlanoAplicacao[0].Unidade" class="text-danger"></span>
-        </td>
-        <td>
-            <input asp-for="PlanoAplicacao[0].Quantidade" class="form-control" />
-            <span asp-validation-for="PlanoAplicacao[0].Quantidade" class="text-danger"></span>
-        </td>
-        <td>
-            <input asp-for="PlanoAplicacao[0].ValorUnitario" class="form-control" />
-            <span asp-validation-for="PlanoAplicacao[0].ValorUnitario" class="text-danger"></span>
-        </td>
-        <td>
-            <input asp-for="PlanoAplicacao[0].ValorTotal" class="form-control" />
-            <span asp-validation-for="PlanoAplicacao[0].ValorTotal" class="text-danger"></span>
-        </td>
-        <td>
-            <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button>
-        </td>
-        </tbody>
-    </table>
-	 <button type="button" class="btn btn-secondary" onclick="addEquipamento()">Adicionar Equipamento</button>
-    <br />
-
-     <!--Equipe Encarregada pela Execução do Projeto -->
-    <br /><h4>Equipe Encarregada pela Execução do Projeto</h4>
-    <table class="table" id="equipeExecucaoTable">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Formação</th>
-                <th>Função</th>
-                <th>Carga Horária Semanal</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <td>
-                    <input asp-for="EquipeExecucao[0].Nome" class="form-control" />
-                    <span asp-validation-for="EquipeExecucao[0].Nome" class="text-danger"></span>
-                </td>
-                <td>
-                    <input asp-for="EquipeExecucao[0].Formacao" class="form-control" />
-                    <span asp-validation-for="EquipeExecucao[0].Formacao" class="text-danger"></span>
-                </td>
-                <td>
-                    <input asp-for="EquipeExecucao[0].Funcao" class="form-control" />
-                    <span asp-validation-for="EquipeExecucao[0].Funcao" class="text-danger"></span>
-                </td>
-                <td>
-                    <input asp-for="EquipeExecucao[0].CargaHorariaSemanal" class="form-control" />
-                    <span asp-validation-for="EquipeExecucao[0].CargaHorariaSemanal" class="text-danger"></span>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button>
-                </td>
-        </tbody>
-    </table>
-    <button type="button" class="btn btn-secondary" onclick="addEquipeExecucao()">Adicionar Membro</button>
-	<br />
-
-    <!-- 12. FOTOS DO PROJETO/INSTITUIÇÃO -->
-    <br />
-    <h4>FOTO DO PROJETO/INSTITUIÇÃO</h4>
-
-    <div class="form-group">
-        <label for="anexo">Selecione uma imagem:</label>
-        <input asp-for="Anexo.Imagem" type="file" name="anexo" id="anexo" class="form-control" accept=".jpg, .jpeg, .png" />
-        <span asp-validation-for="Anexo" class="text-danger"></span>
-        <span class="text-success" id="uploadMessage"></span>
-    </div>
-    <button type="button" id="uploadButton" class="btn btn-primary">Anexar</button>
-    <br />
-
-    <br />
+<div class="form-floating mb-3">
+    <input asp-for="Proponente.EquipeMultidisciplinar" class="form-control" placeholder="Equipe Multidisciplinar" />
+    <label asp-for="Proponente.EquipeMultidisciplinar">Equipe Multidisciplinar</label>
+    <span asp-validation-for="Proponente.EquipeMultidisciplinar" class="text-danger"></span>
+</div>
 
 
 
-    <!-- Botão de Envio -->
-    <div class="form-group">
-        <button type="submit" value="Create" class="btn btn-primary">Criar Projeto</button>
-    </div>
+                        <br />
+
+                        <!-- 2. IDENTIFICAÇÃO DO RESPONSÁVEL LEGAL PELO PROPONENTE -->
+                        <h4>IDENTIFICAÇÃO DO RESPONSÁVEL LEGAL PELO PROPONENTE</h4>
+                        <div class="form-floating mb-3">
+                            <input asp-for="ResponsavelLegal.Nome" class="form-control" placeholder="Nome do Responsável" />
+                            <label asp-for="ResponsavelLegal.Nome">Nome do Responsável</label>
+                            <span asp-validation-for="ResponsavelLegal.Nome" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="ResponsavelLegal.CPF" class="form-control" placeholder="CPF" />
+                            <label asp-for="ResponsavelLegal.CPF">CPF</label>
+                            <span asp-validation-for="ResponsavelLegal.CPF" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="ResponsavelLegal.RG" class="form-control" placeholder="RG" />
+                            <label asp-for="ResponsavelLegal.RG">RG</label>
+                            <span asp-validation-for="ResponsavelLegal.RG" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="ResponsavelLegal.OrgaoExpedidor" class="form-control" placeholder="Órgão Expedidor" />
+                            <label asp-for="ResponsavelLegal.OrgaoExpedidor">Órgão Expedidor</label>
+                            <span asp-validation-for="ResponsavelLegal.OrgaoExpedidor" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="ResponsavelLegal.CargoOSC" class="form-control" placeholder="Cargo OSC" />
+                            <label asp-for="ResponsavelLegal.CargoOSC">Cargo OSC</label>
+                            <span asp-validation-for="ResponsavelLegal.CargoOSC" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="ResponsavelLegal.MandatoVigente" class="form-control" placeholder="Mandato Vigente" />
+                            <label asp-for="ResponsavelLegal.MandatoVigente">Mandato Vigente</label>
+                            <span asp-validation-for="ResponsavelLegal.MandatoVigente" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="ResponsavelLegal.Endereco" class="form-control" placeholder="Endereço" />
+                            <label asp-for="ResponsavelLegal.Endereco">Endereço</label>
+                            <span asp-validation-for="ResponsavelLegal.Endereco" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="ResponsavelLegal.Telefone1" class="form-control" placeholder="Telefone 1" />
+                            <label asp-for="ResponsavelLegal.Telefone1">Telefone 1</label>
+                            <span asp-validation-for="ResponsavelLegal.Telefone1" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="ResponsavelLegal.Telefone2" class="form-control" placeholder="Telefone 2" />
+                            <label asp-for="ResponsavelLegal.Telefone2">Telefone 2</label>
+                            <span asp-validation-for="ResponsavelLegal.Telefone2" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="ResponsavelLegal.Telefone3" class="form-control" placeholder="Telefone 3" />
+                            <label asp-for="ResponsavelLegal.Telefone3">Telefone 3</label>
+                            <span asp-validation-for="ResponsavelLegal.Telefone3" class="text-danger"></span>
+                        </div>
+
+
+                        <br />
+
+                        <!-- 3. IDENTIFICAÇÃO DO RESPONSÁVEL TÉCNICO DO PROJETO -->
+                        <h4>IDENTIFICAÇÃO DO RESPONSÁVEL TÉCNICO DO PROJETO</h4>
+                        <div class="form-group">
+                            <label asp-for="ResponsavelTecnico.Nome" class="control-label"></label>
+                            <input asp-for="ResponsavelTecnico.Nome" class="form-control" />
+                            <span asp-validation-for="ResponsavelTecnico.Nome" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ResponsavelTecnico.CPF" class="control-label"></label>
+                            <input asp-for="ResponsavelTecnico.CPF" class="form-control" />
+                            <span asp-validation-for="ResponsavelTecnico.CPF" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ResponsavelTecnico.RG" class="control-label"></label>
+                            <input asp-for="ResponsavelTecnico.RG" class="form-control" />
+                            <span asp-validation-for="ResponsavelTecnico.RG" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ResponsavelTecnico.OrgaoExpedidor" class="control-label"></label>
+                            <input asp-for="ResponsavelTecnico.OrgaoExpedidor" class="form-control" />
+                            <span asp-validation-for="ResponsavelTecnico.OrgaoExpedidor" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ResponsavelTecnico.CargoOSC" class="control-label"></label>
+                            <input asp-for="ResponsavelTecnico.CargoOSC" class="form-control" />
+                            <span asp-validation-for="ResponsavelTecnico.CargoOSC" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ResponsavelTecnico.MandatoVigente" class="control-label"></label>
+                            <input asp-for="ResponsavelTecnico.MandatoVigente" class="form-control" />
+                            <span asp-validation-for="ResponsavelTecnico.MandatoVigente" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ResponsavelTecnico.Endereco" class="control-label"></label>
+                            <input asp-for="ResponsavelTecnico.Endereco" class="form-control" />
+                            <span asp-validation-for="ResponsavelTecnico.Endereco" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ResponsavelTecnico.Telefone1" class="control-label"></label>
+                            <input asp-for="ResponsavelTecnico.Telefone1" class="form-control" />
+                            <span asp-validation-for="ResponsavelTecnico.Telefone1" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ResponsavelTecnico.Telefone2" class="control-label"></label>
+                            <input asp-for="ResponsavelTecnico.Telefone2" class="form-control" />
+                            <span asp-validation-for="ResponsavelTecnico.Telefone2" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ResponsavelTecnico.Telefone3" class="control-label"></label>
+                            <input asp-for="ResponsavelTecnico.Telefone3" class="form-control" />
+                            <span asp-validation-for="ResponsavelTecnico.Telefone3" class="text-danger"></span>
+                        </div>
+
+                        <!-- 4. CONHECENDO O PROPONENTE -->
+
+                        <div class="form-group">
+                            <label asp-for="Proponente.Historico" class="control-label"></label>
+                            <input asp-for="Proponente.Historico" class="form-control" placeholder="Breve histórico e finalidade da OSC" />
+                            <span asp-validation-for="Proponente.Historico" class="text-danger"></span>
+                        </div>
+
+                        <!-- 5. PRINCIPAIS AÇÕES DESENVOLVIDAS PELA PROPONENTE -->
+
+                        <div class="form-group">
+                            <label asp-for="Proponente.PrincipaisAcoes" class="control-label"></label>
+                            <input asp-for="Proponente.PrincipaisAcoes" class="form-control" />
+                            <span asp-validation-for="Proponente.PrincipaisAcoes" class="text-danger"></span>
+                        </div>
+
+                        <!-- 6. PÚBLICO ALVO DE ATENDIMENTO DA PROPONENTE -->
+
+                        <div class="form-group">
+                            <label asp-for="Proponente.PublicoAlvo" class="control-label"></label>
+                            <input asp-for="Proponente.PublicoAlvo" class="form-control" />
+                            <span asp-validation-for="Proponente.PublicoAlvo" class="text-danger"></span>
+                        </div>
+
+                        <!-- 7. REGIÕES DE ALCANCE DAS AÇÕES (BAIRROS -->
+
+                        <div class="form-group">
+                            <label asp-for="Proponente.RegioesAtendimento" class="control-label"></label>
+                            <input asp-for="Proponente.RegioesAtendimento" class="form-control" />
+                            <span asp-validation-for="Proponente.RegioesAtendimento" class="text-danger"></span>
+                        </div>
+
+                        <!-- 8. INFRAESTRUTURA DA PROPONENTE -->
+
+                        <div class="form-group">
+                            <label asp-for="Proponente.Infraestrutura" class="control-label"></label>
+                            <input asp-for="Proponente.Infraestrutura" class="form-control" />
+                            <span asp-validation-for="Proponente.Infraestrutura" class="text-danger"></span>
+                        </div>
+
+                        <!-- 9. EQUIPE MULTIDISCIPLINAR DO PROPONENTE ---->
+
+                        <div class="form-group">
+                            <label asp-for="Proponente.EquipeMultidisciplinar" class="control-label"></label>
+                            <input asp-for="Proponente.EquipeMultidisciplinar" class="form-control" />
+                            <span asp-validation-for="Proponente.EquipeMultidisciplinar" class="text-danger"></span>
+                        </div>
+                        <br />
+
+                        <!-- 10. RESUMO DO PROJETO -->
+                        <h3>RESUMO DO PROJETO</h3>
+
+                        <div class="form-group">
+                            <label asp-for="Projeto.Objeto" class="control-label"></label>
+                            <input asp-for="Projeto.Objeto" class="form-control" />
+                            <span asp-validation-for="Projeto.Objeto" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Projeto.ObjetivoGeral" class="control-label"></label>
+                            <input asp-for="Projeto.ObjetivoGeral" class="form-control" />
+                            <span asp-validation-for="Projeto.ObjetivoGeral" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Projeto.ObjetivosEspecificos" class="control-label"></label>
+                            <input asp-for="Projeto.ObjetivosEspecificos" class="form-control" />
+                            <span asp-validation-for="Projeto.ObjetivosEspecificos" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Projeto.PublicoBeneficiario" class="control-label"></label>
+                            <input asp-for="Projeto.PublicoBeneficiario" class="form-control" />
+                            <span asp-validation-for="Projeto.PublicoBeneficiario" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Projeto.Justificativa" class="control-label"></label>
+                            <input asp-for="Projeto.Justificativa" class="form-control" />
+                            <span asp-validation-for="Projeto.Justificativa" class="text-danger"></span>
+                        </div>
+
+                        <br />
+
+
+
+                        <!-- 10.6 Equipe de Profissionais que Atuarão na Execução do Projeto -->
+                        <h4>Equipe de Profissionais</h4>
+                        <table class="table" id="equipeProfissionaisTable">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>CPF</th>
+                                    <th>Formação</th>
+                                    <th>Função</th>
+                                    <th>Carga Horária Semanal</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <td>
+                                <input asp-for="EquipeExecucao[0].Nome" class="form-control" />
+                                <span asp-validation-for="EquipeExecucao[0].Nome" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="EquipeExecucao[0].CPF" class="form-control" />
+                                <span asp-validation-for="EquipeExecucao[0].CPF" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="EquipeExecucao[0].Formacao" class="form-control" />
+                                <span asp-validation-for="EquipeExecucao[0].Formacao" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="EquipeExecucao[0].Funcao" class="form-control" />
+                                <span asp-validation-for="EquipeExecucao[0].Funcao" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="EquipeExecucao[0].CargaHorariaSemanal" class="form-control" />
+                                <span asp-validation-for="EquipeExecucao[0].CargaHorariaSemanal" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button>
+                            </td>
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary" onclick="addEquipeProfissionais()">Adicionar Profissional</button>
+                        <br />
+
+                        <!-- 10.7 Período de Execução do Projeto -->
+                        <br /><h4>Período de Execução do Projeto</h4>
+                        <div class="form-group">
+                            <label asp-for="Projeto.InicioExecucao" class="control-label"></label>
+                            <input asp-for="Projeto.InicioExecucao" class="form-control" placeholder="Início em: " />
+                            <span asp-validation-for="Projeto.InicioExecucao" class="text-danger"></span>
+
+                            <label asp-for="Projeto.TerminoExecucao" class="control-label"></label>
+                            <input asp-for="Projeto.TerminoExecucao" class="form-control" placeholder="Término em: " />
+                            <span asp-validation-for="Projeto.TerminoExecucao" class="text-danger"></span>
+                        </div>
+                        <br />
+
+                        <!-- 10.8 CRONOGRAMA FÍSICO-FINANCEIRO DE EXECUÇÃO DO PROJETO -->
+                        <h4>CRONOGRAMA FÍSICO-FINANCEIRO DE EXECUÇÃO DO PROJETO</h4>
+                        <table class="table table-bordered" id="cronogramaFisicoFinanceiroTable">
+                            <tbody>
+
+                                <tr>
+                                    <td colspan="2">
+                                        Meta:<br>
+                                        <input asp-for="Cronograma[0].Meta" class="form-control" />
+                                        <span asp-validation-for="Cronograma[0].Meta" class="text-danger"></span>
+                                    </td>
+                                    <td colspan="2">
+                                        Valor:<br>
+                                        <input asp-for="Cronograma[0].ValorMeta" class="form-control" />
+                                        <span asp-validation-for="Cronograma[0].ValorMeta" class="text-danger"></span>
+                                    </td>
+                                    <th></th>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="4">
+                                        Indicador(es): <br />
+                                        <textarea asp-for="Cronograma[0].Indicadores" class="form-control" rows="3"></textarea>
+                                        <span asp-validation-for="Cronograma[0].Indicadores" class="text-danger"></span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th rowspan="2" class="align-middle text-center">Etapas/Atividades</th>
+                                    <th rowspan="2" class="align-middle text-center">Valor</th>
+                                    <th colspan="2" class="text-center">Período de Execução</th>
+                                </tr>
+                                <tr>
+                                    <th>Início</th>
+                                    <th>Término</th>
+
+                                    <th></th>
+                                </tr>
+
+
+                            <td>
+                                <input asp-for="Cronograma[0].Etapas" class="form-control" />
+                                <span asp-validation-for="Cronograma[0].Etapas" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="Cronograma[0].ValorEtapa" class="form-control" />
+                                <span asp-validation-for="Cronograma[0].ValorEtapa" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="Cronograma[0].Inicio" class="form-control" type="date" />
+                                <span asp-validation-for="Cronograma[0].Inicio" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="Cronograma[0].Termino" class="form-control" type="date" />
+                                <span asp-validation-for="Cronograma[0].Termino" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button>
+                            </td>
+                            </tbody>
+                        </table>
+
+                        <!-- Botão para adicionar novas linhas de Etapas/Atividades -->
+                        <button type="button" class="btn btn-secondary" onclick="addCronograma()">Adicionar Etapa/Atividade</button>
+                        <br />
+
+                        <!-- Equipamentos e Materiais Permanentes-->
+                        <br /><h4>Equipamentos e Materiais Permanentes</h4>
+                        <table class="table" id="equipamentosTable">
+                            <thead>
+                                <tr>
+                                    <th>Especificação</th>
+                                    <th>Unidade</th>
+                                    <th>Quantidade</th>
+                                    <th>Valor Unitário</th>
+                                    <th>Valor Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <td>
+                                <input asp-for="PlanoAplicacao[0].Especificacao" class="form-control" />
+                                <span asp-validation-for="PlanoAplicacao[0].Especificacao" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="PlanoAplicacao[0].Unidade" class="form-control" />
+                                <span asp-validation-for="PlanoAplicacao[0].Unidade" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="PlanoAplicacao[0].Quantidade" class="form-control" />
+                                <span asp-validation-for="PlanoAplicacao[0].Quantidade" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="PlanoAplicacao[0].ValorUnitario" class="form-control" />
+                                <span asp-validation-for="PlanoAplicacao[0].ValorUnitario" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="PlanoAplicacao[0].ValorTotal" class="form-control" />
+                                <span asp-validation-for="PlanoAplicacao[0].ValorTotal" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button>
+                            </td>
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary" onclick="addEquipamento()">Adicionar Equipamento</button>
+                        <br />
+
+                        <!--Equipe Encarregada pela Execução do Projeto -->
+                        <br /><h4>Equipe Encarregada pela Execução do Projeto</h4>
+                        <table class="table" id="equipeExecucaoTable">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Formação</th>
+                                    <th>Função</th>
+                                    <th>Carga Horária Semanal</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <td>
+                                <input asp-for="EquipeExecucao[0].Nome" class="form-control" />
+                                <span asp-validation-for="EquipeExecucao[0].Nome" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="EquipeExecucao[0].Formacao" class="form-control" />
+                                <span asp-validation-for="EquipeExecucao[0].Formacao" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="EquipeExecucao[0].Funcao" class="form-control" />
+                                <span asp-validation-for="EquipeExecucao[0].Funcao" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="EquipeExecucao[0].CargaHorariaSemanal" class="form-control" />
+                                <span asp-validation-for="EquipeExecucao[0].CargaHorariaSemanal" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button>
+                            </td>
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary" onclick="addEquipeExecucao()">Adicionar Membro</button>
+                        <br />
+
+                        <!-- 12. FOTOS DO PROJETO/INSTITUIÇÃO -->
+                        <br />
+                        <h4>FOTO DO PROJETO/INSTITUIÇÃO</h4>
+
+                        <div class="form-group">
+                            <label for="anexo">Selecione uma imagem:</label>
+                            <input asp-for="Anexo.Imagem" type="file" name="anexo" id="anexo" class="form-control" accept=".jpg, .jpeg, .png" />
+                            <span asp-validation-for="Anexo" class="text-danger"></span>
+                            <span class="text-success" id="uploadMessage"></span>
+                        </div>
+                        <button type="button" id="uploadButton" class="btn btn-primary">Anexar</button>
+                        <br />
+
+                        <br />
+
+
+
+                        <!-- Botão de Envio -->
+                        <div class="form-group">
+                            <button type="submit" value="Create" class="btn btn-primary">Criar Projeto</button>
+                        </div>
 </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+	
 
 @section Scripts {
         <partial name="_ValidationScriptsPartial" />
