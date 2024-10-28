@@ -1,8 +1,6 @@
-﻿using Fortificar.Models;
-
-namespace Fortificar.Models.ViewModels
+﻿namespace Fortificar.Models.ViewModels
 {
-	public class ProjetoViewModel
+    public class ProjetoViewModel
 	{//MIGRATION
 		public Projeto Projeto { get; set; }
 		public Proponente Proponente { get; set; }
@@ -11,8 +9,9 @@ namespace Fortificar.Models.ViewModels
 		public Anexo? Anexo { get; set; }
         public List<MembroEquipe> EquipeExecucao { get; set; } = new List<MembroEquipe>();
         public List<CronogramaMeta> Cronograma { get; set; } = new List<CronogramaMeta>();
-        public List<PlanoAplicacaoItem> PlanoAplicacao { get; set; } = new List<PlanoAplicacaoItem>();
+        public List<PlanoAplicacaoItem> PlanoAplicacao { get; set; } = new List<PlanoAplicacaoItem>();		
+        public List<ODS> ODS { get; set; } = new List<ODS>();
 
-
+        public IEnumerable<Projeto> Projetos { get; set; }
     }
 }

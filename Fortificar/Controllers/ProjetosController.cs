@@ -16,6 +16,8 @@ using Microsoft.CodeAnalysis;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Build.Evaluation;
 using System.Security.Claims;
+using System.ComponentModel.DataAnnotations;
+using ODS = Fortificar.Models.ODS;
 
 namespace Fortificar.Controllers
 {
@@ -32,8 +34,94 @@ namespace Fortificar.Controllers
         // GET: Projetos
         public async Task<IActionResult> Index(ProjetoViewModel viewModel)
         {
-            return View(viewModel);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Busca o ProponenteId baseado no usuário logado
+            var proponenteId = _context.FortificarUser
+                .Where(fu => fu.Id == userId)
+                .Select(fu => fu.ProponenteId)
+                .FirstOrDefault();
+
+            // Caso não encontre o ProponenteId, redireciona para uma página de erro
+            if (proponenteId == null)
+            {
+                return RedirectToAction("Error");
+            }
+
+            // Busca o proponente no banco de dados
+            var proponente = _context.Proponente
+                .FirstOrDefault(p => p.Id == proponenteId);
+
+            // Caso não encontre o proponente, redireciona para uma página de erro
+            if (proponente == null)
+            {
+                return RedirectToAction("Error");
+            }
+
+
+
+            // Busca o Responsável Legal, se houver
+            var responsavelLegal = _context.ResponsavelLegal
+                .FirstOrDefault(rl => rl.Id == proponente.ResponsavelLegalId);
+
+            // Preenche o ViewModel com os dados do proponente e responsável legal (se existir)
+            viewModel = new ProjetoViewModel
+            {
+                Projetos = await _context.Projeto
+                                 .Include(p => p.Proponente) 
+                                 .ToListAsync(),
+
+                Proponente = new Proponente
+                {
+                    RazaoSocial = proponente.RazaoSocial,
+                    NomeFantasia = proponente.NomeFantasia,
+                    CNPJ = proponente.CNPJ,
+                    InscricaoEstadual = proponente.InscricaoEstadual,
+                    InscricaoMunicipal = proponente.InscricaoMunicipal,
+                    Endereco = proponente.Endereco,
+                    Numero = proponente.Numero,
+                    Complemento = proponente.Complemento,
+                    Bairro = proponente.Bairro,
+                    Cidade = proponente.Cidade,
+                    Estado = proponente.Estado,
+                    CEP = proponente.CEP,
+                    Telefone1 = proponente.Telefone1,
+                    Telefone2 = proponente.Telefone2,
+                    Telefone3 = proponente.Telefone3,
+                    Site = proponente.Site,
+
+                    Historico = proponente.Historico,
+                    PrincipaisAcoes = proponente.PrincipaisAcoes,
+                    PublicoAlvo = proponente.PublicoAlvo,
+                    RegioesAtendimento = proponente.RegioesAtendimento,
+                    Infraestrutura = proponente.Infraestrutura,
+                    EquipeMultidisciplinar = proponente.EquipeMultidisciplinar
+
+                },
+                ResponsavelLegal = responsavelLegal != null ? new ResponsavelLegal
+                {
+                    Nome = responsavelLegal.Nome,
+                    CPF = responsavelLegal.CPF,
+                    RG = responsavelLegal.RG,
+                    OrgaoExpedidor = responsavelLegal.OrgaoExpedidor,
+                    CargoOSC = responsavelLegal.CargoOSC,
+                    MandatoVigente = responsavelLegal.MandatoVigente,
+                    Endereco = responsavelLegal.Endereco,
+                    Telefone1 = responsavelLegal.Telefone1,
+                    Telefone2 = responsavelLegal.Telefone2,
+                    Telefone3 = responsavelLegal.Telefone3
+                } : new ResponsavelLegal(),
+
+                EquipeExecucao = new List<MembroEquipe> { new MembroEquipe() },
+                Cronograma = new List<CronogramaMeta> { new CronogramaMeta() },
+                PlanoAplicacao = new List<PlanoAplicacaoItem> { new PlanoAplicacaoItem() }
+            };
+
+            // Retorna a view preenchida com o ViewModel
+            return View("Create", viewModel);
         }
+
+
 
         // GET: Projetos/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -57,6 +145,34 @@ namespace Fortificar.Controllers
         public IActionResult Create()
         {
             return View();
+        } 
+        public IActionResult DadosGeraisNav()
+        {
+            return View();
+        }
+        public IActionResult ResponsavelLegalNav()
+        {
+            return View();
+        }
+        public IActionResult ResponsavelTecnicoNav()
+        {
+            return View();
+        }
+        public IActionResult DadosProjetoNav()
+        {
+            return View();
+        }
+        public IActionResult PlanoAplicacaoNav()
+        {
+            return View();
+        }
+        public IActionResult ProponenteNav()
+        {
+            return View();
+        }
+        public IActionResult FotosNav()
+        {
+            return View();
         }
 
 		// POST: Projetos/Create
@@ -66,37 +182,52 @@ namespace Fortificar.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(ProjetoViewModel viewModel)
 		{
-			if (ModelState.IsValid)
-			{//MIGRATION
-				viewModel.Projeto.ProponenteId = viewModel.Proponente.Id;
-				viewModel.Projeto.ResponsavelLegalId = viewModel.ResponsavelLegal.Id;
-				viewModel.Projeto.ResponsavelTecnicoId = viewModel.ResponsavelTecnico.Id;
 
-				_context.Add(viewModel.Projeto);
-				await _context.SaveChangesAsync();
-				return RedirectToAction(nameof(Index));
-			}
-
+            Console.WriteLine("entrei create");
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-
+            // Busca o ProponenteId baseado no usuário logado
             var proponenteId = _context.FortificarUser
-            .Where(fu => fu.Id == userId)
-            .Select(fu => fu.ProponenteId)
-            .FirstOrDefault();
+                .Where(fu => fu.Id == userId)
+                .Select(fu => fu.ProponenteId)
+                .FirstOrDefault();
 
+            // Busca o proponente no banco de dados
             var proponente = _context.Proponente
                 .FirstOrDefault(p => p.Id == proponenteId);
 
-
+            // Caso não encontre o proponente, redireciona para uma página de erro
             if (proponente == null)
             {
                 return RedirectToAction("Error");
             }
 
-            var view = new ProjetoViewModel
+            // Preenche o ViewModel com os dados do proponente
+            var viewModel2 = new ProjetoViewModel
             {
-                Proponente = new Proponente
+                ODS = new List<ODS>
+            {
+                new ODS { Id = 1, Nome = "Erradicação da pobreza", IsSelected = false },
+                new ODS { Id = 2, Nome = "Fome zero e agricultura sustentável", IsSelected = false },
+                new ODS { Id = 3, Nome = "Saúde e Bem-Estar", IsSelected = false },
+                new ODS { Id = 4, Nome = "Educação de qualidade", IsSelected = false },
+                new ODS { Id = 5, Nome = "Igualdade de gênero", IsSelected = false },
+                new ODS { Id = 6, Nome = "Água potável e saneamento", IsSelected = false },
+                new ODS { Id = 7, Nome = "Energia limpa e acessível", IsSelected = false },
+                new ODS { Id = 8, Nome = "Trabalho decente e crescimento econômico", IsSelected = false },
+                new ODS { Id = 9, Nome = "Indústria, inovação e infraestrutura", IsSelected = false },
+                new ODS { Id = 10, Nome = "Redução das desigualdades", IsSelected = false },
+                new ODS { Id = 11, Nome = "Cidades e comunidades sustentáveis", IsSelected = false },
+                new ODS { Id = 12, Nome = "Consumo e produção responsáveis", IsSelected = false },
+                new ODS { Id = 13, Nome = "Ação contra a mudança global do clima", IsSelected = false },
+                new ODS { Id = 14, Nome = "Vida na água", IsSelected = false },
+                new ODS { Id = 15, Nome = "Vida terrestre", IsSelected = false },
+                new ODS { Id = 16, Nome = "Paz, Justiça e Instituições Eficazes", IsSelected = false },
+                new ODS { Id = 17, Nome = "Parcerias e meios de implementação", IsSelected = false }
+            },
+
+
+            Proponente = new Proponente
                 {
                     RazaoSocial = proponente.RazaoSocial,
                     NomeFantasia = proponente.NomeFantasia,
@@ -116,65 +247,30 @@ namespace Fortificar.Controllers
                     Site = proponente.Site
                 }
             };
-            return View(view);
-		}
+
+            // Retorna a view preenchida com o ViewModel
+            return View(viewModel2);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SalvarProjeto(ProjetoViewModel projetoViewModel, IFormFile? anexo)
         {
             if (ModelState.IsValid)
-            {//MIGRATION
-             
-                var proponente = new Proponente
-                {
-                    RazaoSocial = projetoViewModel.Proponente.RazaoSocial,
-                    NomeFantasia = projetoViewModel.Proponente.NomeFantasia,
-                    CNPJ = projetoViewModel.Proponente.CNPJ,
-                    InscricaoEstadual = projetoViewModel.Proponente.InscricaoEstadual,
-                    InscricaoMunicipal = projetoViewModel.Proponente.InscricaoMunicipal,
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                    Endereco = projetoViewModel.Proponente.Endereco,
-                    Numero = projetoViewModel.Proponente.Numero,
-                    Complemento = projetoViewModel.Proponente.Complemento,
-                    Bairro = projetoViewModel.Proponente.Bairro,
-                    Cidade = projetoViewModel.Proponente.Cidade,
-                    Estado = projetoViewModel.Proponente.Estado,
-                    CEP = projetoViewModel.Proponente.CEP,
+                // Busca o ProponenteId baseado no usuário logado
+                var proponenteId = _context.FortificarUser
+                    .Where(fu => fu.Id == userId)
+                    .Select(fu => fu.ProponenteId)
+                    .FirstOrDefault();
 
-                    Site = projetoViewModel.Proponente.Site,
-                    Telefone1 = projetoViewModel.Proponente.Telefone1,
-                    Telefone2 = projetoViewModel.Proponente.Telefone2,
-                    Telefone3 = projetoViewModel.Proponente.Telefone3,
+                var proponente = _context.Proponente
+                    .FirstOrDefault(p => p.Id == proponenteId);
 
-                    Banco = projetoViewModel.Proponente.Banco,
-                    Agencia = projetoViewModel.Proponente.Agencia,
-                    Conta = projetoViewModel.Proponente.Conta,
-                    TipoConta = projetoViewModel.Proponente.TipoConta,
-
-                    ResponsavelLegalId = projetoViewModel.Proponente.ResponsavelLegalId,
-
-                    Historico = projetoViewModel.Proponente.Historico,
-                    PrincipaisAcoes = projetoViewModel.Proponente.PrincipaisAcoes,
-                    PublicoAlvo = projetoViewModel.Proponente.PublicoAlvo,
-                    RegioesAtendimento = projetoViewModel.Proponente.RegioesAtendimento,
-                    Infraestrutura = projetoViewModel.Proponente.Infraestrutura,
-                    EquipeMultidisciplinar = projetoViewModel.Proponente.EquipeMultidisciplinar
-
-                }; 
-
-                var responsavelLegal = new ResponsavelLegal
-                {
-                    Nome = projetoViewModel.ResponsavelLegal.Nome,
-                    CPF = projetoViewModel.ResponsavelLegal.CPF,
-                    RG = projetoViewModel.ResponsavelLegal.RG,
-                    Endereco = projetoViewModel.ResponsavelLegal.Endereco,
-                    MandatoVigente = projetoViewModel.ResponsavelLegal.MandatoVigente,
-                    OrgaoExpedidor = projetoViewModel.ResponsavelLegal.OrgaoExpedidor,
-                    Telefone1 = projetoViewModel.ResponsavelLegal.Telefone1,
-                    Telefone2 = projetoViewModel.ResponsavelLegal.Telefone2,
-                    Telefone3 = projetoViewModel.ResponsavelLegal.Telefone3
-                };
+                var responsavelLegal = _context.ResponsavelLegal
+                    .FirstOrDefault(rl => rl.Id == proponente.ResponsavelLegalId);
 
                 var responsavelTecnico = new ResponsavelTecnico
                 {
@@ -189,61 +285,49 @@ namespace Fortificar.Controllers
                     Telefone3 = projetoViewModel.ResponsavelTecnico.Telefone3
                 };
 
-                // Salvar objetos no banco
-                _context.Proponente.Add(proponente);
-                await _context.SaveChangesAsync();
-                
-                _context.ResponsavelLegal.Add(responsavelLegal);
-                await _context.SaveChangesAsync();
-                
                 _context.ResponsavelTecnico.Add(responsavelTecnico);
                 await _context.SaveChangesAsync();
 
-                
                 var projeto = new Projeto
                 {
                     Objeto = projetoViewModel.Projeto.Objeto,
-                    ObjetivoGeral = projetoViewModel.Projeto.ObjetivoGeral  ,
+                    ObjetivoGeral = projetoViewModel.Projeto.ObjetivoGeral,
                     ObjetivosEspecificos = projetoViewModel.Projeto.ObjetivosEspecificos,
-                    PublicoBeneficiario = projetoViewModel.Projeto.PublicoBeneficiario  ,
-                    Justificativa = projetoViewModel.Projeto.Justificativa  ,
-
-                    ProponenteId = proponente.Id,  
-                    ResponsavelLegalId = responsavelLegal.Id , 
-					ResponsavelTecnicoId = responsavelTecnico.Id  
-                                                  
+                    PublicoBeneficiario = projetoViewModel.Projeto.PublicoBeneficiario,
+                    Justificativa = projetoViewModel.Projeto.Justificativa,
+                    ProponenteId = proponente.Id,
+                    ResponsavelLegalId = responsavelLegal.Id,
+                    ResponsavelTecnicoId = responsavelTecnico.Id
                 };
 
-                // Salvar o Projeto no banco
                 _context.Projeto.Add(projeto);
                 await _context.SaveChangesAsync();
 
+                // Salvando a equipe de execução
                 if (projetoViewModel.EquipeExecucao != null)
                 {
                     foreach (var membro in projetoViewModel.EquipeExecucao)
                     {
-
                         var _membro = new MembroEquipe
                         {
                             Nome = membro.Nome,
                             Formacao = membro.Formacao,
                             Funcao = membro.Funcao,
                             CargaHorariaSemanal = membro.CargaHorariaSemanal,
-                            ProjetoId = projeto.Id 
+                            ProjetoId = projeto.Id
                         };
-                        _context.MembroEquipe.Add(_membro); // Adicionar cada membro individualmente
-                        await _context.SaveChangesAsync();
+                        _context.MembroEquipe.Add(_membro);
                     }
+                    await _context.SaveChangesAsync();
                 }
 
+                // Salvando o cronograma
                 if (projetoViewModel.Cronograma != null)
                 {
                     foreach (var cronograma in projetoViewModel.Cronograma)
                     {
-
                         var _cronograma = new CronogramaMeta
                         {
-
                             Meta = cronograma.Meta,
                             ValorMeta = cronograma.ValorMeta,
                             ValorEtapa = cronograma.ValorEtapa,
@@ -251,13 +335,14 @@ namespace Fortificar.Controllers
                             Etapas = cronograma.Etapas,
                             Inicio = cronograma.Inicio,
                             Termino = cronograma.Termino,
-                            ProjetoId = projeto.Id 
+                            ProjetoId = projeto.Id
                         };
-                        _context.CronogramaMeta.Add(_cronograma); // Adicionar cada membro individualmente
-                        await _context.SaveChangesAsync();
+                        _context.CronogramaMeta.Add(_cronograma);
                     }
+                    await _context.SaveChangesAsync();
                 }
 
+                // Salvando o plano de aplicação
                 if (projetoViewModel.PlanoAplicacao != null)
                 {
                     foreach (var plano in projetoViewModel.PlanoAplicacao)
@@ -269,50 +354,66 @@ namespace Fortificar.Controllers
                             Quantidade = plano.Quantidade,
                             ValorUnitario = plano.ValorUnitario,
                             ValorTotal = plano.ValorTotal,
-                            ProjetoId = projeto.Id 
+                            ProjetoId = projeto.Id
                         };
-                        _context.PlanoAplicacaoItem.Add(_plano); // Adicionar cada membro individualmente
-                        await _context.SaveChangesAsync();
+                        _context.PlanoAplicacaoItem.Add(_plano);
                     }
+                    await _context.SaveChangesAsync();
                 }
 
+                
+
+                // Salvando os ODS selecionados
+                if (projetoViewModel.ODS != null)
+                {
+                    foreach (var odsId in projetoViewModel.ODS.Where(ods => ods.IsSelected).Select(ods => ods.Id))
+                    {
+                        var projetoODS = new ProjetoODS
+                        {
+                            ProjetoId = projeto.Id,
+                            ODSId = odsId
+                        };
+
+                        _context.ProjetoODS.Add(projetoODS);
+                    }
+
+                    await _context.SaveChangesAsync();
+                }
+
+
+                // Salvando o anexo, se existir
                 if (anexo != null)
                 {
-                    Anexo imagem;
                     using (var memoryStream = new MemoryStream())
                     {
                         anexo.CopyTo(memoryStream);
-                        var arquivo = memoryStream.ToArray(); // Convertendo para byte[]
+                        var arquivo = memoryStream.ToArray();
 
                         var novoAnexo = new Anexo
                         {
                             Nome = anexo.FileName,
                             Tipo = anexo.ContentType,
-                            ProjetoId = projeto.Id, 
+                            ProjetoId = projeto.Id,
                             Imagem = arquivo
                         };
 
-                        imagem = novoAnexo;
-
-                        // Salvar no BD
                         _context.Anexo.Add(novoAnexo);
-                        _context.SaveChanges();
+                        await _context.SaveChangesAsync();
                     }
                 }
-                
 
-
-                // Redirecionar para a Index após salvar o projeto
                 return RedirectToAction(nameof(Index));
             }
+
             var errors = ModelState.Values.SelectMany(v => v.Errors);
             foreach (var error in errors)
             {
                 Console.WriteLine(error.ErrorMessage);
             }
-            // Caso o ModelState não seja válido, voltar para a View Create
+
             return View("Create", projetoViewModel);
         }
+
 
 
         [HttpGet]
@@ -460,7 +561,81 @@ namespace Fortificar.Controllers
           return (_context.Projeto?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-       
+
+        
+
+        [HttpGet]
+        public IActionResult Parametros()
+        {
+            // Busca todos os parâmetros no banco de dados
+            var parametros = _context.Parametro.ToList();
+
+            // Se a lista for nula, inicializa uma lista vazia para evitar NullReferenceException
+            if (parametros == null)
+            {
+                parametros = new List<Parametro>();
+            }
+
+            return View(parametros);
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> ConfigurarParametros(List<Parametro> parametros)
+        {
+            foreach (var parametro in parametros)
+            {
+                // Ignorar parâmetros vazios (sem nome, descrição e valor)
+                if (string.IsNullOrEmpty(parametro.Nome) && string.IsNullOrEmpty(parametro.Descricao) && string.IsNullOrEmpty(parametro.ValorMin) && string.IsNullOrEmpty(parametro.ValorMax) && string.IsNullOrEmpty(parametro.Ativo))
+                {
+                    continue;
+                }
+
+                if (parametro.Id == 0)
+                {
+                    // Adicionar novo parâmetro
+                    _context.Parametro.Add(parametro);
+                }
+                else
+                {
+                    // Atualizar parâmetro existente
+                    var parametroExistente = await _context.Parametro.FindAsync(parametro.Id);
+                    if (parametroExistente != null)
+                    {
+                        // Verificar se houve alterações antes de atualizar
+                        if (parametroExistente.Nome != parametro.Nome ||
+                            parametroExistente.Descricao != parametro.Descricao ||
+                            parametroExistente.ValorMin != parametro.ValorMin ||
+                            parametroExistente.ValorMax != parametro.ValorMax)
+                        {
+                            parametroExistente.Nome = parametro.Nome;
+                            parametroExistente.Descricao = parametro.Descricao;
+                            parametroExistente.ValorMin = parametro.ValorMin;
+                            parametroExistente.ValorMax = parametro.ValorMax;
+                        }
+                    }
+                }
+            }
+
+            // Salvar alterações para garantir que IDs sejam atribuídos aos novos parâmetros
+            await _context.SaveChangesAsync();
+
+            // Obter todos os IDs dos parâmetros existentes no banco
+            var todosIdsExistentes = _context.Parametro.Select(p => p.Id).ToList();
+
+            // Deletar parâmetros que não estão na lista recebida (considerando que foram removidos)
+            var idsRecebidos = parametros.Where(p => p.Id != 0).Select(p => p.Id).ToList();
+            var parametrosParaDeletar = _context.Parametro
+                .Where(p => !idsRecebidos.Contains(p.Id) && todosIdsExistentes.Contains(p.Id))
+                .ToList();
+
+            _context.Parametro.RemoveRange(parametrosParaDeletar);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Parametros");
+        }
+
 
 
     }

@@ -7,6 +7,7 @@ namespace Fortificar.Models
     {
         public int Id { get; set; }
         // Informações básicas
+        [Display(Name = "Nome da Empresa")]
         public string? NomeFantasia { get; set; }
         public string? RazaoSocial { get; set; }
         public string? CNPJ { get; set; }
@@ -24,6 +25,8 @@ namespace Fortificar.Models
         public string? CEP { get; set; }
 
         // Contato
+        [Display(Name = "Email")]
+        public string? EmailEmpresa { get; set; }
         [Display(Name = "Sítio eletrônico de divulgação de parceria")]
         public string? Site { get; set; }
         [Display(Name = "Telefone 1")]
@@ -49,7 +52,7 @@ namespace Fortificar.Models
 
         // Representante Legal
 
-        public int ResponsavelLegalId{ get; set; }
+        public int ResponsavelLegalId { get; set; }
         public ResponsavelLegal? ResponsavelLegal { get; set; }
 
 
@@ -57,23 +60,23 @@ namespace Fortificar.Models
         // Seção de projetos
 
         [Display(Name = "CONHECENDO O PROPONENTE")]
-		public string Historico { get; set; }
+        public string Historico { get; set; }
 
-		[Display(Name = "PRINCIPAIS AÇÕES DESENVOLVIDAS PELA PROPONENTE")]
-		public string PrincipaisAcoes { get; set; }
+        [Display(Name = "PRINCIPAIS AÇÕES DESENVOLVIDAS PELA PROPONENTE")]
+        public string PrincipaisAcoes { get; set; }
 
-		[Display(Name = "PÚBLICO ALVO DE ATENDIMENTO DA PROPONENTE")]
-		public string PublicoAlvo { get; set; }
+        [Display(Name = "PÚBLICO ALVO DE ATENDIMENTO DA PROPONENTE")]
+        public string PublicoAlvo { get; set; }
 
-		[Display(Name = "REGIÕES DE ALCANCE DAS AÇÕES (BAIRROS)")]
-		public string RegioesAtendimento { get; set; }
+        [Display(Name = "REGIÕES DE ALCANCE DAS AÇÕES (BAIRROS)")]
+        public string RegioesAtendimento { get; set; }
 
-		[Display(Name = "INFRAESTRUTURA DA PROPONENTE")]
-		public string Infraestrutura { get; set; }
+        [Display(Name = "INFRAESTRUTURA DA PROPONENTE")]
+        public string Infraestrutura { get; set; }
 
-		// Lista de Equipe Multidisciplinar
-		[Display(Name = "EQUIPE MULTIDISCIPLINAR DO PROPONENTE")]
-		public string EquipeMultidisciplinar { get; set; }
+        // Lista de Equipe Multidisciplinar
+        [Display(Name = "EQUIPE MULTIDISCIPLINAR DO PROPONENTE")]
+        public string EquipeMultidisciplinar { get; set; }
         //public List<Projeto> Projetos { get;  set; }
 
     }

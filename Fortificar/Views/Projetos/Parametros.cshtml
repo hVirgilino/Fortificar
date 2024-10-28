@@ -1,0 +1,127 @@
+﻿@model List<Parametro>
+
+@{
+    ViewData["Title"] = "Configuração de parâmetros";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br />
+
+<div class="row justify-content-center">
+    <div class="col-12 mt-10">
+        <div class="marginB card-body">
+            <form asp-action="ConfigurarParametros" id="parametro-form" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th>Valor Mínimo</th>
+                            <th>Valor Máximo</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="parametros-list">
+                        @if (Model != null && Model.Count > 0)
+                        {
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        <input readonly name="[@i].Nome" class="form-control" value="@Model[i].Nome" />
+                                    </td>
+                                    <td>
+                                        <textarea readonly name="[@i].Descricao" class="form-control" value="">@Model[i].Descricao</textarea>
+                                    </td>
+                                    <td>
+                                        <input name="[@i].ValorMin" class="form-control" value="@Model[i].ValorMin" />
+                                    </td>
+                                    <td>
+                                        <input name="[@i].ValorMax" class="form-control" value="@Model[i].ValorMax" />
+                                    </td>
+                                    <td>
+                                        <button type="button" value="desativar" class="btn btn-danger" onclick="ativarDesativar(this)">Desativar</button>
+                                        <input name="[@i].Ativo" class="form-control" value="@Model[i].Ativo" style="display:none" />
+                                    </td>
+                                </tr>
+                                        
+                            }
+                        }
+                        else
+                        {
+                            <p>Nenhum parâmetro disponível.</p>
+                        }
+
+                    </tbody>
+                </table>
+
+               <!-- <button type="button" class="btn btn-success" onclick="addRow()">Adicionar Parâmetro</button>-->
+                <button id="save-button" type="submit" class="btn btn-primary">Salvar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function addRow() {
+            const tableBody = document.getElementById('parametros-list');
+            const index = tableBody.rows.length;
+
+            const newRow = `
+                        <tr>
+                            <td>
+                                <input name="[${index}].Nome" class="form-control" value="" />
+                            </td>
+                            <td>
+                                <textarea name="[${index}].Descricao" class="form-control" value="" readonly ></textarea>
+                            </td>
+                            <td>
+                                <input name="[${index}].Valor" class="form-control" value="" />
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" onclick="removeRow(this)">Deletar</button>
+                            </td>
+                        </tr>`;
+
+            tableBody.insertAdjacentHTML('beforeend', newRow);
+        }
+
+        function ativarDesativar(button) {
+            const row = button.closest('tr');
+            const elements = row.querySelectorAll('input, textarea');
+
+            if (button.value.toLowerCase() === "ativar") {
+                // Ativa todos os elementos na linha, exceto "Nome" e "Descricao"
+                elements.forEach(element => {
+                    if (element.name !== "Nome" && element.name !== "Descricao") {
+                        element.readonly = false;
+                    }
+                });
+                // Atualiza o valor e o texto do botão
+                hiddenAtivo.value = "S";
+                button.value = "Desativar";
+                button.innerHTML = "Desativar";
+            } else {
+                // Desativa todos os inputs, exceto Nome e Descricao
+                inputs.forEach(input => {
+                    if (input.name !== "Nome" && input.name !== "Descricao") {
+                        input.disabled = true;
+                    }
+                });
+                // Define o valor de Ativo como "N"
+                hiddenAtivo.value = "N";
+                button.value = "Ativar";
+                button.innerHTML = "Ativar";
+            }
+        }
+
+
+
+    </script>
+}

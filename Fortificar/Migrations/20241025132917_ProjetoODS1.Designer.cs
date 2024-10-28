@@ -4,6 +4,7 @@ using Fortificar.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fortificar.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    partial class AuthDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241025132917_ProjetoODS1")]
+    partial class ProjetoODS1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,7 +120,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ProjetoId");
 
-                    b.ToTable("Anexo", (string)null);
+                    b.ToTable("Anexo");
                 });
 
             modelBuilder.Entity("Fortificar.Models.CronogramaMeta", b =>
@@ -159,7 +162,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ProjetoId");
 
-                    b.ToTable("CronogramaMeta", (string)null);
+                    b.ToTable("CronogramaMeta");
                 });
 
             modelBuilder.Entity("Fortificar.Models.MembroEquipe", b =>
@@ -195,7 +198,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ProjetoId");
 
-                    b.ToTable("MembroEquipe", (string)null);
+                    b.ToTable("MembroEquipe");
                 });
 
             modelBuilder.Entity("Fortificar.Models.ODS", b =>
@@ -224,7 +227,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ProjetoId");
 
-                    b.ToTable("ODS", (string)null);
+                    b.ToTable("ODS");
 
                     b.HasData(
                         new
@@ -376,7 +379,7 @@ namespace Fortificar.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Parametro", (string)null);
+                    b.ToTable("Parametro");
                 });
 
             modelBuilder.Entity("Fortificar.Models.PlanoAplicacaoItem", b =>
@@ -411,7 +414,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ProjetoId");
 
-                    b.ToTable("PlanoAplicacaoItem", (string)null);
+                    b.ToTable("PlanoAplicacaoItem");
                 });
 
             modelBuilder.Entity("Fortificar.Models.Projeto", b =>
@@ -462,7 +465,7 @@ namespace Fortificar.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projeto", (string)null);
+                    b.ToTable("Projeto");
                 });
 
             modelBuilder.Entity("Fortificar.Models.ProjetoODS", b =>
@@ -485,7 +488,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ProjetoId");
 
-                    b.ToTable("ProjetoODS", (string)null);
+                    b.ToTable("ProjetoODS");
                 });
 
             modelBuilder.Entity("Fortificar.Models.Proponente", b =>
@@ -590,7 +593,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ResponsavelLegalId");
 
-                    b.ToTable("Proponente", (string)null);
+                    b.ToTable("Proponente");
                 });
 
             modelBuilder.Entity("Fortificar.Models.ResponsavelLegal", b =>
@@ -642,7 +645,7 @@ namespace Fortificar.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ResponsavelLegal", (string)null);
+                    b.ToTable("ResponsavelLegal");
                 });
 
             modelBuilder.Entity("Fortificar.Models.ResponsavelTecnico", b =>
@@ -694,7 +697,7 @@ namespace Fortificar.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ResponsavelTecnico", (string)null);
+                    b.ToTable("ResponsavelTecnico");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -48,19 +48,19 @@ body {
 
 
 #scrollTopButton {
-    display: none; /* Escondido inicialmente */
-    position: fixed; /* Fixa no canto da tela */
-    bottom: 20px; /* Espaçamento da parte inferior */
-    right: 30px; /* Espaçamento da parte direita */
-    z-index: 99; /* Aparece na frente de outros elementos */
-    border: none; /* Sem borda */
-    outline: none; /* Sem contorno */
-    background-color: #555; /* Cor do botão */
-    color: white; /* Cor da seta */
-    cursor: pointer; /* Mãozinha no hover */
-    padding: 10px; /* Tamanho do botão */
-    border-radius: 10px; /* Bordas arredondadas */
-    font-size: 18px; /* Tamanho da seta */
+    display: none; 
+    position: fixed; 
+    bottom: 20px; 
+    right: 30px; 
+    z-index: 99; 
+    border: none; 
+    outline: none; 
+    background-color: #555; 
+    color: white; 
+    cursor: pointer; 
+    padding: 10px; 
+    border-radius: 10px; 
+    font-size: 18px; 
 }
 
 #scrollTopButton:hover {
@@ -136,5 +136,19 @@ footer {
 }
 
 .marginB{
-    margin-bottom:100px;
+    margin-bottom:150px;
 }
+
+.ods-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px; 
+}
+    .ods-grid input{
+        margin-right: 10px;
+    }
+
+    .ods-grid .form-check {
+        display: flex;
+        align-items: center;
+    }

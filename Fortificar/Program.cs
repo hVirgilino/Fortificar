@@ -16,7 +16,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.Configure<IdentityOptions>(options =>
-{//RequireUppercase pode ter sua definition vista para outras validações
+{//RequireUppercase pode ter sua definition vista para outras validaï¿½ï¿½es
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = false;
     options.Password.RequireNonAlphanumeric = false;

@@ -1,0 +1,113 @@
+﻿@page
+@using Fortificar.Views.Projetos
+@model Proponente
+@{
+    ViewData["Title"] = "1. DADOS GERAIS DO PROPONENTE";
+    ViewData["ActivePage"] = ProjetoNavPages.DadosGeraisNav;
+}
+
+<div class="row justify-content-center">
+    <div class="col-10 mt-10">         
+        <div class="marginB card-body">
+            <form asp-action="SalvarProjeto" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <!-- 1. DADOS GERAIS DO PROPONENTE -->
+                <h5 class="font-weight-bold">@ViewData["Title"]</h5>
+                <div class="row g-2">
+                    <div class="col-8">
+                    <div class="form-floating mb-3">
+                        <input disabled asp-for="NomeFantasia"  class="form-control" placeholder="Nome Fantasia da Empresa" />
+                        <label asp-for="NomeFantasia">Nome Fantasia da Empresa</label>
+                        <span asp-validation-for="NomeFantasia" class="text-danger"></span>
+                    </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-floating mb-3">
+                            <input disabled asp-for="CNPJ" class="form-control" placeholder="CNPJ da Empresa" />
+                            <label asp-for="CNPJ">CNPJ da Empresa</label>
+                            <span asp-validation-for="CNPJ" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input disabled asp-for="Endereco" class="form-control" placeholder="Logradouro" />
+                    <label asp-for="Endereco">Endereço</label>
+                    <span asp-validation-for="Endereco" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input disabled asp-for="Bairro" class="form-control" placeholder="Bairro" />
+                            <label asp-for="Bairro">Bairro</label>
+                            <span asp-validation-for="Bairro" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input disabled asp-for="Cidade" class="form-control" placeholder="Cidade" />
+                            <label asp-for="Cidade">Cidade</label>
+                            <span asp-validation-for="Cidade" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input disabled asp-for="CEP" class="form-control" placeholder="CEP" />
+                            <label asp-for="CEP">CEP</label>
+                            <span asp-validation-for="CEP" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>     
+
+
+                    <div class="row g-2">
+                    <div class="col-8">
+                        <div class="form-floating mb-3">
+                            <input disabled asp-for="EmailEmpresa" class="form-control" placeholder="Email" />
+                            <label asp-for="EmailEmpresa">EmailEmpresa</label>
+                            <span asp-validation-for="EmailEmpresa" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="col-4">
+                        <div class="form-floating mb-3">
+                            <input disabled asp-for="Site" class="form-control" placeholder="Sítio eletrônico de divulgação de parceria" />
+                            <label asp-for="Site">Site</label>
+                            <span asp-validation-for="Site" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input disabled asp-for="Telefone1" class="form-control" placeholder="Telefone 1" />
+                            <label asp-for="Telefone1">Telefone 1</label>
+                            <span asp-validation-for="Telefone1" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input disabled asp-for="Telefone2" class="form-control" placeholder="Telefone 2" />
+                            <label asp-for="Telefone2">Telefone 2</label>
+                            <span asp-validation-for="Telefone2" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input disabled asp-for="Telefone3" class="form-control" placeholder="Telefone 3" />
+                            <label asp-for="Telefone3">Telefone 3</label>
+                            <span asp-validation-for="Telefone3" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                </div>  
+            </form>
+        </div>
+    </div>
+</div>
+                    

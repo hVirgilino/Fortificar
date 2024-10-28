@@ -4,6 +4,7 @@ using Fortificar.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fortificar.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    partial class AuthDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241024215004_Orcamento2")]
+    partial class Orcamento2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,7 +120,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ProjetoId");
 
-                    b.ToTable("Anexo", (string)null);
+                    b.ToTable("Anexo");
                 });
 
             modelBuilder.Entity("Fortificar.Models.CronogramaMeta", b =>
@@ -159,7 +162,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ProjetoId");
 
-                    b.ToTable("CronogramaMeta", (string)null);
+                    b.ToTable("CronogramaMeta");
                 });
 
             modelBuilder.Entity("Fortificar.Models.MembroEquipe", b =>
@@ -195,157 +198,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ProjetoId");
 
-                    b.ToTable("MembroEquipe", (string)null);
-                });
-
-            modelBuilder.Entity("Fortificar.Models.ODS", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsSelected")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ProjetoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjetoId");
-
-                    b.ToTable("ODS", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Descricao = "Acabar com a pobreza em todas as suas formas, em todos os lugares.",
-                            IsSelected = false,
-                            Nome = "Erradicação da pobreza"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Descricao = "Acabar com a fome e a inanição, alcançar a segurança alimentar, melhorar a nutrição e promover a agricultura sustentável.",
-                            IsSelected = false,
-                            Nome = "Erradicação da fome"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Descricao = "Assegurar uma vida saudável e promover o bem-estar para todos, em todas as idades.",
-                            IsSelected = false,
-                            Nome = "Saúde e Bem-Estar"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Descricao = "Assegurar a educação inclusiva e equitativa de qualidade, e promover oportunidades de aprendizagem ao longo da vida para todos.",
-                            IsSelected = false,
-                            Nome = "Educação de qualidade"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Descricao = "Alcançar a igualdade de gênero e empoderar todas as mulheres e meninas.",
-                            IsSelected = false,
-                            Nome = "Igualdade de gênero"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Descricao = "Assegurar a disponibilidade e a gestão sustentável da água e saneamento para todos.",
-                            IsSelected = false,
-                            Nome = "Água Potável e Saneamento"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Descricao = "Assegurar o acesso confiável, sustentável, moderno e a preço acessível à energia para todos.",
-                            IsSelected = false,
-                            Nome = "Energia acessível e limpa"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Descricao = "Promover o crescimento econômico sustentado, inclusivo e sustentável, o emprego pleno e produtivo e o trabalho decente para todos.",
-                            IsSelected = false,
-                            Nome = "Trabalho decente e crescimento econômico"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Descricao = "Construir infraestruturas resilientes, promover a industrialização inclusiva e sustentável e fomentar a inovação.",
-                            IsSelected = false,
-                            Nome = "Inovação e infraestrutura"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Descricao = "Reduzir a desigualdade dentro dos países e entre eles.",
-                            IsSelected = false,
-                            Nome = "Redução das desigualdades"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Descricao = "Tornar as cidades e os assentamentos humanos inclusivos, seguros, resilientes e sustentáveis.",
-                            IsSelected = false,
-                            Nome = "Cidades e comunidades sustentáveis"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Descricao = "Assegurar padrões de produção e de consumo sustentáveis.",
-                            IsSelected = false,
-                            Nome = "Consumo e produção responsáveis"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Descricao = "Tomar medidas urgentes para combater a mudança do clima e seus impactos.",
-                            IsSelected = false,
-                            Nome = "Ação contra a Mudança Global do Clima"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Descricao = "Conservar e promover o uso sustentável dos oceanos, dos mares e dos recursos marinhos para o desenvolvimento sustentável.",
-                            IsSelected = false,
-                            Nome = "Vida na Água"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Descricao = "Proteger, recuperar e promover o uso sustentável dos ecossistemas terrestres, gerir de forma sustentável as florestas, combater a desertificação, deter e reverter a degradação da terra e deter a perda.",
-                            IsSelected = false,
-                            Nome = "Vida Terrestre"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Descricao = "Promover sociedades pacíficas e inclusivas para o desenvolvimento sustentável, proporcionar o acesso à justiça para todos e construir instituições eficazes, responsáveis e inclusivas em todos os níveis.",
-                            IsSelected = false,
-                            Nome = "Paz, Justiça e Instituições Eficazes"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Descricao = "Fortalecer os meios de implementação e revitalizar a parceria global para o desenvolvimento sustentável.",
-                            IsSelected = false,
-                            Nome = "Parcerias e Meios de Implementação"
-                        });
+                    b.ToTable("MembroEquipe");
                 });
 
             modelBuilder.Entity("Fortificar.Models.Parametro", b =>
@@ -355,9 +208,6 @@ namespace Fortificar.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Ativo")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(max)");
@@ -376,7 +226,7 @@ namespace Fortificar.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Parametro", (string)null);
+                    b.ToTable("Parametro");
                 });
 
             modelBuilder.Entity("Fortificar.Models.PlanoAplicacaoItem", b =>
@@ -411,7 +261,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ProjetoId");
 
-                    b.ToTable("PlanoAplicacaoItem", (string)null);
+                    b.ToTable("PlanoAplicacaoItem");
                 });
 
             modelBuilder.Entity("Fortificar.Models.Projeto", b =>
@@ -462,30 +312,7 @@ namespace Fortificar.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projeto", (string)null);
-                });
-
-            modelBuilder.Entity("Fortificar.Models.ProjetoODS", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ODSId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjetoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ODSId");
-
-                    b.HasIndex("ProjetoId");
-
-                    b.ToTable("ProjetoODS", (string)null);
+                    b.ToTable("Projeto");
                 });
 
             modelBuilder.Entity("Fortificar.Models.Proponente", b =>
@@ -590,7 +417,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ResponsavelLegalId");
 
-                    b.ToTable("Proponente", (string)null);
+                    b.ToTable("Proponente");
                 });
 
             modelBuilder.Entity("Fortificar.Models.ResponsavelLegal", b =>
@@ -642,7 +469,7 @@ namespace Fortificar.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ResponsavelLegal", (string)null);
+                    b.ToTable("ResponsavelLegal");
                 });
 
             modelBuilder.Entity("Fortificar.Models.ResponsavelTecnico", b =>
@@ -694,7 +521,7 @@ namespace Fortificar.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ResponsavelTecnico", (string)null);
+                    b.ToTable("ResponsavelTecnico");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -867,13 +694,6 @@ namespace Fortificar.Migrations
                     b.Navigation("Projeto");
                 });
 
-            modelBuilder.Entity("Fortificar.Models.ODS", b =>
-                {
-                    b.HasOne("Fortificar.Models.Projeto", null)
-                        .WithMany("ODS")
-                        .HasForeignKey("ProjetoId");
-                });
-
             modelBuilder.Entity("Fortificar.Models.PlanoAplicacaoItem", b =>
                 {
                     b.HasOne("Fortificar.Models.Projeto", "Projeto")
@@ -881,25 +701,6 @@ namespace Fortificar.Migrations
                         .HasForeignKey("ProjetoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Projeto");
-                });
-
-            modelBuilder.Entity("Fortificar.Models.ProjetoODS", b =>
-                {
-                    b.HasOne("Fortificar.Models.ODS", "ODS")
-                        .WithMany()
-                        .HasForeignKey("ODSId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Fortificar.Models.Projeto", "Projeto")
-                        .WithMany()
-                        .HasForeignKey("ProjetoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ODS");
 
                     b.Navigation("Projeto");
                 });
@@ -971,8 +772,6 @@ namespace Fortificar.Migrations
                     b.Navigation("Cronograma");
 
                     b.Navigation("EquipeExecucao");
-
-                    b.Navigation("ODS");
 
                     b.Navigation("PlanoAplicacao");
                 });

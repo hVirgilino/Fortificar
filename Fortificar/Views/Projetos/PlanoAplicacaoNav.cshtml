@@ -1,0 +1,189 @@
+﻿@page
+@using Fortificar.Views.Projetos
+@model Fortificar.Models.ViewModels.ProjetoViewModel
+@{
+    ViewData["Title"] = "11. PLANO DE APLICAÇÃO";
+    ViewData["ActivePage"] = ProjetoNavPages.PlanoAplicacaoNav;
+}
+
+<div class="row justify-content-center">
+    <div class="col-10 mt-10">
+        <div class="marginB card-body">
+            <form asp-action="SalvarProjeto" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <!-- 11. PLANO DE APLICAÇÃO -->
+                <h5 class="font-weight-bold">@ViewData["Title"]</h5>
+                <h6 class="font-weight-bold">11.1 Equipamentos e Materiais Permanentes</h6>
+                <table class="table" id="equipamentosTable">
+                    <thead>
+                        <tr>
+                            <th>Especificação</th>
+                            <th>Unidade</th>
+                            <th>Quantidade</th>
+                            <th>Valor Unitário</th>
+                            <th>Valor Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input asp-for="PlanoAplicacao[0].Especificacao" class="form-control" />
+                                <span asp-validation-for="PlanoAplicacao[0].Especificacao" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="PlanoAplicacao[0].Unidade" class="form-control" />
+                                <span asp-validation-for="PlanoAplicacao[0].Unidade" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="PlanoAplicacao[0].Quantidade" class="form-control" />
+                                <span asp-validation-for="PlanoAplicacao[0].Quantidade" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="PlanoAplicacao[0].ValorUnitario" class="form-control" />
+                                <span asp-validation-for="PlanoAplicacao[0].ValorUnitario" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="PlanoAplicacao[0].ValorTotal" class="form-control" />
+                                <span asp-validation-for="PlanoAplicacao[0].ValorTotal" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-secondary" onclick="addEquipamento()">Adicionar Equipamento</button>
+
+
+                <br />                        <br />
+
+                <!-- 11.2 Equipe Encarregada pela Execução do Projeto -->
+                <h6 class="font-weight-bold">11.2 Equipe encarregada pela execução do projeto</h6>
+                <table class="table" id="equipeExecucaoTable">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>Formação</th>
+                            <th>Função</th>
+                            <th>Carga Horária Semanal</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input asp-for="EquipeExecucao[0].Nome" class="form-control" />
+                                <span asp-validation-for="EquipeExecucao[0].Nome" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="EquipeExecucao[0].CPF" class="form-control" />
+                                <span asp-validation-for="EquipeExecucao[0].CPF" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="EquipeExecucao[0].Formacao" class="form-control" />
+                                <span asp-validation-for="EquipeExecucao[0].Formacao" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="EquipeExecucao[0].Funcao" class="form-control" />
+                                <span asp-validation-for="EquipeExecucao[0].Funcao" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="EquipeExecucao[0].CargaHorariaSemanal" class="form-control" />
+                                <span asp-validation-for="EquipeExecucao[0].CargaHorariaSemanal" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-secondary" onclick="addEquipeExecucao()">Adicionar Profissional</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+
+        function addEquipamento() {
+            var container = document.getElementById("equipamentosTable").getElementsByTagName('tbody')[0];
+            var index = container.rows.length + 1;
+
+            var row = container.insertRow();
+            row.innerHTML = `
+                        <td>
+                            <input asp-for="PlanoAplicacao[${index}].Especificacao" class="form-control" />
+                            <span asp-validation-for="PlanoAplicacao[${index}].Especificacao" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <input asp-for="PlanoAplicacao[${index}].Unidade" class="form-control" />
+                            <span asp-validation-for="PlanoAplicacao[${index}].Unidade" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <input asp-for="PlanoAplicacao[${index}].Quantidade" class="form-control" />
+                            <span asp-validation-for="PlanoAplicacao[${index}].Quantidade" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <input asp-for="PlanoAplicacao[${index}].ValorUnitario" class="form-control" />
+                            <span asp-validation-for="PlanoAplicacao[${index}].ValorUnitario" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <input asp-for="PlanoAplicacao[${index}].ValorTotal" class="form-control" />
+                            <span asp-validation-for="PlanoAplicacao[${index}].ValorTotal" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button>
+                        </td>`;
+        }
+
+
+        function addEquipeExecucao() {
+            var container = document.getElementById("equipeExecucaoTable").getElementsByTagName('tbody')[0];
+            var index = container.rows.length + 1;
+
+            var row = container.insertRow();
+            row.innerHTML = `
+                        <td>
+                            <input asp-for="EquipeExecucao[${index}].Nome" class="form-control" />
+                            <span asp-validation-for="EquipeExecucao[${index}].Nome" class="text-danger"></span>
+                        </td><td>
+                            <input asp-for="EquipeExecucao[${index}].CPF" class="form-control" />
+                            <span asp-validation-for="EquipeExecucao[${index}].CPF" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <input asp-for="EquipeExecucao[${index}].Formacao" class="form-control" />
+                            <span asp-validation-for="EquipeExecucao[${index}].Formacao" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <input asp-for="EquipeExecucao[${index}].Funcao" class="form-control" />
+                            <span asp-validation-for="EquipeExecucao[${index}].Funcao" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <input asp-for="EquipeExecucao[${index}].CargaHorariaSemanal" class="form-control" />
+                            <span asp-validation-for="EquipeExecucao[${index}].CargaHorariaSemanal" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button>
+                        </td>`;
+        }
+
+
+        function removeRow(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+
+
+    </script>
+
+}
+

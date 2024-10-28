@@ -1,4 +1,5 @@
 ﻿using Fortificar.Areas.Identity.Pages.Account;
+
 namespace Fortificar.Models.ViewModels
 {
     public class RegistroViewModel

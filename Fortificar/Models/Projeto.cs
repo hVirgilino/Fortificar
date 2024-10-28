@@ -15,17 +15,11 @@ namespace Fortificar.Models
 
         // Relacionamentos com Proponente, Responsável Legal e Técnico
         // Chave estrangeira para Proponente
-        
-		public int ProponenteId { get; set; }
+
+        public Proponente? Proponente { get; set; }
+        public int ProponenteId { get; set; }
 		public int ResponsavelLegalId { get; set; }
 		public int ResponsavelTecnicoId { get; set; }
-
-
-		// Relacionamento com Proponente
-		//public Proponente Proponente { get; set; }
-		//[ForeignKey("ResponsavelLegalId")]
-		//public ResponsavelLegal ResponsavelLegal { get; set; }
-	//;public ResponsavelTecnico ResponsavelTecnico { get; set; }
 
 		// Informações do projeto
 		public string Objeto { get; set; }
@@ -45,23 +39,23 @@ namespace Fortificar.Models
         [Display(Name = "Término em:")]
         public DateTime TerminoExecucao { get; set; }
 
-        // Lista de profissionais que atuarão na execução do projeto
+        // Lista de profissionais da execução do projeto
         public List<MembroEquipe> EquipeExecucao { get; set; } = new List<MembroEquipe>();
 
         // Cronograma físico-financeiro e metas
         public List<CronogramaMeta> Cronograma { get; set; } = new List<CronogramaMeta>();
 
         // Plano de aplicação
-        public List<PlanoAplicacaoItem> PlanoAplicacao { get; set; } = new List<PlanoAplicacaoItem>();
-
+        public List<PlanoAplicacaoItem> PlanoAplicacao { get; set; } = new List<PlanoAplicacaoItem>();      
         
+        // ODS
+        public List<ODS> ODS { get; set; } = new List<ODS>();
 
-        // Anexo
-       // [NotMapped]
-       // public IFormFile Anexo { get; set; }
-        
+        [Display(Name = "Orçamento do Projeto")]
+        public float Orcamento { get; set; }
 
-     
+
+
     }
    
     public class MembroEquipe
