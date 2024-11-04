@@ -303,6 +303,57 @@
                 <span asp-validation-for="Proponente.PublicoAlvo" class="text-danger"></span>
             </div>
 
+            <div class="form-group">
+            <h5 class="font-weight-bold">Selecione o(s) público(s) do projeto</h5>
+            <div class="ods-grid">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="checkboxCrianca" value="CRI">
+                    <label class="form-check-label" for="checkboxCrianca">Criança</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="checkboxAdolescente" value="ADO">
+                    <label class="form-check-label" for="checkboxAdolescente">Adolescente</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="checkboxJovens" value="JOV">
+                    <label class="form-check-label" for="checkboxJovens">Jovens</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="checkboxAdultos" value="ADU">
+                    <label class="form-check-label" for="checkboxAdultos">Adultos</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="checkboxIdosos" value="IDO">
+                    <label class="form-check-label" for="checkboxIdosos">Idosos</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="checkboxCriancaAdolescente" value="CAD">
+                    <label class="form-check-label" for="checkboxCriancaAdolescente">Criança e Adolescente</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="checkboxTodos" value="TUD">
+                    <label class="form-check-label" for="checkboxTodos">Criança, adolescentes, Jovens, adultos e idosos</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="checkboxAdultosIdosos" value="AID">
+                    <label class="form-check-label" for="checkboxAdultosIdosos">Adultos e Idosos</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="checkboxMulheres" value="MUL">
+                    <label class="form-check-label" for="checkboxMulheres">Mulheres</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="checkboxPcd" value="PCD">
+                    <label class="form-check-label" for="checkboxPcd">PCD</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="checkboxDependentes" value="DSA">
+                    <label class="form-check-label" for="checkboxDependentes">Dependentes de substâncias psicoativas</label>
+                </div>
+            </div>
+        </div>
+
+
             <!-- 7. REGIÕES DE ALCANCE DAS AÇÕES (BAIRROS) -->
             <h5 class="font-weight-bold">7. REGIÕES DE ALCANCE DAS AÇÕES (BAIRROS)</h5>
             <div class="form-floating mb-3">
@@ -325,6 +376,14 @@
                 <textarea disabled asp-for="Proponente.EquipeMultidisciplinar" class="form-control" placeholder="Equipe Multidisciplinar" style="height: 150px;"></textarea>
                 <label asp-for="Proponente.EquipeMultidisciplinar">Equipe Multidisciplinar</label>
                 <span asp-validation-for="Proponente.EquipeMultidisciplinar" class="text-danger"></span>
+            </div>
+
+            <!-- INFORMAÇÕES RELEVANTES -->
+            <h5 class="font-weight-bold">INFORMAÇÕES RELEVANTES</h5>
+            <div class="form-floating mb-3">
+                <textarea disabled asp-for="Proponente.InformacoesRelevantes" class="form-control" placeholder="Informações Relevantes" style="height: 150px;"></textarea>
+                <label asp-for="Proponente.InformacoesRelevantes">Equipe Multidisciplinar</label>
+                <span asp-validation-for="Proponente.InformacoesRelevantes" class="text-danger"></span>
             </div>
 
             <!-- 10. RESUMO DO PROJETO -->
@@ -352,10 +411,25 @@
 
             <h6 class="font-weight-bold">10.4 Público Beneficiário do Projeto</h6>
             <div class="form-floating mb-3">
-                <input asp-for="Projeto.PublicoBeneficiario" class="form-control" placeholder="Público Beneficiário do Projeto" />
+                <select asp-for="Projeto.PublicoBeneficiario" class="form-control">
+                    <option value="">Selecione o Público Beneficiário</option>
+                    <option value="CRI">Criança</option>
+                    <option value="ADO">Adolescente</option>
+                    <option value="JOV">Jovens</option>
+                    <option value="ADU">Adultos</option>
+                    <option value="IDO">Idosos</option>
+                    <option value="CAE">Criança e Adolescente</option>
+                    <option value="CAJ">Criança, adolescentes, Jovens, adultos e idosos</option>
+                    <option value="ADI">Adultos e Idosos</option>
+                    <option value="MUL">Mulheres</option>
+                    <option value="PCD">PCD</option>
+                    <option value="DSA">Dependentes de substâncias psicoativas</option>
+                </select>
                 <label asp-for="Projeto.PublicoBeneficiario">Público Beneficiário</label>
                 <span asp-validation-for="Projeto.PublicoBeneficiario" class="text-danger"></span>
             </div>
+
+
 
             <h6 class="font-weight-bold">10.5 Justificativa</h6>
             <div class="form-floating mb-3">

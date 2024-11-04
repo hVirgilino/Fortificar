@@ -4,10 +4,11 @@
     {
 
         public int Id { get; set; }
-        public String Nome { get; set; }
-        protected String Cnpj { get; set; }
-        protected String Endereco { get; set; }
-        public List<Projeto> Projetos { get; set; }
+        public String? Nome { get; set; }
+        protected String? Cnpj { get; set; }
+        protected String? Endereco { get; set; }
+        public float? Desembolso { get; set; }
+
 
     }
 }

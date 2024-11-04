@@ -59,6 +59,14 @@
             </div>
 
 
+            <div class="row">
+                <!-- INFORMAÇÕES RELEVANTES -->
+                <div class="form-floating mb-3">
+                    <textarea disabled asp-for="Proponente.InformacoesRelevantes" class="form-control" placeholder="Informações Relevantes" style="height: 150px;"></textarea>
+                    <label asp-for="Proponente.InformacoesRelevantes">Equipe Multidisciplinar</label>
+                    <span asp-validation-for="Proponente.InformacoesRelevantes" class="text-danger"></span>
+                </div>
+            </div>
             <div class="row g-2">
                 <div class="col-8">
                     <div class="form-floating mb-3">

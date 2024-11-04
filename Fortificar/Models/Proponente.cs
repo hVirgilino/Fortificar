@@ -79,6 +79,9 @@ namespace Fortificar.Models
         public string EquipeMultidisciplinar { get; set; }
         //public List<Projeto> Projetos { get;  set; }
 
+        // Informações relevantes
+        public string? InformacoesRelevantes { get; set; }
+
     }
 
 }
