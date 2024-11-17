@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Fortificar.Models.Projeto>
+
+@{
+    ViewData["Title"] = "Visualizar Projetos";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br />
+<br />
+<p>
+    <a asp-action="Recusados">Projetos recusados</a>
+</p>
+
+<br />
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Proponente.NomeFantasia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orcamento)
+            </th>
+            <th>
+                Ações
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Proponente.NomeFantasia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Orcamento)
+                </td>
+                <td>
+                    <a asp-route-status="1" asp-action="Detalhes" asp-route-id="@item.Id">Detalhes</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

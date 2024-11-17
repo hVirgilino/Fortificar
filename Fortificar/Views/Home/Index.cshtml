@@ -1,8 +1,47 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+
+    var Tipo = (int)ViewData["Tipo"];
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Administrador: @ViewData["UserNome"]</p>
+    <h1 class="display-4">Bem vindo(a)!</h1>
+    <p>Veja as últimas atualizações do projeto Fortificar abaixo:</p>
 </div>
+
+@if(Tipo == 0)
+{
+
+    <p>Altere o documento da página principal abaixo:</p>
+    <form asp-action="AnexarDocIndex" method="post" enctype="multipart/form-data">
+        <div class="input-group">
+            <input type="file" class="form-control" accept=".pdf" id="inputDocIndex" name="anexo" />
+            <button class="btn btn-outline-secondary" type="submit">Alterar documento</button>
+        </div>
+    </form>
+    <br />
+
+    <input type="hidden" id="caminhoArq" name="caminhoArq" value="@ViewData["CaminhoDocAnexo"]" />
+
+    @if (ViewData["Error"] != null)
+    {
+        <p style="color: red;">@ViewData["Erro"]</p>
+    }
+    @if (ViewData["Success"] != null)
+    {
+        <p style="color: green;">@ViewData["Ok"]</p>
+    }
+}
+
+<div class="viewPDF marginB" style="height: 800px"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.3.0/pdfobject.min.js" integrity="sha512-Nr6NV16pWOefJbWJiT8SrmZwOomToo/84CNd0MN6DxhP5yk8UAoPUjNuBj9KyRYVpESUb14RTef7FKxLVA4WGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript">
+    if(PDFObject.supportsPDFs){
+        var caminhoArq = document.getElementById('caminhoArq').value;
+
+        PDFObject.embed(caminhoArq, ".viewPDF");
+    }else{
+        alert("Não há documento disponível para exibição!");
+    }
+
+</script>

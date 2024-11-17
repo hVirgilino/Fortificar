@@ -2,6 +2,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Fortificar.Data;
 using Fortificar.Areas.Identity.Data;
+using Fortificar.Service;
+using Fortificar.Models;
+using FluentEmail.Smtp;
+using FluentEmail.Core;
+using System.Net;
+using System.Net.Mail;
+using Fortificar.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("AuthDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthDbContextConnection' not found.");
@@ -22,6 +29,11 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredUniqueChars = 0;
 });
+
+
+
+
+builder.Services.AddScoped<EmailService>();
 
 var app = builder.Build();
 

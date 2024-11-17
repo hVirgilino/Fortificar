@@ -13,21 +13,21 @@
             <div class="row g-2">
                 <div class="col-8">
                 <div class="form-floating mb-3">
-                    <input disabled asp-for="Proponente.NomeFantasia"  class="form-control" placeholder="Nome Fantasia da Empresa" />
+                    <input readonly asp-for="Proponente.NomeFantasia"  class="form-control" placeholder="Nome Fantasia da Empresa" />
                     <label asp-for="Proponente.NomeFantasia">Nome Fantasia da Empresa</label>
                     <span asp-validation-for="Proponente.NomeFantasia" class="text-danger"></span>
                 </div>
                 </div>
                 <div class="col-4">
                     <div class="form-floating mb-3">
-                        <input disabled asp-for="Proponente.CNPJ" class="form-control" placeholder="CNPJ da Empresa" />
+                        <input readonly asp-for="Proponente.CNPJ" class="form-control" placeholder="CNPJ da Empresa" />
                         <label asp-for="Proponente.CNPJ">CNPJ da Empresa</label>
                         <span asp-validation-for="Proponente.CNPJ" class="text-danger"></span>
                     </div>
                 </div>
             </div>
             <div class="form-floating mb-3">
-                <input disabled asp-for="Proponente.Endereco" class="form-control" placeholder="Logradouro" />
+                <input readonly asp-for="Proponente.Endereco" class="form-control" placeholder="Logradouro" />
                 <label asp-for="Proponente.Endereco">Endereço</label>
                 <span asp-validation-for="Proponente.Endereco" class="text-danger"></span>
             </div>
@@ -35,21 +35,21 @@
             <div class="row">
                 <div class="col">
                     <div class="form-floating mb-3">
-                        <input disabled asp-for="Proponente.Bairro" class="form-control" placeholder="Bairro" />
+                        <input readonly asp-for="Proponente.Bairro" class="form-control" placeholder="Bairro" />
                         <label asp-for="Proponente.Bairro">Bairro</label>
                         <span asp-validation-for="Proponente.Bairro" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating mb-3">
-                        <input disabled asp-for="Proponente.Cidade" class="form-control" placeholder="Cidade" />
+                        <input readonly asp-for="Proponente.Cidade" class="form-control" placeholder="Cidade" />
                         <label asp-for="Proponente.Cidade">Cidade</label>
                         <span asp-validation-for="Proponente.Cidade" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating mb-3">
-                        <input disabled asp-for="Proponente.CEP" class="form-control" placeholder="CEP" />
+                        <input readonly asp-for="Proponente.CEP" class="form-control" placeholder="CEP" />
                         <label asp-for="Proponente.CEP">CEP</label>
                         <span asp-validation-for="Proponente.CEP" class="text-danger"></span>
                     </div>
@@ -60,15 +60,15 @@
               <div class="row g-2">
                 <div class="col-8">
                     <div class="form-floating mb-3">
-                        <input disabled asp-for="Proponente.EmailEmpresa" class="form-control" placeholder="Email" />
-                        <label asp-for="Proponente.EmailEmpresa">EmailEmpresa</label>
+                        <input readonly asp-for="Proponente.EmailEmpresa" class="form-control" placeholder="Email" />
+                        <label asp-for="Proponente.EmailEmpresa">Email da Empresa</label>
                         <span asp-validation-for="Proponente.EmailEmpresa" class="text-danger"></span>
                     </div>
 
                 </div>
                 <div class="col-4">
                     <div class="form-floating mb-3">
-                <input disabled asp-for="Proponente.Site" class="form-control" placeholder="Sítio eletrônico de divulgação de parceria" />
+                <input readonly asp-for="Proponente.Site" class="form-control" placeholder="Sítio eletrônico de divulgação de parceria" />
                 <label asp-for="Proponente.Site">Site</label>
                 <span asp-validation-for="Proponente.Site" class="text-danger"></span>
             </div>
@@ -79,7 +79,7 @@
             <div class="row">
                 <div class="col">
                     <div class="form-floating mb-3">
-                <input disabled asp-for="Proponente.Telefone1" class="form-control" placeholder="Telefone 1" />
+                <input readonly asp-for="Proponente.Telefone1" class="form-control" placeholder="Telefone 1" />
                 <label asp-for="Proponente.Telefone1">Telefone 1</label>
                 <span asp-validation-for="Proponente.Telefone1" class="text-danger"></span>
             </div>
@@ -87,7 +87,7 @@
                 </div>
                 <div class="col">
                     <div class="form-floating mb-3">
-                <input disabled asp-for="Proponente.Telefone2" class="form-control" placeholder="Telefone 2" />
+                <input readonly asp-for="Proponente.Telefone2" class="form-control" placeholder="Telefone 2" />
                 <label asp-for="Proponente.Telefone2">Telefone 2</label>
                 <span asp-validation-for="Proponente.Telefone2" class="text-danger"></span>
             </div>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="col">
                     <div class="form-floating mb-3">
-                <input disabled asp-for="Proponente.Telefone3" class="form-control" placeholder="Telefone 3" />
+                <input readonly asp-for="Proponente.Telefone3" class="form-control" placeholder="Telefone 3" />
                 <label asp-for="Proponente.Telefone3">Telefone 3</label>
                 <span asp-validation-for="Proponente.Telefone3" class="text-danger"></span>
             </div>
@@ -109,7 +109,7 @@
                 <div class="col-8">
                     <!-- Responsável Legal -->
                                 <div class="form-floating mb-3">
-                                    <input disabled asp-for="ResponsavelLegal.Nome" class="form-control" placeholder="Nome do Responsável Legal" />
+                                    <input readonly asp-for="ResponsavelLegal.Nome" class="form-control" placeholder="Nome do Responsável Legal" />
                                     <label asp-for="ResponsavelLegal.Nome">Nome do Responsável Legal</label>
                                     <span asp-validation-for="ResponsavelLegal.Nome" class="text-danger"></span>
                                 </div>
@@ -117,7 +117,7 @@
 
                 <div class="col-4">
                     <div class="form-floating mb-3">
-                                    <input disabled asp-for="ResponsavelLegal.CPF" class="form-control" placeholder="CPF" />
+                                    <input readonly asp-for="ResponsavelLegal.CPF" class="form-control" placeholder="CPF" />
                                     <label asp-for="ResponsavelLegal.CPF">CPF</label>
                                     <span asp-validation-for="ResponsavelLegal.CPF" class="text-danger"></span>
                                 </div>
@@ -126,7 +126,7 @@
             <div class="row">
                 <div class="col">
                     <div class="form-floating mb-3">
-                                    <input disabled asp-for="ResponsavelLegal.RG" class="form-control" placeholder="RG" />
+                                    <input readonly asp-for="ResponsavelLegal.RG" class="form-control" placeholder="RG" />
                                     <label asp-for="ResponsavelLegal.RG">RG</label>
                                     <span asp-validation-for="ResponsavelLegal.RG" class="text-danger"></span>
                                 </div>
@@ -134,7 +134,7 @@
 
                 <div class="col">
                     <div class="form-floating mb-3">
-                                    <input disabled asp-for="ResponsavelLegal.OrgaoExpedidor" class="form-control" placeholder="Órgão Expedidor" />
+                                    <input readonly asp-for="ResponsavelLegal.OrgaoExpedidor" class="form-control" placeholder="Órgão Expedidor" />
                                     <label asp-for="ResponsavelLegal.OrgaoExpedidor">Órgão Expedidor</label>
                                     <span asp-validation-for="ResponsavelLegal.OrgaoExpedidor" class="text-danger"></span>
                                 </div>
@@ -142,7 +142,7 @@
 
                 <div class="col">
                     <div class="form-floating mb-3">
-                                    <input disabled asp-for="ResponsavelLegal.CargoOSC" class="form-control" placeholder="Cargo OSC" />
+                                    <input readonly asp-for="ResponsavelLegal.CargoOSC" class="form-control" placeholder="Cargo OSC" />
                                     <label asp-for="ResponsavelLegal.CargoOSC">Cargo OSC</label>
                                     <span asp-validation-for="ResponsavelLegal.CargoOSC" class="text-danger"></span>
                                 </div>
@@ -150,7 +150,7 @@
 
                 <div class="col">
                     <div class="form-floating mb-3">
-                                    <input disabled asp-for="ResponsavelLegal.MandatoVigente" class="form-control" placeholder="Mandato Vigente" />
+                                    <input readonly asp-for="ResponsavelLegal.MandatoVigente" class="form-control" placeholder="Mandato Vigente" />
                                     <label asp-for="ResponsavelLegal.MandatoVigente">Mandato Vigente</label>
                                     <span asp-validation-for="ResponsavelLegal.MandatoVigente" class="text-danger"></span>
                                 </div>
@@ -159,7 +159,7 @@
             <div class="row">
                 <div class="col">
                     <div class="form-floating mb-3">
-                                    <input disabled asp-for="ResponsavelLegal.Endereco" class="form-control" placeholder="Endereço" />
+                                    <input readonly asp-for="ResponsavelLegal.Endereco" class="form-control" placeholder="Endereço" />
                                     <label asp-for="ResponsavelLegal.Endereco">Endereço</label>
                                     <span asp-validation-for="ResponsavelLegal.Endereco" class="text-danger"></span>
                                 </div>
@@ -168,7 +168,7 @@
             <div class="row">
                 <div class="col">
                     <div class="form-floating mb-3">
-                                    <input disabled asp-for="ResponsavelLegal.Telefone1" class="form-control" placeholder="Telefone 1" />
+                                    <input readonly asp-for="ResponsavelLegal.Telefone1" class="form-control" placeholder="Telefone 1" />
                                     <label asp-for="ResponsavelLegal.Telefone1">Telefone 1</label>
                                     <span asp-validation-for="ResponsavelLegal.Telefone1" class="text-danger"></span>
                                 </div>
@@ -176,7 +176,7 @@
 
                 <div class="col">
                     <div class="form-floating mb-3">
-                                    <input disabled asp-for="ResponsavelLegal.Telefone2" class="form-control" placeholder="Telefone 2" />
+                                    <input readonly asp-for="ResponsavelLegal.Telefone2" class="form-control" placeholder="Telefone 2" />
                                     <label asp-for="ResponsavelLegal.Telefone2">Telefone 2</label>
                                     <span asp-validation-for="ResponsavelLegal.Telefone2" class="text-danger"></span>
                                 </div>
@@ -184,7 +184,7 @@
 
                 <div class="col">
                                         <div class="form-floating mb-3">
-                                            <input disabled asp-for="ResponsavelLegal.Telefone3" class="form-control" placeholder="Telefone 3" />
+                                            <input readonly asp-for="ResponsavelLegal.Telefone3" class="form-control" placeholder="Telefone 3" />
                                             <label asp-for="ResponsavelLegal.Telefone3">Telefone 3</label>
                                             <span asp-validation-for="ResponsavelLegal.Telefone3" class="text-danger"></span>
                                         </div>
@@ -270,19 +270,19 @@
                                 </div>
                 </div>
 
-                    <div class="col">
-                            <div class="form-floating mb-3">
-                                <input asp-for="ResponsavelTecnico.Telefone3" class="form-control" placeholder="Telefone 3" />
-                                <label asp-for="ResponsavelTecnico.Telefone3">Telefone 3</label>
-                                <span asp-validation-for="ResponsavelTecnico.Telefone3" class="text-danger"></span>
-                            </div>
-                    </div>
+                <div class="col">
+                        <div class="form-floating mb-3">
+                            <input asp-for="ResponsavelTecnico.Telefone3" class="form-control" placeholder="Telefone 3" />
+                            <label asp-for="ResponsavelTecnico.Telefone3">Telefone 3</label>
+                            <span asp-validation-for="ResponsavelTecnico.Telefone3" class="text-danger"></span>
+                        </div>
+                </div>
             </div>
 
-         <!-- 4. CONHECENDO O PROPONENTE -->
+            <!-- 4. CONHECENDO O PROPONENTE -->
             <h5 class="font-weight-bold">4. CONHECENDO O PROPONENTE</h5>
             <div class="form-floating mb-3">
-                <textarea disabled asp-for="Proponente.Historico" class="form-control" placeholder="Breve histórico e finalidade da OSC" style="height: 150px;"></textarea>
+                <textarea readonly asp-for="Proponente.Historico" class="form-control" placeholder="Breve histórico e finalidade da OSC" style="height: 150px;"></textarea>
                 <label asp-for="Proponente.Historico">Breve histórico e finalidade da OSC</label>
                 <span asp-validation-for="Proponente.Historico" class="text-danger"></span>
             </div>
@@ -290,74 +290,31 @@
             <!-- 5. PRINCIPAIS AÇÕES DESENVOLVIDAS PELA PROPONENTE -->
             <h5 class="font-weight-bold">5. PRINCIPAIS AÇÕES DESENVOLVIDAS PELA PROPONENTE</h5>
             <div class="form-floating mb-3">
-                <textarea disabled asp-for="Proponente.PrincipaisAcoes" class="form-control" placeholder="Principais Ações" style="height: 150px;"></textarea>
+                <textarea readonly asp-for="Proponente.PrincipaisAcoes" class="form-control" placeholder="Principais Ações" style="height: 150px;"></textarea>
                 <label asp-for="Proponente.PrincipaisAcoes">Principais Ações</label>
                 <span asp-validation-for="Proponente.PrincipaisAcoes" class="text-danger"></span>
             </div>
 
             <!-- 6. PÚBLICO ALVO DE ATENDIMENTO DA PROPONENTE -->
-            <h5 class="font-weight-bold">6. PÚBLICO ALVO DE ATENDIMENTO DA PROPONENTE</h5>
-            <div class="form-floating mb-3">
-                <input disabled asp-for="Proponente.PublicoAlvo" class="form-control" placeholder="Público Alvo" />
-                <label asp-for="Proponente.PublicoAlvo">Público Alvo</label>
-                <span asp-validation-for="Proponente.PublicoAlvo" class="text-danger"></span>
-            </div>
-
+            <h5 class="font-weight-bold">6. PÚBLICO ALVO DE ATENDIMENTO DA PROPONENTE</h5>    
             <div class="form-group">
-            <h5 class="font-weight-bold">Selecione o(s) público(s) do projeto</h5>
-            <div class="ods-grid">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="checkboxCrianca" value="CRI">
-                    <label class="form-check-label" for="checkboxCrianca">Criança</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="checkboxAdolescente" value="ADO">
-                    <label class="form-check-label" for="checkboxAdolescente">Adolescente</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="checkboxJovens" value="JOV">
-                    <label class="form-check-label" for="checkboxJovens">Jovens</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="checkboxAdultos" value="ADU">
-                    <label class="form-check-label" for="checkboxAdultos">Adultos</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="checkboxIdosos" value="IDO">
-                    <label class="form-check-label" for="checkboxIdosos">Idosos</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="checkboxCriancaAdolescente" value="CAD">
-                    <label class="form-check-label" for="checkboxCriancaAdolescente">Criança e Adolescente</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="checkboxTodos" value="TUD">
-                    <label class="form-check-label" for="checkboxTodos">Criança, adolescentes, Jovens, adultos e idosos</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="checkboxAdultosIdosos" value="AID">
-                    <label class="form-check-label" for="checkboxAdultosIdosos">Adultos e Idosos</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="checkboxMulheres" value="MUL">
-                    <label class="form-check-label" for="checkboxMulheres">Mulheres</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="checkboxPcd" value="PCD">
-                    <label class="form-check-label" for="checkboxPcd">PCD</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="checkboxDependentes" value="DSA">
-                    <label class="form-check-label" for="checkboxDependentes">Dependentes de substâncias psicoativas</label>
+                <div class="checkbox-grid">
+                    @foreach (var item in Model.PublicoBeneficiario)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" asp-for="@item.IsSelected" value="@item.Id" />
+                            <label class="form-check-label" for="@item.Id">@item.Nome</label>
+                        </div>
+                    }
+
                 </div>
             </div>
-        </div>
 
-
+            <br>
             <!-- 7. REGIÕES DE ALCANCE DAS AÇÕES (BAIRROS) -->
             <h5 class="font-weight-bold">7. REGIÕES DE ALCANCE DAS AÇÕES (BAIRROS)</h5>
             <div class="form-floating mb-3">
-                <textarea disabled asp-for="Proponente.RegioesAtendimento" class="form-control" placeholder="Regiões de Atendimento" style="height: 150px;"></textarea>
+                <textarea readonly asp-for="Proponente.RegioesAtendimento" class="form-control" placeholder="Regiões de Atendimento" style="height: 150px;"></textarea>
                 <label asp-for="Proponente.RegioesAtendimento">Regiões de Atendimento</label>
                 <span asp-validation-for="Proponente.RegioesAtendimento" class="text-danger"></span>
             </div>
@@ -365,7 +322,7 @@
             <!-- 8. INFRAESTRUTURA DA PROPONENTE -->
             <h5 class="font-weight-bold">8. INFRAESTRUTURA DA PROPONENTE</h5>
             <div class="form-floating mb-3">
-                <textarea disabled asp-for="Proponente.Infraestrutura" class="form-control" placeholder="Infraestrutura" style="height: 150px;"></textarea>
+                <textarea readonly asp-for="Proponente.Infraestrutura" class="form-control" placeholder="Infraestrutura" style="height: 150px;"></textarea>
                 <label asp-for="Proponente.Infraestrutura">Infraestrutura</label>
                 <span asp-validation-for="Proponente.Infraestrutura" class="text-danger"></span>
             </div>
@@ -373,7 +330,7 @@
             <!-- 9. EQUIPE MULTIDISCIPLINAR DO PROPONENTE -->
             <h5 class="font-weight-bold">9. EQUIPE MULTIDISCIPLINAR DO PROPONENTE</h5>
             <div class="form-floating mb-3">
-                <textarea disabled asp-for="Proponente.EquipeMultidisciplinar" class="form-control" placeholder="Equipe Multidisciplinar" style="height: 150px;"></textarea>
+                <textarea readonly asp-for="Proponente.EquipeMultidisciplinar" class="form-control" placeholder="Equipe Multidisciplinar" style="height: 150px;"></textarea>
                 <label asp-for="Proponente.EquipeMultidisciplinar">Equipe Multidisciplinar</label>
                 <span asp-validation-for="Proponente.EquipeMultidisciplinar" class="text-danger"></span>
             </div>
@@ -381,8 +338,8 @@
             <!-- INFORMAÇÕES RELEVANTES -->
             <h5 class="font-weight-bold">INFORMAÇÕES RELEVANTES</h5>
             <div class="form-floating mb-3">
-                <textarea disabled asp-for="Proponente.InformacoesRelevantes" class="form-control" placeholder="Informações Relevantes" style="height: 150px;"></textarea>
-                <label asp-for="Proponente.InformacoesRelevantes">Equipe Multidisciplinar</label>
+                <textarea readonly asp-for="Proponente.InformacoesRelevantes" class="form-control" placeholder="Informações Relevantes" style="height: 150px;"></textarea>
+                <label asp-for="Proponente.InformacoesRelevantes">Informações Relevantes</label>
                 <span asp-validation-for="Proponente.InformacoesRelevantes" class="text-danger"></span>
             </div>
 
@@ -507,21 +464,21 @@
                     <tr>
                         <td colspan="3">
                             Meta:<br>
-                            <input asp-for="Cronograma[0].Meta" class="form-control" />
-                            <span asp-validation-for="Cronograma[0].Meta" class="text-danger"></span>
+                            <input asp-for="Projeto.Cronograma" class="form-control" />
+                            <span asp-validation-for="Projeto.Cronograma" class="text-danger"></span>
                         </td>
                         <td colspan="2">
                             Valor:<br>
-                            <input asp-for="Cronograma[0].ValorMeta" class="form-control" />
-                            <span asp-validation-for="Cronograma[0].ValorMeta" class="text-danger"></span>
+                            <input asp-for="Projeto.ValorMeta" class="form-control" />
+                            <span asp-validation-for="Projeto.ValorMeta" class="text-danger"></span>
                         </td>
                         <th></th>
                     </tr>
                     <tr>
                         <td colspan="5">
                             Indicador(es): <br />
-                            <textarea asp-for="Cronograma[0].Indicadores" class="form-control" rows="3"></textarea>
-                            <span asp-validation-for="Cronograma[0].Indicadores" class="text-danger"></span>
+                            <textarea asp-for="Projeto.Indicadores" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Projeto.Indicadores" class="text-danger"></span>
                         </td>
                     </tr>
                     <tr>
@@ -536,20 +493,20 @@
                     </tr>
                     <tr>
                         <td>
-                            <input asp-for="Cronograma[0].Etapas" class="form-control" />
-                            <span asp-validation-for="Cronograma[0].Etapas" class="text-danger"></span>
+                            <input asp-for="CronogramaMeta[0].Etapas" class="form-control" />
+                            <span asp-validation-for="CronogramaMeta[0].Etapas" class="text-danger"></span>
                         </td>
                         <td>
-                            <input asp-for="Cronograma[0].ValorEtapa" class="form-control" />
-                            <span asp-validation-for="Cronograma[0].ValorEtapa" class="text-danger"></span>
+                            <input asp-for="CronogramaMeta[0].ValorEtapa" class="form-control" />
+                            <span asp-validation-for="CronogramaMeta[0].ValorEtapa" class="text-danger"></span>
                         </td>
                         <td>
-                            <input asp-for="Cronograma[0].Inicio" class="form-control" type="date" />
-                            <span asp-validation-for="Cronograma[0].Inicio" class="text-danger"></span>
+                            <input asp-for="CronogramaMeta[0].Inicio" class="form-control" type="date" />
+                            <span asp-validation-for="CronogramaMeta[0].Inicio" class="text-danger"></span>
                         </td>
                         <td>
-                            <input asp-for="Cronograma[0].Termino" class="form-control" type="date" />
-                            <span asp-validation-for="Cronograma[0].Termino" class="text-danger"></span>
+                            <input asp-for="CronogramaMeta[0].Termino" class="form-control" type="date" />
+                            <span asp-validation-for="CronogramaMeta[0].Termino" class="text-danger"></span>
                         </td>
                         <td>
                             <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button>
@@ -653,7 +610,7 @@
             <br />                        <br />
 
             <!-- 12. FOTOS DO PROJETO/INSTITUIÇÃO -->
-            <h5 class="font-weight-bold">12. FOTOS DO PROJETO/INSTITUIÇÃO</h5>
+            <h5 class="font-weight-bold">12. FOTO DO PROJETO/INSTITUIÇÃO</h5>
 
             <div class="form-group">
                 <label for="anexo">Selecione uma imagem:</label>
@@ -666,80 +623,23 @@
 
             <div class="form-group">
                 <h5 class="font-weight-bold">13. SELECIONE A(S) ODS DO PROJETO</h5>
-                <div class="ods-grid">
-                    <div class="form-check form-check-inline">
-                        <input  class="form-check-input" type="checkbox" id="odsCheckbox1" value="1">
-                        <label class="form-check-label" for="odsCheckbox1">1 - Erradicação da pobreza</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input  class="form-check-input" type="checkbox" id="odsCheckbox2" value="2">
-                        <label class="form-check-label" for="odsCheckbox2">2 - Fome zero e agricultura sustentável</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input  class="form-check-input" type="checkbox" id="odsCheckbox3" value="3">
-                        <label class="form-check-label" for="odsCheckbox3">3 - Saúde e Bem-Estar</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input  class="form-check-input" type="checkbox" id="odsCheckbox4" value="4">
-                        <label class="form-check-label" for="odsCheckbox4">4 - Educação de qualidade</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input  class="form-check-input" type="checkbox" id="odsCheckbox5" value="5">
-                        <label class="form-check-label" for="odsCheckbox5">5 - Igualdade de gênero</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input  class="form-check-input" type="checkbox" id="odsCheckbox6" value="6">
-                        <label class="form-check-label" for="odsCheckbox6">6 - Água potável e saneamento</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input  class="form-check-input" type="checkbox" id="odsCheckbox7" value="7">
-                        <label class="form-check-label" for="odsCheckbox7">7 - Energia limpa e acessível</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input  class="form-check-input" type="checkbox" id="odsCheckbox8" value="8">
-                        <label class="form-check-label" for="odsCheckbox8">8 - Trabalho decente e crescimento econômico</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input  class="form-check-input" type="checkbox" id="odsCheckbox9" value="9">
-                        <label class="form-check-label" for="odsCheckbox9">9 - Indústria, inovação e infraestrutura</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input  class="form-check-input" type="checkbox" id="odsCheckbox10" value="10">
-                        <label class="form-check-label" for="1odsCheckbox10">10 - Redução das desigualdades</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input  class="form-check-input" type="checkbox" id="odsCheckbox11" value="11">
-                        <label class="form-check-label" for="1odsCheckbox11">11 - Cidades e comunidades sustentáveis</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input  class="form-check-input" type="checkbox" id="odsCheckbox12" value="12">
-                        <label class="form-check-label" for="1odsCheckbox12">12 - Consumo e produção responsáveis</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input  class="form-check-input" type="checkbox" id="odsCheckbox13" value="13">
-                        <label class="form-check-label" for="1odsCheckbox13">13 - Ação contra a mudança global do clima</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input  class="form-check-input" type="checkbox" id="odsCheckbox14" value="14">
-                        <label class="form-check-label" for="1odsCheckbox14">14 - Vida na água</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input  class="form-check-input" type="checkbox" id="odsCheckbox15" value="15">
-                        <label class="form-check-label" for="1odsCheckbox15">15 - Vida terrestre</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input  class="form-check-input" type="checkbox" id="odsCheckbox16" value="16">
-                        <label class="form-check-label" for="1odsCheckbox16">16 - Paz, Justiça e Instituições Eficazes</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input  class="form-check-input" type="checkbox" id="odsCheckbox17" value="17">
-                        <label class="form-check-label" for="1odsCheckbox17">17 - Parcerias e meios de implementação</label>
-                    </div>
+                <div class="checkbox-grid">
+                    @for (int i = 0; i < Model.ODS.Count; i++)
+                    {
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" asp-for="ODS[i].IsSelected" />
+                            <label class="form-check-label" for="odsCheckbox@Model.ODS[i].Id">
+                                @Model.ODS[i].Id - @Model.ODS[i].Nome
+                            </label>
+                        </div>
+                    }
                 </div>
             </div>
 
             
             <br />
+            
+            <h5 class="font-weight-bold">14. ORÇAMENTO PEDIDO PARA O PROJETO</h5>
             <div class="w-25 form-group">
                 <label for="orcamento">Orçamento:</label>
                 <input asp-for="Projeto.Orcamento" type="number" name="orcamento" id="orcamento" class="form-control" />
@@ -750,6 +650,8 @@
             <div class="form-group">
                 <button type="submit" value="Create" class="btn btn-primary btn-lg btn-block">Criar Projeto</button>
             </div>
+            <br />
+            <a asp-action="Index" asp-route-id="Id" class="btn btn-primary">Voltar</a>
     </form>
         </div>
     </div>

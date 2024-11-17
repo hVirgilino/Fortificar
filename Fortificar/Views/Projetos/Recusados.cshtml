@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Fortificar.Models.Projeto>
+
+@{
+    ViewData["Title"] = "Visualizar Projetos Recusados ";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br />
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Proponente.NomeFantasia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orcamento)
+            </th>
+            <th>
+                Ações
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Proponente.NomeFantasia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Orcamento)
+                </td>
+                <td>
+                    <a asp-action="Aprovar" asp-route-id="@item.Id">Aprovar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" asp-route-id="Id" class="btn btn-primary">Voltar</a>

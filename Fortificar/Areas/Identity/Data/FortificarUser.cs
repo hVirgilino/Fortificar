@@ -14,3 +14,11 @@ public class FortificarUser : IdentityUser
     public int Tipo { get; set; }
     public int ProponenteId { get; set; }
 }
+
+public class Desembolso
+{
+    public float? ValorTotal { get; set; }
+    public float? ValorMin { get; set; } 
+    public float? ValorMax { get; set; } 
+    public bool Indicador => ValorTotal >= ValorMin && ValorTotal <= ValorMax;
+}

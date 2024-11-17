@@ -60,23 +60,23 @@ namespace Fortificar.Models
         // Seção de projetos
 
         [Display(Name = "CONHECENDO O PROPONENTE")]
-        public string Historico { get; set; }
+        public string? Historico { get; set; }
 
         [Display(Name = "PRINCIPAIS AÇÕES DESENVOLVIDAS PELA PROPONENTE")]
-        public string PrincipaisAcoes { get; set; }
+        public string? PrincipaisAcoes { get; set; }
 
         [Display(Name = "PÚBLICO ALVO DE ATENDIMENTO DA PROPONENTE")]
-        public string PublicoAlvo { get; set; }
+        public string? PublicoAlvo { get; set; }
 
         [Display(Name = "REGIÕES DE ALCANCE DAS AÇÕES (BAIRROS)")]
-        public string RegioesAtendimento { get; set; }
+        public string? RegioesAtendimento { get; set; }
 
         [Display(Name = "INFRAESTRUTURA DA PROPONENTE")]
-        public string Infraestrutura { get; set; }
+        public string? Infraestrutura { get; set; }
 
         // Lista de Equipe Multidisciplinar
         [Display(Name = "EQUIPE MULTIDISCIPLINAR DO PROPONENTE")]
-        public string EquipeMultidisciplinar { get; set; }
+        public string? EquipeMultidisciplinar { get; set; }
         //public List<Projeto> Projetos { get;  set; }
 
         // Informações relevantes

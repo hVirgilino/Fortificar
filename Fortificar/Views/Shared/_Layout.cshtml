@@ -28,13 +28,13 @@
 
         <nav class="navbar navbar-expand-lg navbar-custom">
             <div class="container">
-                <a class="navbar-brand" href="#">
-                    <img src="~/img/FORTES_LOGOMARCA.png" alt="Fortes Engenharia">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                    <img src="~/img/FORTIFICAR_LOGO.png" alt="Fortes Engenharia">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                    <div id="navbarNav" class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"  class="nav-link" >
+                    <div id="navbarNav" class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse nav-link">
                     <partial class="nav-link" name="_LoginPartial.cshtml" />
                     </div>
                 </div>
@@ -53,12 +53,12 @@
         
         <div class="footer-logo">
             <img src="~/img/FORTES_LOGOMARCA.png" alt="Fortes Engenharia">
-            &copy; 2024 - Fortes Engenharia. Todos os direitos reservados. - 
-            <a asp-area="" asp-controller="Home" asp-action="Privacy"> Privacidade.</a>
+            &copy; 2024 - Fortes Engenharia. Todos os direitos reservados.
         
         </div>
 
        
+    </footer>
         <div class="collapse d-sm-inline-flex flex-sm-row-reverse">
             <!-- Botão de subir -->
             <button id="scrollTopButton" title="Voltar ao topo">
@@ -66,7 +66,6 @@
             </button>
 
         </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

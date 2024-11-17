@@ -1,25 +1,38 @@
-﻿@model Fortificar.Models.ViewModels.ProjetoViewModel
+﻿@model List<Projeto>
 
 @{
     ViewData["Title"] = "Visualizar Projetos";
     Layout = "../Shared/_Layout.cshtml";
+
+    var Tipo = (int)ViewData["Tipo"];
+
 }
 
 <h1>@ViewData["Title"]</h1>
-<br /><br />
-<div class="form-group">
-    <a asp-action="Create">Criar novo Projeto</a>
-</div>
+<br />
+@if (Tipo == 1)
+{
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Criar novo Projeto</a>
+    </p>
+}
+else if (Tipo == 0)
+{
+    <p>
+        <a class="btn btn-warning" asp-action="Recusados">Projetos em análise</a>
+    </p>
+}
 
-<br /><br />
+
+<br />
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Proponente.NomeFantasia)
+                Nome da Empresa
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Projeto.Orcamento)
+                Orçamento do Projeto
             </th>
             <th>
                 Ações
@@ -30,23 +43,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-                <td>
-                    Teste Empresa
-                </td>
-                <td>
-                    6000
-                </td>
-                <td>
-                    <a asp-action="Edit" >Editar</a> |
-                    <a asp-action="Details" >Detalhes</a> |
-                    <a asp-action="Delete" >Excluir</a>
-                </td>
-                <td>
-                    Em análise
-                </td>
-            </tr>
-        @foreach (var item in Model.Projetos)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
@@ -56,12 +53,16 @@
                     @Html.DisplayFor(modelItem => item.Orcamento)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                    <a asp-action="Detalhes" asp-route-id="@item.Id">Detalhes</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Situacao.Nome)
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
+
+<a asp-action="Index" asp-route-id="Id" class="btn btn-primary">Voltar</a>

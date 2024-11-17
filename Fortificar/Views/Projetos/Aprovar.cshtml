@@ -1,0 +1,75 @@
+﻿@model Fortificar.Models.Projeto
+
+@{
+    ViewData["Title"] = "Aprovar projeto";
+}
+
+<h1>@ViewData["Title"]</h1>
+    <hr />
+
+<h3>Você tem certeza que deseja aprovar o projeto?</h3>
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ObjetivoGeral)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ObjetivoGeral)
+        </dd>
+    </dl>
+
+
+    <hr />
+    <input asp-for="Proponente.EmailEmpresa" readonly type="text" id="Destinatario" class="form-control col-sm-6" />
+    <input placeholder="Assunto" type="text" id="Assunto" class="form-control col-sm-6" />
+    <textarea placeholder="Mensagem" type="text" id="Texto" class="form-control col-sm-6" ></textarea>
+    <hr />
+    <button asp-controller="Emails" type="button" class="btn btn-success" onclick="Aprovar()" id="Aprovar">
+        <i class="fa fa-envelope" style="font-size:36px;">Aprovar</i>
+    </button>
+    <hr />
+
+    <h4 id="RetornoMsg"></h4>
+
+
+    <script>
+        setTimeout(function () {
+            $('#Destinatario').focus();
+            $('#Destinatario').select();
+        }, 200);
+
+        var Aprovar = function () {
+            $("#Aprovar").html('<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span><b>Aguarde...</b></span>');
+            $('#Aprovar').attr('disabled', 'disabled');
+            $("#RetornoMsg").html('');
+
+            var _Destinatario = $('#Destinatario').val();
+            var _Texto = $('#Texto').val();
+            var _Assunto = $('#Assunto').val();
+
+            $.ajax({
+                type: "GET",
+                url: "/Emails/Enviar?Destinatario=" + _Destinatario + "Texto=" + _Texto + "Assunto=" + _Assunto,
+                success: function (result) {
+                    setTimeout(function () {
+                        $("#Aprovar").html('<i class="fa fa-envelope" style="font-size:36px;">Aprovar</i>');
+                        $('#Aprovar').removeAttr('disabled');
+                        $("#RetornoMsg").html(result);
+                    }, 200);
+
+                    setTimeout(function () {
+                        $("#RetornoMsg").html('');
+                    }, 3000);
+                },
+                error: function (response) {
+                    console.log(response.responseText);
+                }
+            });
+        }
+    </script>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <a asp-action="Index" class="btn btn-primary">Voltar</a>
+    </form>
+</div>

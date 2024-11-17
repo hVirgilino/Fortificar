@@ -54,6 +54,12 @@ namespace Fortificar.Areas.Identity.Pages.Account.Manage
         [BindProperty]
         public Proponente Proponente { get; set; } = new();
 
+        [BindProperty]
+        public Desembolso Desembolso { get; set; } = new();
+
+        [BindProperty]
+        public List<Parametro> Parametros { get; set; } = new();
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -61,45 +67,105 @@ namespace Fortificar.Areas.Identity.Pages.Account.Manage
 
 
         private async Task LoadAsync(FortificarUser user)
-        {
+        {        
 
-            try
+            if (user.Tipo == 0)
             {
-                Proponente = await _context.Proponente
-                    .Include(p => p.ResponsavelLegal)
-                    .FirstOrDefaultAsync(p => p.Id == user.ProponenteId);
-
-            }
-            catch (Exception ex)
-            {
-                // Tratamento genérico para outras exceções
-                Console.WriteLine("Ocorreu um erro: " + ex.Message);
-            }
-
-
-
-            if (Proponente == null)
-            {
-                // Criar um novo ResponsavelLegal se necessário
-                var novoResponsavelLegal = new ResponsavelLegal();
-                _context.ResponsavelLegal.Add(novoResponsavelLegal);
-                await _context.SaveChangesAsync();
-
-                // Criar um novo Proponente e associar o ResponsavelLegal
-                Proponente = new Proponente
+                try
                 {
-                    ResponsavelLegalId = novoResponsavelLegal.Id,
-                    // Preencha outros campos do Proponente conforme necessário
-                };
-                _context.Proponente.Add(Proponente);
-                await _context.SaveChangesAsync();
+                    var _parametro = _context.Parametro
+         .FirstOrDefault(p => p.Nome.ToLower() == "desembolso");
 
-                // Associar o ProponenteId ao usuário
-                user.ProponenteId = Proponente.Id;
-                await _userManager.UpdateAsync(user);
+                    Desembolso = new Desembolso
+                    {
+                        ValorTotal = _context.Projeto
+        .Where(p => p.SituacaoId == 4 || p.SituacaoId == 6)
+        .Sum(p => p.Orcamento),
+                        ValorMin = _parametro.ValorMin,
+                        ValorMax = _parametro.ValorMax
+                    };
+
+                    // Busca todos os parâmetros no banco de dados
+                    var parametros = _context.Parametro.ToList();
+
+                    // Se a lista for nula, inicializa uma lista vazia para evitar NullReferenceException
+                    if (parametros == null)
+                    {
+                        parametros = new List<Parametro>();
+                    }
+
+                    Parametros = parametros;
+
+                }
+                catch (Exception ex)
+                {
+                    // Tratamento genérico para outras exceções
+                    Console.WriteLine("Ocorreu um erro: " + ex.Message);
+                }
+            }else if(user.Tipo == 1)
+            {
+                try
+                {
+                    Proponente = await _context.Proponente
+                        .Include(p => p.ResponsavelLegal)
+                        .FirstOrDefaultAsync(p => p.Id == user.ProponenteId);
+
+                }
+                catch (Exception ex)
+                {
+                    // Tratamento genérico para outras exceções
+                    Console.WriteLine("Ocorreu um erro: " + ex.Message);
+                }
+
+
+                if (Proponente == null)
+                {
+                    // Criar um novo ResponsavelLegal se necessário
+                    var novoResponsavelLegal = new ResponsavelLegal();
+                    _context.ResponsavelLegal.Add(novoResponsavelLegal);
+                    await _context.SaveChangesAsync();
+
+                    // Criar um novo Proponente e associar o ResponsavelLegal
+                    Proponente = new Proponente
+                    {
+                        ResponsavelLegalId = novoResponsavelLegal.Id,
+                        // Preencha outros campos do Proponente conforme necessário
+                    };
+                    _context.Proponente.Add(Proponente);
+                    await _context.SaveChangesAsync();
+
+                    // Associar o ProponenteId ao usuário
+                    user.ProponenteId = Proponente.Id;
+                    await _userManager.UpdateAsync(user);
+                }
             }
 
 
+            ViewData["Tipo"] = user.Tipo;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConfigurarParametros(List<Parametro> parametros)
+        {
+            foreach (var parametro in parametros)
+            {
+                // Busca o parâmetro existente no banco
+                var parametroExistente = await _context.Parametro
+                    .FirstOrDefaultAsync(p => p.Id == parametro.Id);
+
+                if (parametroExistente != null)
+                {
+                    // Atualiza os valores
+                    parametroExistente.ValorMin = parametro.ValorMin;
+                    parametroExistente.ValorMax = parametro.ValorMax;
+                    parametroExistente.Ativo = parametro.Ativo;
+                }
+            }
+
+            // Salva as alterações no banco
+            await _context.SaveChangesAsync();
+
+            return Page();
         }
 
 
