@@ -191,11 +191,7 @@ namespace Fortificar.Controllers
                 .Select(fu => fu.ProponenteId)
                 .FirstOrDefault();
 
-            // Caso não encontre o ProponenteId, redireciona para uma página de erro
-            if (proponenteId == null)
-            {
-                return RedirectToAction("Error");
-            }
+           
 
             // Busca o proponente no banco de dados
             var proponente = _context.Proponente

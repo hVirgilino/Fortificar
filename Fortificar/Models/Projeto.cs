@@ -61,8 +61,8 @@ namespace Fortificar.Models
         public float? ValorMeta { get; set; }
         public string? Indicadores { get; set; }
 
-        public ICollection<ProjetoODS> ProjetoODS { get; set; }
-        public ICollection<ProjetoPublicoBeneficiario> ProjetoPublicoBeneficiario { get; set; }
+        public ICollection<ProjetoODS>? ProjetoODS { get; set; }
+        public ICollection<ProjetoPublicoBeneficiario>? ProjetoPublicoBeneficiario { get; set; }
     }
 
     public class Situacao

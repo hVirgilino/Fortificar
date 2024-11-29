@@ -144,7 +144,7 @@ namespace Fortificar.Areas.Identity.Pages.Account.Manage
             ViewData["Tipo"] = user.Tipo;
         }
 
-        [HttpPost]
+       
         public async Task<IActionResult> ConfigurarParametros(List<Parametro> parametros)
         {
             foreach (var parametro in parametros)

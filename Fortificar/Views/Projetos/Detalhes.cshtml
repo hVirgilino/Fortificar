@@ -429,7 +429,7 @@
                     <input readonly class="form-control" value="5"/>
                 </td>
 
-                @foreach (var item in Model.EquipeExecucao)
+                @foreach (var item in Model.Projeto.EquipeExecucao)
                 {
                     <td>
                         <input readonly asp-for="Projeto.EquipeExecucao[@item.Id].Nome" class="form-control" />
@@ -525,7 +525,7 @@
                     <input readonly value="31/12/2024" class="form-control" type="date" />
                 </td>
 
-                @foreach (var item in Model.CronogramaMeta)
+                @foreach (var item in Model.Projeto.CronogramaMeta)
                 {
                     <td>
                         <input readonly asp-for="Projeto.CronogramaMeta[@item.Id].Etapas" class="form-control" />
@@ -581,7 +581,7 @@
                 <td>
                     <input readonly class="form-control" value="1" />
                 </td>
-                @foreach (var item in Model.PlanoAplicacao)
+                @foreach (var item in Model.Projeto.PlanoAplicacao)
                 {
                     <td>
                         <input readonly asp-for="Projeto.PlanoAplicacao[@item.Id].Especificacao" class="form-control" />
@@ -643,7 +643,7 @@
                     <input readonly class="form-control" value="1" />
                 </td>
 
-                @foreach (var item in Model.PlanoAplicacao)
+                @foreach (var item in Model.Projeto.PlanoAplicacao)
                 {
                     <td>
                         <input readonly asp-for="Projeto.PlanoAplicacao[@item.Id].Especificacao" class="form-control" />
