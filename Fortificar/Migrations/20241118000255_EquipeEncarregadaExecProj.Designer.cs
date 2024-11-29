@@ -4,6 +4,7 @@ using Fortificar.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fortificar.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    partial class AuthDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241118000255_EquipeEncarregadaExecProj")]
+    partial class EquipeEncarregadaExecProj
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,8 +199,6 @@ namespace Fortificar.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProjetoId");
 
                     b.ToTable("EquipeExecucaoProjeto");
                 });
@@ -1051,17 +1052,6 @@ namespace Fortificar.Migrations
                 {
                     b.HasOne("Fortificar.Models.Projeto", "Projeto")
                         .WithMany("CronogramaMeta")
-                        .HasForeignKey("ProjetoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Projeto");
-                });
-
-            modelBuilder.Entity("Fortificar.Models.EquipeExecucaoProjeto", b =>
-                {
-                    b.HasOne("Fortificar.Models.Projeto", "Projeto")
-                        .WithMany()
                         .HasForeignKey("ProjetoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

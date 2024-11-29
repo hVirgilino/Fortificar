@@ -18,6 +18,7 @@ public class AuthDbContext : IdentityDbContext<FortificarUser>
     public DbSet<MembroEquipe> MembroEquipe { get; set; }
     public DbSet<CronogramaMeta> CronogramaMeta { get; set; }
     public DbSet<PlanoAplicacaoItem> PlanoAplicacaoItem { get; set; }
+    public DbSet<EquipeExecucaoProjeto> EquipeExecucaoProjeto { get; set; }
     public DbSet<Anexo> Anexo { get; set; }
     public DbSet<Parametro> Parametro { get; set; }
     public DbSet<ODS> ODS { get; set; }

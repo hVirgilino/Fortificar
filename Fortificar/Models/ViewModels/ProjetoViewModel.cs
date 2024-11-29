@@ -2,14 +2,7 @@
 {
     public class ProjetoViewModel
 	{//MIGRATION
-		public Projeto Projeto { get; set; }
-		public Proponente? Proponente { get; set; }
-		public ResponsavelLegal? ResponsavelLegal { get; set; }
-		public ResponsavelTecnico ResponsavelTecnico { get; set; }
-		public Anexo? Anexo { get; set; }
-        public List<MembroEquipe> EquipeExecucao { get; set; } = new List<MembroEquipe>();
-        public List<CronogramaMeta> CronogramaMeta { get; set; } = new List<CronogramaMeta>();
-        public List<PlanoAplicacaoItem> PlanoAplicacao { get; set; } = new List<PlanoAplicacaoItem>();		
+		public Projeto Projeto { get; set; }		
         public List<ODS> ODS { get; set; } = new List<ODS>();
         public List<PublicoBeneficiario> PublicoBeneficiario { get; set; } = new List<PublicoBeneficiario>();
 

@@ -37,7 +37,10 @@ namespace Fortificar.Models
         public List<CronogramaMeta>? CronogramaMeta { get; set; } = new List<CronogramaMeta>();
 
         // Plano de aplicação
-        public List<PlanoAplicacaoItem>? PlanoAplicacao { get; set; } = new List<PlanoAplicacaoItem>();      
+        public List<PlanoAplicacaoItem>? PlanoAplicacao { get; set; } = new List<PlanoAplicacaoItem>();    
+        
+        // Equipe encarregada pela execução do projeto
+        public List<EquipeExecucaoProjeto>? EquipeEncarregada { get; set; } = new List<EquipeExecucaoProjeto>();      
         
         // ODS
         public List<ODS>? ODS { get; set; } = new List<ODS>();
@@ -58,8 +61,8 @@ namespace Fortificar.Models
         public float? ValorMeta { get; set; }
         public string? Indicadores { get; set; }
 
-        public ICollection<ProjetoODS>? ProjetoODS { get; set; }
-        public ICollection<ProjetoPublicoBeneficiario>? ProjetoPublicoBeneficiario { get; set; }
+        public ICollection<ProjetoODS> ProjetoODS { get; set; }
+        public ICollection<ProjetoPublicoBeneficiario> ProjetoPublicoBeneficiario { get; set; }
     }
 
     public class Situacao
@@ -123,5 +126,21 @@ namespace Fortificar.Models
         public int ProjetoId { get; set; }
         [NotMapped]
         public Projeto? Projeto { get; set; }
+    }
+    public class EquipeExecucaoProjeto
+    {
+        public int Id { get; set; }
+        [Display(Name = "Especificação")]
+        public string? Especificacao { get; set; }
+        public string? Unidade { get; set; }
+        public int? Quantidade { get; set; }
+        [Display(Name = "Valor Unitário")]
+        public float? ValorUnitario { get; set; }
+
+        [Display(Name = "Valor Total")]
+        public float? ValorTotal { get; set; }
+
+        public int ProjetoId { get; set; }
+        public Projeto Projeto { get; set; }
     }
 }

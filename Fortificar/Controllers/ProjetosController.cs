@@ -15,16 +15,19 @@ namespace Fortificar.Controllers
     {
         private readonly AuthDbContext _context;
         private readonly UserManager<FortificarUser> _userManager;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProjetosController(AuthDbContext context, UserManager<FortificarUser> userManager)
+        public ProjetosController(AuthDbContext context, UserManager<FortificarUser> userManager, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _userManager = userManager;
+
+            _webHostEnvironment = webHostEnvironment;
         }
 
 
         // GET: Projetos
-        public async Task<IActionResult> Index(ProjetoViewModel viewmodelIndex)
+        public async Task<IActionResult> Index(List<Projeto> projetos)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -32,102 +35,20 @@ namespace Fortificar.Controllers
             ViewData["UserNome"] = userName;
 
             var user = await _userManager.GetUserAsync(this.User);
+            //var projetos = _context.Projeto.ToList();
 
             if (user.Tipo == 1)
             {
-                // Busca o ProponenteId baseado no usuário logado
-                var proponenteId = _context.FortificarUser
-                    .Where(fu => fu.Id == userId)
-                    .Select(fu => fu.ProponenteId)
-                    .FirstOrDefault();
-
-                // Caso não encontre o ProponenteId, redireciona para uma página de erro
-                if (proponenteId == null)
-                {
-                    return RedirectToAction("Error");
-                }
-
-                // Busca o proponente no banco de dados
-                var proponente = _context.Proponente
-                    .FirstOrDefault(p => p.Id == proponenteId);
-
-                // Caso não encontre o proponente, redireciona para uma página de erro
-                if (proponente == null)
-                {
-                    return RedirectToAction("Error");
-                }
-
-
-
-                // Busca o Responsável Legal, se houver
-                var responsavelLegal = _context.ResponsavelLegal
-                    .FirstOrDefault(rl => rl.Id == proponente.ResponsavelLegalId);
-
-                var ods = _context.ODS.OrderBy(a => a.Id);
-                var pb = _context.PublicoBeneficiario.OrderBy(a => a.Id);
-                viewmodelIndex = new ProjetoViewModel
-                {
-
-                    Projetos = await _context.Projeto
-                                     .Include(p => p.Proponente)
-                                     .ToListAsync(),
-
-                    Proponente = new Proponente
-                    {
-                        RazaoSocial = proponente.RazaoSocial,
-                        NomeFantasia = proponente.NomeFantasia,
-                        CNPJ = proponente.CNPJ,
-                        InscricaoEstadual = proponente.InscricaoEstadual,
-                        InscricaoMunicipal = proponente.InscricaoMunicipal,
-                        Endereco = proponente.Endereco,
-                        Numero = proponente.Numero,
-                        Complemento = proponente.Complemento,
-                        Bairro = proponente.Bairro,
-                        Cidade = proponente.Cidade,
-                        Estado = proponente.Estado,
-                        CEP = proponente.CEP,
-                        Telefone1 = proponente.Telefone1,
-                        Telefone2 = proponente.Telefone2,
-                        Telefone3 = proponente.Telefone3,
-                        Site = proponente.Site,
-
-                        Historico = proponente.Historico,
-                        PrincipaisAcoes = proponente.PrincipaisAcoes,
-                        PublicoAlvo = proponente.PublicoAlvo,
-                        RegioesAtendimento = proponente.RegioesAtendimento,
-                        Infraestrutura = proponente.Infraestrutura,
-                        EquipeMultidisciplinar = proponente.EquipeMultidisciplinar
-
-                    },
-                    ResponsavelLegal = responsavelLegal != null ? new ResponsavelLegal
-                    {
-                        Nome = responsavelLegal.Nome,
-                        CPF = responsavelLegal.CPF,
-                        RG = responsavelLegal.RG,
-                        OrgaoExpedidor = responsavelLegal.OrgaoExpedidor,
-                        CargoOSC = responsavelLegal.CargoOSC,
-                        MandatoVigente = responsavelLegal.MandatoVigente,
-                        Endereco = responsavelLegal.Endereco,
-                        Telefone1 = responsavelLegal.Telefone1,
-                        Telefone2 = responsavelLegal.Telefone2,
-                        Telefone3 = responsavelLegal.Telefone3
-                    } : new ResponsavelLegal(),
-
-                    EquipeExecucao = new List<MembroEquipe> { new MembroEquipe() },
-                    CronogramaMeta = new List<CronogramaMeta> { new CronogramaMeta() },
-                    PlanoAplicacao = new List<PlanoAplicacaoItem> { new PlanoAplicacaoItem() }
-                };
-
-                // Retorna a view preenchida com o ViewModel
-                //return View("Create", viewModel);
-
-                ViewData["Tipo"] = user.Tipo;
-                return View("Index", viewmodelIndex);
+                projetos = _context.Projeto
+                    .Include(p => p.Proponente)
+                    .Include(p => p.Situacao)
+                    .Where(p => p.ProponenteId == user.ProponenteId)
+                    .ToList();
             }
             else if(user.Tipo == 0)
             {
 
-                var projetos = _context.Projeto
+                projetos = _context.Projeto
                     .Include(p => p.Proponente)
                     .Include(p => p.Situacao)
                     .Where(p => p.SituacaoId == 2 || p.SituacaoId == 3 || p.SituacaoId == 4)
@@ -135,12 +56,10 @@ namespace Fortificar.Controllers
                 
 
 
-                ViewData["Tipo"] = user.Tipo;
-                return View("Index", projetos);
             }
 
-
-            return View("Index");
+                ViewData["Tipo"] = user.Tipo;
+                return View("Index", projetos);
         }
 
 
@@ -159,13 +78,18 @@ namespace Fortificar.Controllers
                 .Include(p => p.Anexo)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-            //var odsList = projeto.ProjetoODS.Select(po => po.ODS).ToList();
-
 
             if (projeto == null)
             {
                 return NotFound();
             }
+
+            bool ataEleicaoPendente = true;
+            bool estatutoPendente = false;
+            bool cnpjPendente = false;
+            bool cpfPendente = false;
+            bool rgPendente = false;
+            bool dadosBancariosPendente = false;
 
             if (projeto.SituacaoId == 4)
             {
@@ -174,34 +98,85 @@ namespace Fortificar.Controllers
                     .FirstOrDefaultAsync(a => a.ProjetoId == projeto.Id);
 
                 // Verificação de pendências de documentos
-                bool ataEleicaoPendente = anexo?.AtaEleicao == null;
-                bool estatutoPendente = anexo?.Estatuto == null;
-                bool cnpjPendente = anexo?.CNPJ == null;
-                bool cpfPendente = anexo?.CPFRespLegal == null;
-                bool rgPendente = anexo?.RGRespLegal == null;
-                bool dadosBancariosPendente = anexo?.DadosBancarios == null;
-
-
-                // Cria um objeto com o status dos documentos pendentes
-                var anexosPendentes = new
-                {
-                    AtaEleicaoPendente = ataEleicaoPendente,
-                    EstatutoPendente = estatutoPendente,
-                    CNPJPendente = cnpjPendente,
-                    CPFPendente = cpfPendente,
-                    RGPendente = rgPendente,
-                    DadosBancariosPendente = dadosBancariosPendente
-                };
-
-                ViewData["AnexosPendentes"] = anexosPendentes;
+                ataEleicaoPendente = anexo?.AtaEleicao == null;
+                estatutoPendente = anexo?.Estatuto == null;
+                cnpjPendente = anexo?.CNPJ == null;
+                cpfPendente = anexo?.CPFRespLegal == null;
+                rgPendente = anexo?.RGRespLegal == null;
+                dadosBancariosPendente = anexo?.DadosBancarios == null;
             }
+
+
+            // Cria um objeto com o status dos documentos pendentes
+            var anexosPendentes = new
+            {
+                AtaEleicaoPendente = ataEleicaoPendente,
+                EstatutoPendente = estatutoPendente,
+                CNPJPendente = cnpjPendente,
+                CPFPendente = cpfPendente,
+                RGPendente = rgPendente,
+                DadosBancariosPendente = dadosBancariosPendente
+            };
+
+            ViewData["AnexosPendentes"] = anexosPendentes;
 
             
             ViewData["_Situacao"] = projeto.SituacaoId;
 
             ViewData["Tipo"] = user.Tipo;
 
-            return View(projeto);
+            /*
+            var odsDisponiveis = await (from po in _context.ProjetoODS
+                                        join ods in _context.ODS on po.ODSId equals ods.Id
+                                        where po.ProjetoId == id
+                                        select ods)
+                                        .ToListAsync();
+
+            var pbDisponiveis = await (from ppb in _context.ProjetoPublicoBeneficiario
+                                       join pb in _context.PublicoBeneficiario on ppb.PublicoBeneficiarioId equals pb.Id
+                                       where ppb.ProjetoId == id
+                                       select pb)
+                                        .ToListAsync();
+            */
+            var detalhesViewModel = new ProjetoViewModel
+            {
+                Projeto = projeto,
+                //ODS = odsDisponiveis,
+                //PublicoBeneficiario = pbDisponiveis
+            };
+
+            var pastaDoc = Path.Combine(_webHostEnvironment.WebRootPath, "pdf");
+
+            if (Directory.Exists(pastaDoc))
+            {
+                // Verifica se há arquivos na pasta
+                var arquivos = Directory.GetFiles(pastaDoc, "*.pdf");
+                if (arquivos.Length > 0)
+                {
+                    // Pega o primeiro arquivo encontrado
+                    var caminho = arquivos[0];
+                    var nomeArq = Path.GetFileName(caminho);
+
+                    // Armazena as informações no ViewData
+                    var caminhoArq = $"/pdf/{nomeArq}";
+                    ViewData["CaminhoDocAnexo"] = caminhoArq;
+                    ViewData["NomeDocAnexo"] = nomeArq;
+                }
+                else
+                {
+                    // Caso a pasta esteja vazia
+                    ViewData["CaminhoDocAnexo"] = null;
+                    ViewData["NomeDocAnexo"] = null;
+                }
+            }
+            else
+            {
+                // Caso a pasta não exista
+                ViewData["CaminhoDocAnexo"] = null;
+                ViewData["NomeDocAnexo"] = null;
+            }
+
+            return View(detalhesViewModel);
         }
 
         
@@ -257,98 +232,64 @@ namespace Fortificar.Controllers
 
                 Projetos = await _context.Projeto
                                  .Include(p => p.Proponente)
+                                    .ThenInclude(r => r.ResponsavelLegal)
                                  .ToListAsync(),
 
-                Proponente = new Proponente
+                Projeto = new Projeto
                 {
-                    RazaoSocial = proponente.RazaoSocial,
-                    NomeFantasia = proponente.NomeFantasia,
-                    CNPJ = proponente.CNPJ,
-                    InscricaoEstadual = proponente.InscricaoEstadual,
-                    InscricaoMunicipal = proponente.InscricaoMunicipal,
-                    Endereco = proponente.Endereco,
-                    Numero = proponente.Numero,
-                    Complemento = proponente.Complemento,
-                    Bairro = proponente.Bairro,
-                    Cidade = proponente.Cidade,
-                    Estado = proponente.Estado,
-                    CEP = proponente.CEP,
-                    Telefone1 = proponente.Telefone1,
-                    Telefone2 = proponente.Telefone2,
-                    Telefone3 = proponente.Telefone3,
-                    Site = proponente.Site,
+                    Proponente = new Proponente
+                    {
+                        RazaoSocial = proponente.RazaoSocial,
+                        NomeFantasia = proponente.NomeFantasia,
+                        CNPJ = proponente.CNPJ,
+                        InscricaoEstadual = proponente.InscricaoEstadual,
+                        InscricaoMunicipal = proponente.InscricaoMunicipal,
+                        Endereco = proponente.Endereco,
+                        Numero = proponente.Numero,
+                        Complemento = proponente.Complemento,
+                        Bairro = proponente.Bairro,
+                        Cidade = proponente.Cidade,
+                        Estado = proponente.Estado,
+                        CEP = proponente.CEP,
+                        Telefone1 = proponente.Telefone1,
+                        Telefone2 = proponente.Telefone2,
+                        Telefone3 = proponente.Telefone3,
+                        Site = proponente.Site,
 
-                    Historico = proponente.Historico,
-                    PrincipaisAcoes = proponente.PrincipaisAcoes,
-                    PublicoAlvo = proponente.PublicoAlvo,
-                    RegioesAtendimento = proponente.RegioesAtendimento,
-                    Infraestrutura = proponente.Infraestrutura,
-                    EquipeMultidisciplinar = proponente.EquipeMultidisciplinar
+                        Historico = proponente.Historico,
+                        PrincipaisAcoes = proponente.PrincipaisAcoes,
+                        PublicoAlvo = proponente.PublicoAlvo,
+                        RegioesAtendimento = proponente.RegioesAtendimento,
+                        Infraestrutura = proponente.Infraestrutura,
+                        EquipeMultidisciplinar = proponente.EquipeMultidisciplinar
 
-                },
-                ResponsavelLegal = responsavelLegal != null ? new ResponsavelLegal
-                {
-                    Nome = responsavelLegal.Nome,
-                    CPF = responsavelLegal.CPF,
-                    RG = responsavelLegal.RG,
-                    OrgaoExpedidor = responsavelLegal.OrgaoExpedidor,
-                    CargoOSC = responsavelLegal.CargoOSC,
-                    MandatoVigente = responsavelLegal.MandatoVigente,
-                    Endereco = responsavelLegal.Endereco,
-                    Telefone1 = responsavelLegal.Telefone1,
-                    Telefone2 = responsavelLegal.Telefone2,
-                    Telefone3 = responsavelLegal.Telefone3
-                } : new ResponsavelLegal(),
+                    },
+                    ResponsavelLegal = responsavelLegal != null ? new ResponsavelLegal
+                    {
+                        Nome = responsavelLegal.Nome,
+                        CPF = responsavelLegal.CPF,
+                        RG = responsavelLegal.RG,
+                        OrgaoExpedidor = responsavelLegal.OrgaoExpedidor,
+                        CargoOSC = responsavelLegal.CargoOSC,
+                        MandatoVigente = responsavelLegal.MandatoVigente,
+                        Endereco = responsavelLegal.Endereco,
+                        Telefone1 = responsavelLegal.Telefone1,
+                        Telefone2 = responsavelLegal.Telefone2,
+                        Telefone3 = responsavelLegal.Telefone3
+                    } : new ResponsavelLegal(),
 
-                EquipeExecucao = new List<MembroEquipe> { new MembroEquipe() },
-                CronogramaMeta = new List<CronogramaMeta> { new CronogramaMeta() },
-                PlanoAplicacao = new List<PlanoAplicacaoItem> { new PlanoAplicacaoItem() }
+                    EquipeExecucao = new List<MembroEquipe> { new MembroEquipe() },
+                    CronogramaMeta = new List<CronogramaMeta> { new CronogramaMeta() },
+                    PlanoAplicacao = new List<PlanoAplicacaoItem> { new PlanoAplicacaoItem() }
+                }
+
+                
             };
 
             // Retorna a view preenchida com o ViewModel
             return View("Create", viewmodelCreate);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SalvarProjetoTeste(IFormFile? anexo)
-        {
-            if (ModelState.IsValid)
-            {
-
-
-                // Salvando o anexo, se existir
-                if (anexo != null)
-                {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        anexo.CopyTo(memoryStream);
-                        var arquivo = memoryStream.ToArray();
-
-                        var novoAnexo = new Anexo
-                        {
-                            Nome = anexo.FileName,
-                            Tipo = anexo.ContentType,
-                            ProjetoId = 18,
-                            Imagem = arquivo
-                        };
-
-                        _context.Anexo.Add(novoAnexo);
-                        await _context.SaveChangesAsync();
-                    }
-                }
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            var errors = ModelState.Values.SelectMany(v => v.Errors);
-            foreach (var error in errors)
-            {
-                Console.WriteLine(error.ErrorMessage);
-            }
-
-            return View("Index");
-        }
  public async Task<IActionResult> SalvarProjeto(ProjetoViewModel viewmodelProjeto, IFormFile? anexo)
         {
             if (ModelState.IsValid)
@@ -369,15 +310,15 @@ namespace Fortificar.Controllers
 
                 var responsavelTecnico = new ResponsavelTecnico
                 {
-                    Nome = viewmodelProjeto.ResponsavelTecnico.Nome,
-                    CPF = viewmodelProjeto.ResponsavelTecnico.CPF,
-                    RG = viewmodelProjeto.ResponsavelTecnico.RG,
-                    Endereco = viewmodelProjeto.ResponsavelTecnico.Endereco,
-                    MandatoVigente = viewmodelProjeto.ResponsavelTecnico.MandatoVigente,
-                    OrgaoExpedidor = viewmodelProjeto.ResponsavelTecnico.OrgaoExpedidor,
-                    Telefone1 = viewmodelProjeto.ResponsavelTecnico.Telefone1,
-                    Telefone2 = viewmodelProjeto.ResponsavelTecnico.Telefone2,
-                    Telefone3 = viewmodelProjeto.ResponsavelTecnico.Telefone3
+                    Nome = viewmodelProjeto.Projeto.ResponsavelTecnico.Nome,
+                    CPF = viewmodelProjeto.Projeto.ResponsavelTecnico.CPF,
+                    RG = viewmodelProjeto.Projeto.ResponsavelTecnico.RG,
+                    Endereco = viewmodelProjeto.Projeto.ResponsavelTecnico.Endereco,
+                    MandatoVigente = viewmodelProjeto.Projeto.ResponsavelTecnico.MandatoVigente,
+                    OrgaoExpedidor = viewmodelProjeto.Projeto.ResponsavelTecnico.OrgaoExpedidor,
+                    Telefone1 = viewmodelProjeto.Projeto.ResponsavelTecnico.Telefone1,
+                    Telefone2 = viewmodelProjeto.Projeto.ResponsavelTecnico.Telefone2,
+                    Telefone3 = viewmodelProjeto.Projeto.ResponsavelTecnico.Telefone3
                 };
 
                 _context.ResponsavelTecnico.Add(responsavelTecnico);
@@ -404,9 +345,9 @@ namespace Fortificar.Controllers
                 await _context.SaveChangesAsync();
 
                 // Salvando a equipe de execução
-                if (viewmodelProjeto.EquipeExecucao != null)
+                if (viewmodelProjeto.Projeto.EquipeExecucao != null)
                 {
-                    foreach (var membro in viewmodelProjeto.EquipeExecucao)
+                    foreach (var membro in viewmodelProjeto.Projeto.EquipeExecucao)
                     {
                         var _membro = new MembroEquipe
                         {
@@ -422,9 +363,9 @@ namespace Fortificar.Controllers
                 }
 
                 // Salvando o cronograma
-                if (viewmodelProjeto.CronogramaMeta != null)
+                if (viewmodelProjeto.Projeto.CronogramaMeta != null)
                 {
-                    foreach (var cronograma in viewmodelProjeto.CronogramaMeta)
+                    foreach (var cronograma in viewmodelProjeto.Projeto.CronogramaMeta)
                     {
                         var _cronograma = new CronogramaMeta
                         {
@@ -440,9 +381,9 @@ namespace Fortificar.Controllers
                 }
 
                 // Salvando o plano de aplicação
-                if (viewmodelProjeto.PlanoAplicacao != null)
+                if (viewmodelProjeto.Projeto.PlanoAplicacao != null)
                 {
-                    foreach (var plano in viewmodelProjeto.PlanoAplicacao)
+                    foreach (var plano in viewmodelProjeto.Projeto.PlanoAplicacao)
                     {
                         var _plano = new PlanoAplicacaoItem
                         {
@@ -681,25 +622,27 @@ namespace Fortificar.Controllers
             return RedirectToAction("Detalhes");
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Aprovar(int id)
         {
             var projeto = _context.Projeto
+                    .Include(p => p.Proponente)
                     .FirstOrDefault(p => p.Id == id);
-            var _situacao = 4; // Aguardando Documentação
+            //var _situacao = 3; // Em andamento
 
 
-            ViewData["Situacao"] = _situacao;
+            //ViewData["Situacao"] = _situacao;
 
-            await MudarSituacaoProjeto(id, _situacao);
+            //await MudarSituacaoProjeto(id, _situacao);
 
 
-            return RedirectToAction("Detalhes");
+            return View("Aprovar", projeto);
         }
         [HttpPost]
         public async Task<IActionResult> MudarSituacaoProjeto(int id, int _situacao)
         {
             var projeto = _context.Projeto
+                    .Include(p => p.Proponente)
                     .FirstOrDefault(p => p.Id == id);            
 
             projeto.SituacaoId = _situacao;

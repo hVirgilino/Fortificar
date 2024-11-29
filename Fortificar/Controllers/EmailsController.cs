@@ -24,7 +24,7 @@ namespace Fortificar.Controllers
         // P
 
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Enviar(string Destinatario, string Texto, string Assunto)
         {
             try

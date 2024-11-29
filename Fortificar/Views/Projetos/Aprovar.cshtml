@@ -11,7 +11,7 @@
 <div>
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ObjetivoGeral)
+            Objetivo Geral:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ObjetivoGeral)
@@ -20,7 +20,11 @@
 
 
     <hr />
-    <input asp-for="Proponente.EmailEmpresa" readonly type="text" id="Destinatario" class="form-control col-sm-6" />
+    <div class="form-floating mb-3">
+        <input readonly id="Destinatario" asp-for="Proponente.EmailEmpresa" class="form-control" placeholder="Email" />
+        <label asp-for="Proponente.EmailEmpresa">Email da Empresa</label>
+        <span asp-validation-for="Proponente.EmailEmpresa" class="text-danger"></span>
+    </div>
     <input placeholder="Assunto" type="text" id="Assunto" class="form-control col-sm-6" />
     <textarea placeholder="Mensagem" type="text" id="Texto" class="form-control col-sm-6" ></textarea>
     <hr />
@@ -44,12 +48,16 @@
             $("#RetornoMsg").html('');
 
             var _Destinatario = $('#Destinatario').val();
+            console.log(_Destinatario);
             var _Texto = $('#Texto').val();
             var _Assunto = $('#Assunto').val();
 
             $.ajax({
-                type: "GET",
-                url: "/Emails/Enviar?Destinatario=" + _Destinatario + "Texto=" + _Texto + "Assunto=" + _Assunto,
+                type: "POST",
+                url: "/Emails/Enviar?Destinatario=" + encodeURIComponent(_Destinatario) +
+                    "&Texto=" + encodeURIComponent(_Texto) +
+                    "&Assunto=" + encodeURIComponent(_Assunto)
+                ,
                 success: function (result) {
                     setTimeout(function () {
                         $("#Aprovar").html('<i class="fa fa-envelope" style="font-size:36px;">Aprovar</i>');
