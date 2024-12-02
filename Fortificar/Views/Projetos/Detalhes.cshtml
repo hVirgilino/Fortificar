@@ -4,11 +4,18 @@
     ViewData["Title"] = "Detalhes do projeto";
     var Tipo = (int)ViewData["Tipo"];
     var _Situacao = (int)ViewData["_Situacao"];
-    var anexosPendentes = (dynamic)ViewData["AnexosPendentes"];
 
-    var base64Imagem = Convert.ToBase64String(Model.Projeto.Anexo.Imagem);
-    var imagemSrc = $"data:image/jpeg;base64,{base64Imagem}";
-    
+    var imagemSrc = "";
+    Console.WriteLine(ViewData["AtaEleicao-env"]);
+    if(Model.Projeto.Anexo.Imagem != null)
+    {
+        var base64Imagem = Convert.ToBase64String(Model.Projeto.Anexo.Imagem);
+        imagemSrc = $"data:image/jpeg;base64,{base64Imagem}";
+    }
+
+   
+
+
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -19,6 +26,8 @@
                 <label asp-for="Projeto.Situacao.Nome">Status do projeto</label>
                 <span asp-validation-for="Projeto.Situacao.Nome" class="text-danger"></span>
     </div>
+
+    <input type="hidden" id="ProjetoId" name="ProjetoId" value="@Model.Projeto.Id" />
     <!-- 1. DADOS GERAIS DO PROPONENTE -->
     <h5 class="font-weight-bold">1. DADOS GERAIS DO PROPONENTE</h5>
 
@@ -715,6 +724,14 @@
 
     <br />
 
+    <input type="hidden" id="caminhoAtaEleicaoPendente" value="@ViewData["AtaEleicao-env"]">
+    <input type="hidden" id="caminhoEstatutoPendente" value="@ViewData["Estatuto-env"]">
+    <input type="hidden" id="caminhoCNPJPendente" value="@ViewData["CNPJ-env"]">
+    <input type="hidden" id="caminhoCPFPendente" value="@ViewData["CPFRespLegal-env"]">
+    <input type="hidden" id="caminhoRGPendente" value="@ViewData["RGRespLegal-env"]">
+    <input type="hidden" id="caminhoDadosBancariosPendente" value="@ViewData["DadosBancarios-env"]">
+
+
 @if (Tipo == 0) // Visão da FORTES
 {
     <div>
@@ -737,228 +754,249 @@ else
         {
                 
             <div>
-                <a asp-action="EnviarProjeto" asp-route-id="Id" class="btn btn-success">Enviar</a> |
-                <a asp-action="Delete" asp-route-id="Id" class="btn btn-danger">Excluir</a> |
+                <a asp-action="EnviarProjeto" asp-route-id="@Model.Projeto.Id" class="btn btn-success">Enviar</a> |
+                <a asp-action="Delete" asp-route-id="@Model.Projeto.Id" class="btn btn-danger">Excluir</a> |
             </div>
         }
-        <a asp-action="Index" asp-route-id="Id" class="btn btn-primary">Voltar</a>
+        <a asp-action="Index" asp-route-id="@Model.Projeto.Id" class="btn btn-primary">Voltar</a>
     </div>
     <br />
 }
 
 
-    @if(Tipo == 0){
-
-        <h5 class="font-weight-bold">Ata de eleição dos dirigentes</h5>
-        @if (anexosPendentes.AtaEleicaoPendente)
-
-        {
-            <input type="hidden" id="caminhoArq" name="caminhoArq" value="@ViewData["CaminhoDocAnexo"]" />
-                <div class="viewPDF marginB" style="height: 300px"></div> 
+    @if(Tipo == 0){        
+        @if(_Situacao != 6){
+            <h5 class="font-weight-bold">Ata de Eleição</h5>
+            @if (ViewData["AprovarAtaEleicao"] == null || (int)ViewData["AprovarAtaEleicao"] == 0)
+            {
+                <div id="viewPDFAtaEleicao" style="height: 300px"></div>
                 <div>
-                    <a asp-action="AprovarDoc" asp-route-id="Id" class="btn btn-success">Aprovar</a> |
-                <a asp-action="RecusarDoc" asp-route-id="Id" class="btn btn-warning">Recusar</a> |
-            </div><br><br>
-        }else{
-            <span class="text-success" id="uploadMessage">Documento: Ata de eleição dos dirigentes já aprovado!</span><br />
-        }
-
-        
-        <h5 class="font-weight-bold">Estatuto ou Contrato Social</h5>
-        @if (anexosPendentes.EstatutoPendente)
-        {
-            <input type="hidden" id="caminhoArq" name="caminhoArqEstatutoPendente" value="@ViewData["CaminhoDocAnexoEstatutoPendente"]" />
-            <div class="viewPDFEstatutoPendente marginB" style="height: 300px"></div> 
-            <div>
-                <a asp-action="AprovarDoc" asp-route-id="Id" class="btn btn-success">Aprovar</a> |
-                <a asp-action="RecusarDoc" asp-route-id="Id" class="btn btn-warning">Recusar</a> |
-            </div><br><br>
-        }else{
-            <span class="text-success" id="uploadMessage">Documento: Estatuto ou Contrato Social já aprovado!</span><br />
-        }
-
-        
-        <h5 class="font-weight-bold">Cartão do CNPJ</h5>
-        @if (anexosPendentes.CNPJPendente)
-        {
-            <input type="hidden" id="caminhoArq" name="caminhoArqCNPJPendente" value="@ViewData["CaminhoDocAnexoCNPJPendente"]" />
-            <div class="viewPDFCNPJPendente marginB" style="height: 300px"></div> 
-            <div>
-                <a asp-action="AprovarDoc" asp-route-id="Id" class="btn btn-success">Aprovar</a> |
-                <a asp-action="RecusarDoc" asp-route-id="Id" class="btn btn-warning">Recusar</a> |
-            </div><br><br>
-        }else{
-            <span class="text-success" id="uploadMessage">Documento: Cartão do CNPJ já aprovado!</span><br />
-        }
-
-        
-        <h5 class="font-weight-bold">Cópia do CPF do Responsável Legal</h5>
-        @if (anexosPendentes.CPFPendente)
-        {
-            <input type="hidden" id="caminhoArq" name="caminhoArqCPFPendente" value="@ViewData["CaminhoDocAnexoCPFPendente"]" />
-            <div class="viewPDFCPFPendente marginB" style="height: 300px"></div> 
-            <div>
-                <a asp-action="AprovarDoc" asp-route-id="Id" class="btn btn-success">Aprovar</a> |
-                <a asp-action="RecusarDoc" asp-route-id="Id" class="btn btn-warning">Recusar</a> |
-            </div><br><br>
-        }else{
-            <span class="text-success" id="uploadMessage">Documento: Cópia do CPF do Responsável Legal já aprovado!</span><br />
-        }
-
-        
-        <h5 class="font-weight-bold">Cópia do RG do Responsável Legal</h5>
-        @if (anexosPendentes.RGPendente)
-        {
-            <input type="hidden" id="caminhoArq" name="caminhoArqRGPendente" value="@ViewData["CaminhoDocAnexoRGPendente"]" />
-            <div class="viewPDFRGPendente marginB" style="height: 300px"></div> 
-            <div>
-                <a asp-action="AprovarDoc" asp-route-id="Id" class="btn btn-success">Aprovar</a> |
-                <a asp-action="RecusarDoc" asp-route-id="Id" class="btn btn-warning">Recusar</a> |
-            </div><br><br>
-        }else{
-            <span class="text-success" id="uploadMessage">Documento: Cópia do RG do Responsável Legal já aprovado!</span><br />
-        }
-
-        
-        <h5 class="font-weight-bold">Cópia do cheque ou declaração do banco assinada pelo gerente com dados bancários</h5>
-        @if (anexosPendentes.DadosBancariosPendente)
-        {
-            <input type="hidden" id="caminhoArq" name="caminhoArqDadosBancariosPendente" value="@ViewData["CaminhoDocAnexoDadosBancariosPendente"]" />
-            
-            <div class="viewPDFDadosBancariosPendente marginB" style="height: 300px"></div>
-            <div>
-                <a asp-action="AprovarDoc" asp-route-id="Id" class="btn btn-success">Aprovar</a> |
-                <a asp-action="RecusarDoc" asp-route-id="Id" class="btn btn-warning">Recusar</a> |
-            </div><br><br>
-        }else{
-            <span class="text-success" id="uploadMessage">Documento: Cópia do cheque ou declaração do banco assinada pelo gerente com dados bancários já aprovado!</span>
+                    <button class="btn btn-success" onclick="aprovarDocumento(@Model.Projeto.Id, 'AtaEleicao')">Aprovar</button> |
+                    <button class="btn btn-warning" onclick="recusarDocumento(@Model.Projeto.Id, 'AtaEleicao')">Recusar</button>
+                </div>
+            }
+            else
+            {
+                <span class="text-success">Documento: Ata de Eleição já aprovado!</span>
+            }
 
             <br />
-        }
 
-        @if (!anexosPendentes.AtaEleicaoPendente && !anexosPendentes.EstatutoPendente && !anexosPendentes.CNPJPendente && !anexosPendentes.CPFPendente && !anexosPendentes.RGPendente && !anexosPendentes.DadosBancariosPendente )
-        {
-            <br><a asp-action="ConcluirProjeto" asp-route-id="Id" class="btn btn-lg btn-success">Concluir projeto</a>
-        }
+            <br />
 
+        
+            <h5 class="font-weight-bold">Estatuto ou Contrato Social</h5>
+            @if (ViewData["AprovarEstatuto"] == null || (int)ViewData["AprovarEstatuto"] == 0)
+            {
+                <div class="viewPDFEstatuto marginB" style="height: 300px"></div>
+                <div>
+                    <button class="btn btn-success" onclick="aprovarDocumento(@Model.Projeto.Id, 'Estatuto')">Aprovar</button> |
+                    <button class="btn btn-warning" onclick="recusarDocumento(@Model.Projeto.Id, 'Estatuto')">Recusar</button>
+                </div>
+            }
+            else
+            {
+                <span class="text-success">Documento: Estatuto ou Contrato Social já aprovado!</span>
+            }
+
+            <br />
+
+            <br />
+
+        
+            <h5 class="font-weight-bold">Cartão do CNPJ</h5>
+            @if (ViewData["AprovarCNPJ"] == null || (int)ViewData["AprovarCNPJ"] == 0)
+            {
+                <div class="viewPDFCNPJ marginB" style="height: 300px"></div>
+                <div>
+                    <button class="btn btn-success" onclick="aprovarDocumento(@Model.Projeto.Id, 'CNPJ')">Aprovar</button> |
+                    <button class="btn btn-warning" onclick="recusarDocumento(@Model.Projeto.Id, 'CNPJ')">Recusar</button>
+                </div>
+            }
+            else
+            {
+                <span class="text-success">Documento: Cartão do CNPJ já aprovado!</span>
+            }
+
+            <br />
+
+            <br />
+
+        
+            <h5 class="font-weight-bold">Cópia do CPF do Responsável Legal</h5>
+            @if (ViewData["AprovarCPF"] == null || (int)ViewData["AprovarCPF"] == 0)
+            {
+                <div class="viewPDFCPF marginB" style="height: 300px"></div>
+                <div>
+                    <button class="btn btn-success" onclick="aprovarDocumento(@Model.Projeto.Id, 'CPF')">Aprovar</button> |
+                    <button class="btn btn-warning" onclick="recusarDocumento(@Model.Projeto.Id, 'CPF')">Recusar</button>
+                </div>
+            }
+            else
+            {
+                <span class="text-success">Documento: Cópia do CPF do Responsável Legal já aprovado!</span>
+            }
+
+            <br />
+
+            <br />
+
+        
+            <h5 class="font-weight-bold">Cópia do RG do Responsável Legal</h5>
+            @if (ViewData["AprovarRG"] == null || (int)ViewData["AprovarRG"] == 0)
+            {
+                <div class="viewPDFRG marginB" style="height: 300px"></div>
+                <div>
+                    <button class="btn btn-success" onclick="aprovarDocumento(@Model.Projeto.Id, 'RG')">Aprovar</button> |
+                    <button class="btn btn-warning" onclick="recusarDocumento(@Model.Projeto.Id, 'RG')">Recusar</button>
+                </div>
+            }
+            else
+            {
+                <span class="text-success">Documento: Cópia do RG do Responsável Legal já aprovado!</span>
+            }
+
+            <br />
+
+            <br />
+
+        
+            <h5 class="font-weight-bold">Dados Bancários</h5>
+            @if (ViewData["AprovarDadosBancarios"] == null || (int)ViewData["AprovarDadosBancarios"] == 0)
+            {
+                <div class="viewPDFDadosBancarios marginB" style="height: 300px"></div>
+                <div>
+                    <button class="btn btn-success" onclick="aprovarDocumento(@Model.Projeto.Id, 'DadosBancarios')">Aprovar</button> |
+                    <button class="btn btn-warning" onclick="recusarDocumento(@Model.Projeto.Id, 'DadosBancarios')">Recusar</button>
+                </div>
+            }
+            else
+            {
+                <span class="text-success">Documento: Dados Bancários já aprovado!</span>
+            }
+
+            <br />
+
+            <br />
+
+            @if ((int)ViewData["AprovarAtaEleicao"] == 1 &&
+           (int)ViewData["AprovarEstatuto"] == 1 &&
+           (int)ViewData["AprovarCNPJ"] == 1 &&
+           (int)ViewData["AprovarCPF"] == 1 &&
+           (int)ViewData["AprovarRG"] == 1 &&
+           (int)ViewData["AprovarDadosBancarios"] == 1 )
+            {
+                <br>
+
+            
+                <button class="btn btn-lg btn-success" onclick="concluirProjeto(@Model.Projeto.Id)">Concluir projeto</button>
+
+            
+            }
+
+        }else if(_Situacao == 6)
+            {
+                <h3 class="text-success">Projeto concluído!</h3>
+            }
+    
 
 
 
     }else if(Tipo == 1){
-        @if (_Situacao == 4 || _Situacao == 3)
+        @if ((_Situacao == 4 || _Situacao == 3) && Model.Projeto.Anexo != null)
         {
-            @if (!anexosPendentes.AtaEleicaoPendente)
-            {
-                <h5 class="font-weight-bold">Ata de eleição dos dirigentes</h5>
-                <div class="form-group">
-                    <label for="anexoAtaEleicao">Selecione um arquivo:</label>
-                    <input asp-for="Projeto.Anexo.AtaEleicao" type="file" name="anexoAtaEleicao" id="anexoAtaEleicao" class="form-control" accept=".jpg, .jpeg, .png, .pdf" />
-                    <span asp-validation-for="Projeto.Anexo.AtaEleicao" class="text-danger"></span>
+            var envAprovadoAtaEleicao = Model.Projeto.Anexo.AprovadoAtaEleicao;
 
-                    <span class="text-success" id="uploadMsgAtaEleicaoPendente"></span>
-                    <button type="button" id="uploadAtaEleicaoPendente" class="btn btn-primary">Anexar</button>
+            var envAprovadoEstatuto = Model.Projeto.Anexo.AprovadoEstatuto;
+
+            var envAprovadoCNPJ = Model.Projeto.Anexo.AprovadoCNPJ;
+
+            var envAprovadoCPFRespLegal = Model.Projeto.Anexo.AprovadoCPFRespLegal;
+
+            var envAprovadoRGRespLegal = Model.Projeto.Anexo.AprovadoRGRespLegal;
+
+            var envAprovadoDadosBancarios = Model.Projeto.Anexo.AprovadoDadosBancarios;
+
+            @if (envAprovadoAtaEleicao != "E" && envAprovadoAtaEleicao != "S")
+            {
+                <div class="form-group">
+                    <label for="anexoAtaEleicao"><strong>Ata de Eleição dos Dirigentes</strong></label>
+                    <input type="file" id="anexoAtaEleicao" class="form-control" accept=".jpg, .jpeg, .png, .pdf" />
+                    <button type="button" class="btn btn-primary mt-2" onclick="uploadDocumento('AtaEleicao')">Anexar</button>
+                    <span id="uploadMsgAtaEleicao" class="text-success d-block mt-2"></span>
                 </div>
-                <br />
             }
             else
             {
-                <span class="text-success" id="uploadMessage">Documento: Ata de eleição dos dirigentes já enviado!</span><br />
+               <p class="text-success">Documento: Ata de Eleição dos Dirigentes já enviado!</p>
             }
 
-
-            @if (anexosPendentes.EstatutoPendente)
-            {
-                <h5 class="font-weight-bold">Estatuto ou Contrato Social</h5>
+            @if (envAprovadoEstatuto != "E" && envAprovadoEstatuto != "S")
+            {    
                 <div class="form-group">
-                    <label for="anexoEstatuto">Selecione um arquivo:</label>
-                    <input asp-for="Projeto.Anexo.Estatuto" type="file" name="anexoEstatuto" id="anexoEstatuto" class="form-control" accept=".jpg, .jpeg, .png, .pdf" />
-                    <span asp-validation-for="Projeto.Anexo.Estatuto" class="text-danger"></span>
-
-                    <span class="text-success" id="uploadMsgEstatutoPendente"></span>
-                    <button type="button" id="uploadEstatutoPendente" class="btn btn-primary">Anexar</button>
+                    <label for="anexoEstatuto"><strong>Estatuto ou Contrato Social</strong></label>
+                    <input type="file" id="anexoEstatuto" class="form-control" accept=".jpg, .jpeg, .png, .pdf" />
+                    <button type="button" class="btn btn-primary mt-2" onclick="uploadDocumento('Estatuto')">Anexar</button>
+                    <span id="uploadMsgEstatuto" class="text-success d-block mt-2"></span>
                 </div>
-                <br>
-            }
-            else
-            {
-                <span class="text-success" id="uploadMessage">Documento: Estatuto ou Contrato Social já enviado!</span><br>
+            }else{
+                <p class="text-success">Documento: Estatuto ou Contrato Social já enviado!</p>
             }
 
-
-            @if (anexosPendentes.CNPJPendente)
-            {
-                <h5 class="font-weight-bold">Cartão do CNPJ</h5>
+            @if (envAprovadoCNPJ != "E" && envAprovadoCNPJ != "S")
+            {    
                 <div class="form-group">
-                    <label for="anexoCNPJ">Selecione um arquivo:</label>
-                    <input asp-for="Projeto.Anexo.CNPJ" type="file" name="anexoCNPJ" id="anexoCNPJ" class="form-control" accept=".jpg, .jpeg, .png, .pdf" />
-                    <span asp-validation-for="Projeto.Anexo.CNPJ" class="text-danger"></span>
-
-                    <span class="text-success" id="uploadMsgCNPJPendente"></span>
-                    <button type="button" id="uploadCNPJPendente" class="btn btn-primary">Anexar</button>
+                    <label for="anexoCNPJ"><strong>Cartão do CNPJ</strong></label>
+                    <input type="file" id="anexoCNPJ" class="form-control" accept=".jpg, .jpeg, .png, .pdf" />
+                    <button type="button" class="btn btn-primary mt-2" onclick="uploadDocumento('CNPJ')">Anexar</button>
+                    <span id="uploadMsgCNPJ" class="text-success d-block mt-2"></span>
                 </div>
-                <br>
-            }
-            else
-            {
-                <span class="text-success" id="uploadMessage">Documento: Cartão do CNPJ já enviado!</span><br>
+            }else{
+                <p class="text-success">Documento: Cartão do CNPJ já enviado!</p>
             }
 
-
-            @if (anexosPendentes.CPFPendente)
-            {
-                <h5 class="font-weight-bold">Cópia do CPF do Responsável Legal</h5>
+            @if (envAprovadoCPFRespLegal != "E" && envAprovadoCPFRespLegal != "S")
+            {    
                 <div class="form-group">
-                    <label for="anexoCPF">Selecione um arquivo:</label>
-                    <input asp-for="Projeto.Anexo.CPFRespLegal" type="file" name="anexoCPFRespLegal" id="anexoCPFRespLegal" class="form-control" accept=".jpg, .jpeg, .png, .pdf" />
-                    <span asp-validation-for="Projeto.Anexo.CPFRespLegal" class="text-danger"></span>
-                    <span class="text-success" id="uploadMsgCPFPendente"></span>
-                    <button type="button" id="uploadCPFPendente" class="btn btn-primary">Anexar</button>
+                    <label for="anexoCPFRespLegal"><strong>CPF do Responsável Legal</strong></label>
+                    <input type="file" id="anexoCPFRespLegal" class="form-control" accept=".jpg, .jpeg, .png, .pdf" />
+                    <button type="button" class="btn btn-primary mt-2" onclick="uploadDocumento('CPFRespLegal')">Anexar</button>
+                    <span id="uploadMsgCPFRespLegal" class="text-success d-block mt-2"></span>
                 </div>
-                <br>
-            }
-            else
-            {
-                <span class="text-success" id="uploadMessage">Documento: Cópia do CPF do Responsável Legal já enviado!</span><br>
+            }else{
+                <p class="text-success">Documento: CPF do Responsável Legal já enviado!</p>
             }
 
-
-            @if (anexosPendentes.RGPendente)
-            {
-                <h5 class="font-weight-bold">Cópia do RG do Responsável Legal</h5>
+            @if (envAprovadoRGRespLegal != "E" && envAprovadoRGRespLegal != "S")
+            {    
                 <div class="form-group">
-                    <label for="anexoRPG">Selecione um arquivo:</label>
-                    <input asp-for="Projeto.Anexo.RGRespLegal" type="file" name="anexoRGRespLegal" id="anexoRPG" class="form-control" accept=".jpg, .jpeg, .png, .pdf" />
-                    <span asp-validation-for="Projeto.Anexo.RGRespLegal" class="text-danger"></span>
-                    <span class="text-success" id="uploadMsgRGPendente"></span>
-                    <button type="button" id="uploadRGPendente" class="btn btn-primary">Anexar</button>
+                    <label for="anexoRGRespLegal"><strong>RG do Responsável Legal</strong></label>
+                    <input type="file" id="anexoRGRespLegal" class="form-control" accept=".jpg, .jpeg, .png, .pdf" />
+                    <button type="button" class="btn btn-primary mt-2" onclick="uploadDocumento('RGRespLegal')">Anexar</button>
+                    <span id="uploadMsgRGRespLegal" class="text-success d-block mt-2"></span>
                 </div>
-                <br>
-            }
-            else
-            {
-                <span class="text-success" id="uploadMessage">Documento: Cópia do RG do Responsável Legal já enviado!</span><br>
+            }else{
+                <p class="text-success">Documento: RG do Responsável Legal já enviado!</p>
             }
 
-
-            @if (anexosPendentes.DadosBancariosPendente)
-            {
-                <!-- Cópia do cheque ou declaração do banco -->
-                <h5 class="font-weight-bold">Cópia do cheque ou declaração do banco assinada pelo gerente com dados bancários</h5>
+            @if (envAprovadoDadosBancarios != "E" && envAprovadoDadosBancarios != "S")
+            {    
                 <div class="form-group">
-                    <label for="anexoCheque">Selecione um arquivo:</label>
-                    <input asp-for="Projeto.Anexo.DadosBancarios" type="file" name="anexoDadosBancarios" id="anexoDadosBancarios" class="form-control" accept=".jpg, .jpeg, .png, .pdf" />
-                    <span asp-validation-for="Projeto.Anexo.DadosBancarios" class="text-danger"></span>
-                    <span class="text-success" id="uploadMsgDadosBancariosPendente"></span>
-                    <button type="button" id="uploadButtonDadosBancarios" class="btn btn-primary">Anexar</button>
+                    <label for="anexoDadosBancarios"><strong>Dados Bancários</strong></label>
+                    <input type="file" id="anexoDadosBancarios" class="form-control" accept=".jpg, .jpeg, .png, .pdf" />
+                    <button type="button" class="btn btn-primary mt-2" onclick="uploadDocumento('DadosBancarios')">Anexar</button>
+                    <span id="uploadMsgDadosBancarios" class="text-success d-block mt-2"></span>
                 </div>
-                <br>
-            }
-            else
-            {
-                <span class="text-success" id="uploadMessage">Documento: Cópia do cheque ou declaração do banco assinada pelo gerente com dados bancários já enviado!</span><br>
+            }else{
+                <p class="text-success">Documento: Dados Bancários já enviado!</p>
             }
 
-        }
+        }else if(_Situacao == 6)
+            {
+                <h3 class="text-success">Projeto concluído!</h3>
+            }
+    
+
     }
 
 
@@ -967,32 +1005,107 @@ else
 
 
                     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.3.0/pdfobject.min.js" integrity="sha512-Nr6NV16pWOefJbWJiT8SrmZwOomToo/84CNd0MN6DxhP5yk8UAoPUjNuBj9KyRYVpESUb14RTef7FKxLVA4WGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script type="text/javascript">
+<script src="https://unpkg.com/pdfobject"></script>
+<script>
     if(PDFObject.supportsPDFs){
 
-        var caminhoArq = document.getElementById('caminhoArq').value;
-        PDFObject.embed(caminhoArq, ".viewPDF");
-
         var caminhoAtaEleicaoPendente = document.getElementById('caminhoAtaEleicaoPendente').value;
-        PDFObject.embed(caminhoArqAtaEleicaoPendente, ".viewPDFAtaEleicaoPendente");
+        PDFObject.embed(caminhoAtaEleicaoPendente, "#viewPDFAtaEleicao");
 
         var caminhoEstatutoPendente = document.getElementById('caminhoEstatutoPendente').value;
-        PDFObject.embed(caminhoArqEstatutoPendente, ".viewPDFEstatutoPendente");
+        PDFObject.embed(caminhoEstatutoPendente, ".viewPDFEstatuto");
 
         var caminhoCNPJPendente = document.getElementById('caminhoCNPJPendente').value;
-        PDFObject.embed(caminhoArqCNPJPendente, ".viewPDFCNPJPendente");
+        PDFObject.embed(caminhoCNPJPendente, ".viewPDFCNPJ");
 
         var caminhoCPFPendente = document.getElementById('caminhoCPFPendente').value;
-        PDFObject.embed(caminhoArqCPFPendente, ".viewPDFCPFPendente");
+        PDFObject.embed(caminhoCPFPendente, ".viewPDFCPF");
 
         var caminhoRGPendente = document.getElementById('caminhoRGPendente').value;
-        PDFObject.embed(caminhoArqRGPendente, ".viewPDFRGPendente");
+        PDFObject.embed(caminhoRGPendente, ".viewPDFRG");
 
         var caminhoDadosBancariosPendente = document.getElementById('caminhoDadosBancariosPendente').value;
-        PDFObject.embed(caminhoArqDadosBancariosPendente, ".viewPDFDadosBancariosPendente");
+        PDFObject.embed(caminhoDadosBancariosPendente, ".viewPDFDadosBancarios");
     }else{
         alert("Não há documento disponível para exibição!");
+    }
+
+    function uploadDocumento(tipoDocumento) {
+        var inputFile = document.getElementById(`anexo${tipoDocumento}`);
+        var file = inputFile.files[0];
+
+        if (!file) {
+            alert("Por favor, selecione um arquivo.");
+            return;
+        }
+        var projetoId = document.getElementById('ProjetoId').value;
+
+        var formData = new FormData();
+        formData.append("arquivo", file);
+        formData.append("tipoDocumento", tipoDocumento);
+        formData.append("projetoId", projetoId);
+
+        $.ajax({
+            url: '/Projetos/UploadDocumento',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data.mensagem) {
+                    document.getElementById(`uploadMsg${tipoDocumento}`).textContent = data.mensagem;
+                }
+            },
+            error: function (error) {
+                console.error('Erro no upload:', error);
+                alert("Ocorreu um erro ao realizar o upload.");
+            }
+        });
+    }
+
+
+    function aprovarDocumento(idProjeto, tipoDocumento) {
+        $.ajax({
+            url: `/Projetos/AprovarDocumento`,
+            type: "POST",
+            data: { idProjeto: idProjeto, tipoDocumento: tipoDocumento },
+            success: function () {
+                location.reload();
+            },
+            error: function (err) {
+                alert("Erro ao aprovar o documento: " + err.responseText);
+            }
+        });
+    }
+
+
+    function recusarDocumento(idProjeto, tipoDocumento) {
+
+        $.ajax({
+            url: `/Projetos/RecusarDoc`,
+            type: "POST",
+            data: { idProjeto: idProjeto, tipoDocumento: tipoDocumento },
+            success: function () {
+                location.reload();
+            },
+            error: function (err) {
+                alert("Erro ao aprovar o documento: " + err.responseText);
+            }
+        });
+    }
+    function concluirProjeto(idProjeto) {
+
+        $.ajax({
+            url: `/Projetos/ConcluirProjeto`,
+            type: "POST",
+            data: { idProjeto: idProjeto},
+            success: function () {
+                location.reload();
+            },
+            error: function (err) {
+                alert("Erro ao aprovar o documento: " + err.responseText);
+            }
+        });
     }
 
 </script>

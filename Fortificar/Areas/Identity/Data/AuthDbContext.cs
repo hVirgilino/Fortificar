@@ -43,6 +43,12 @@ public class AuthDbContext : IdentityDbContext<FortificarUser>
 			.OnDelete(DeleteBehavior.Cascade);
 
 		builder.Entity<Projeto>()
+			.HasMany(p => p.EquipeEncarregada)
+			.WithOne(m => m.Projeto)
+			.HasForeignKey(m => m.ProjetoId)
+			.OnDelete(DeleteBehavior.Cascade);
+
+		builder.Entity<Projeto>()
 			.HasMany(p => p.CronogramaMeta)
 			.WithOne(c => c.Projeto)
 			.HasForeignKey(m => m.ProjetoId)
@@ -58,6 +64,11 @@ public class AuthDbContext : IdentityDbContext<FortificarUser>
             .HasOne(p => p.ResponsavelLegal)
             .WithMany()
             .HasForeignKey(p => p.ResponsavelLegalId)
+            .OnDelete(DeleteBehavior.Restrict);
+		builder.Entity<Projeto>()
+            .HasOne(p => p.Anexo)
+            .WithMany()
+            .HasForeignKey(p => p.AnexoId)
             .OnDelete(DeleteBehavior.Restrict);
 		builder.Entity<Projeto>()
             .HasOne(p => p.ResponsavelTecnico)
@@ -107,10 +118,15 @@ public class AuthDbContext : IdentityDbContext<FortificarUser>
             new Situacao { Id = 5, Nome = "Recusado", Descricao = "O projeto foi recusado."},
             new Situacao { Id = 6, Nome = "Concluido", Descricao = "O projeto foi concluído."},
             new Situacao { Id = 7, Nome = "Em análise", Descricao = "O projeto está em análise."}
-        );
+        );    
+        
+
+
+       
     }
 
+ 
 
 
-	
+
 }

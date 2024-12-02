@@ -8,6 +8,9 @@ using System.Security.Claims;
 using ODS = Fortificar.Models.ODS;
 using Microsoft.AspNetCore.Identity;
 using Fortificar.Areas.Identity.Data;
+using System;
+using Microsoft.Build.Evaluation;
+using System.Reflection.Metadata;
 
 namespace Fortificar.Controllers
 {
@@ -84,43 +87,38 @@ namespace Fortificar.Controllers
                 return NotFound();
             }
 
-            bool ataEleicaoPendente = true;
-            bool estatutoPendente = false;
-            bool cnpjPendente = false;
-            bool cpfPendente = false;
-            bool rgPendente = false;
-            bool dadosBancariosPendente = false;
+            int ataEleicaoAprovada = 0;
+            int estatutoAprovado = 0;
+            int cnpjAprovado = 0;
+            int cpfAprovado = 0;
+            int rgAprovado = 0;
+            int dadosBancariosAprovados = 0;
 
-            if (projeto.SituacaoId == 4)
+            if (projeto.SituacaoId == 4 || projeto.SituacaoId == 2)
             {
-                // Busca o anexo relacionado ao ProponenteId
-                var anexo = await _context.Anexo
-                    .FirstOrDefaultAsync(a => a.ProjetoId == projeto.Id);
 
-                // Verificação de pendências de documentos
-                ataEleicaoPendente = anexo?.AtaEleicao == null;
-                estatutoPendente = anexo?.Estatuto == null;
-                cnpjPendente = anexo?.CNPJ == null;
-                cpfPendente = anexo?.CPFRespLegal == null;
-                rgPendente = anexo?.RGRespLegal == null;
-                dadosBancariosPendente = anexo?.DadosBancarios == null;
+                var anexo = await _context.Anexo
+            .FirstOrDefaultAsync();
+
+                if (anexo != null)
+                {
+                    ataEleicaoAprovada = anexo.AprovadoAtaEleicao == "S" ? 1 : 0;
+                    estatutoAprovado = anexo.AprovadoEstatuto == "S" ? 1 : 0;
+                    cnpjAprovado = anexo.AprovadoCNPJ == "S" ? 1 : 0;
+                    cpfAprovado = anexo.AprovadoCPFRespLegal == "S" ? 1 : 0;
+                    rgAprovado = anexo.AprovadoRGRespLegal == "S" ? 1 : 0;
+                    dadosBancariosAprovados = anexo.AprovadoDadosBancarios == "S" ? 1 : 0;
+                }
             }
 
+            // Preenche os valores no ViewData
+            ViewData["AprovarAtaEleicao"] = ataEleicaoAprovada;
+            ViewData["AprovarEstatuto"] = estatutoAprovado;
+            ViewData["AprovarCNPJ"] = cnpjAprovado;
+            ViewData["AprovarCPF"] = cpfAprovado;
+            ViewData["AprovarRG"] = rgAprovado;
+            ViewData["AprovarDadosBancarios"] = dadosBancariosAprovados;
 
-            // Cria um objeto com o status dos documentos pendentes
-            var anexosPendentes = new
-            {
-                AtaEleicaoPendente = ataEleicaoPendente,
-                EstatutoPendente = estatutoPendente,
-                CNPJPendente = cnpjPendente,
-                CPFPendente = cpfPendente,
-                RGPendente = rgPendente,
-                DadosBancariosPendente = dadosBancariosPendente
-            };
-
-            ViewData["AnexosPendentes"] = anexosPendentes;
-
-            
             ViewData["_Situacao"] = projeto.SituacaoId;
 
             ViewData["Tipo"] = user.Tipo;
@@ -145,35 +143,73 @@ namespace Fortificar.Controllers
                 //PublicoBeneficiario = pbDisponiveis
             };
 
-            var pastaDoc = Path.Combine(_webHostEnvironment.WebRootPath, "pdf");
+            var pastaDoc = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
 
+                
+                var documentos = new[] { "AtaEleicao", "Estatuto", "CNPJ", "CPFRespLegal", "RGRespLegal", "DadosBancarios" };
             if (Directory.Exists(pastaDoc))
             {
-                // Verifica se há arquivos na pasta
-                var arquivos = Directory.GetFiles(pastaDoc, "*.pdf");
-                if (arquivos.Length > 0)
-                {
-                    // Pega o primeiro arquivo encontrado
-                    var caminho = arquivos[0];
-                    var nomeArq = Path.GetFileName(caminho);
 
-                    // Armazena as informações no ViewData
-                    var caminhoArq = $"/pdf/{nomeArq}";
-                    ViewData["CaminhoDocAnexo"] = caminhoArq;
-                    ViewData["NomeDocAnexo"] = nomeArq;
-                }
-                else
+                foreach (var documento in documentos)
                 {
-                    // Caso a pasta esteja vazia
-                    ViewData["CaminhoDocAnexo"] = null;
-                    ViewData["NomeDocAnexo"] = null;
+
+                    var padraoBusca = $"{projeto.Id}_{documento}*.pdf";
+
+                    
+                    var arquivosEncontrados = Directory.GetFiles(pastaDoc, padraoBusca);
+                    if (arquivosEncontrados.Any())
+                    {
+                        var caminhoArquivo = arquivosEncontrados.First();
+                        var nomeArquivo = Path.GetFileName(caminhoArquivo);
+
+                        
+                        ViewData[$"{documento}-env"] = $"/uploads/{nomeArquivo}";
+                    }
+                    else
+                    {
+                        // Se o arquivo não existir, armazena null
+                        ViewData[$"{documento}-env"] = null;
+                    }
+
+                    
+                    var aprovacaoStatus = "";
+
+                    switch (documento)
+                    {
+                        case "AtaEleicao":
+                            aprovacaoStatus = projeto.Anexo.AprovadoAtaEleicao;
+                            break;
+                        case "Estatuto":
+                            aprovacaoStatus = projeto.Anexo.AprovadoEstatuto;
+                            break;
+                        case "CNPJ":
+                            aprovacaoStatus = projeto.Anexo.AprovadoCNPJ;
+                            break;
+                        case "CPFRespLegal":
+                            aprovacaoStatus = projeto.Anexo.AprovadoCPFRespLegal;
+                            break;
+                        case "RGRespLegal":
+                            aprovacaoStatus = projeto.Anexo.AprovadoRGRespLegal;
+                            break;
+                        case "DadosBancarios":
+                            aprovacaoStatus = projeto.Anexo.AprovadoDadosBancarios;
+                            break;
+                        default:
+                            aprovacaoStatus = null;
+                            break;
+                    }
+
+                    ViewData[$"{documento}-Aprovado"] = aprovacaoStatus;
                 }
             }
             else
             {
-                // Caso a pasta não exista
-                ViewData["CaminhoDocAnexo"] = null;
-                ViewData["NomeDocAnexo"] = null;
+                
+                foreach (var documento in documentos)
+                {
+                    ViewData[$"{documento}-env"] = null;
+                    ViewData[$"{documento}-Aprovado"] = null;
+                }
             }
 
             return View(detalhesViewModel);
@@ -276,7 +312,8 @@ namespace Fortificar.Controllers
 
                     EquipeExecucao = new List<MembroEquipe> { new MembroEquipe() },
                     CronogramaMeta = new List<CronogramaMeta> { new CronogramaMeta() },
-                    PlanoAplicacao = new List<PlanoAplicacaoItem> { new PlanoAplicacaoItem() }
+                    PlanoAplicacao = new List<PlanoAplicacaoItem> { new PlanoAplicacaoItem() },
+                    EquipeEncarregada = new List<EquipeExecucaoProjeto> { new EquipeExecucaoProjeto() }
                 }
 
                 
@@ -286,7 +323,7 @@ namespace Fortificar.Controllers
             return View("Create", viewmodelCreate);
         }
 
- public async Task<IActionResult> SalvarProjeto(ProjetoViewModel viewmodelProjeto, IFormFile? anexo)
+        public async Task<IActionResult> SalvarProjeto(ProjetoViewModel viewmodelProjeto, IFormFile? anexo)
         {
             if (ModelState.IsValid)
             {
@@ -320,6 +357,41 @@ namespace Fortificar.Controllers
                 _context.ResponsavelTecnico.Add(responsavelTecnico);
                 await _context.SaveChangesAsync();
 
+
+                var Anexo = new Anexo
+                {
+                    AprovadoAtaEleicao = "N",
+                    AprovadoEstatuto = "N",
+                    AprovadoCNPJ = "N",
+                    AprovadoCPFRespLegal = "N",
+                    AprovadoRGRespLegal = "N",
+                    AprovadoDadosBancarios = "N"
+
+                };
+
+                _context.Anexo.Add(Anexo);
+                await _context.SaveChangesAsync();
+
+                if (anexo != null)
+                {
+                    using (var memoryStream = new MemoryStream())
+                        {
+                            anexo.CopyTo(memoryStream);
+                            var arquivo = memoryStream.ToArray();
+
+                            Anexo = new Anexo
+                            {
+                                Nome = anexo.FileName,
+                                Tipo = anexo.ContentType,
+                                Imagem = arquivo
+                            };
+
+                            _context.Anexo.Update(Anexo);
+                            await _context.SaveChangesAsync();
+                        }
+                }
+
+
                 var projeto = new Projeto
                 {
                     Objeto = viewmodelProjeto.Projeto.Objeto,
@@ -331,10 +403,12 @@ namespace Fortificar.Controllers
                     ValorMeta = viewmodelProjeto.Projeto.ValorMeta,
                     Indicadores = viewmodelProjeto.Projeto.Indicadores,
                     Orcamento = viewmodelProjeto.Projeto.Orcamento,
+                    SituacaoId = 1,
 
                     ProponenteId = proponente.Id,
                     ResponsavelLegalId = responsavelLegal.Id,
-                    ResponsavelTecnicoId = responsavelTecnico.Id
+                    ResponsavelTecnicoId = responsavelTecnico.Id,
+                    AnexoId = Anexo.Id
                 };
 
                 _context.Projeto.Add(projeto);
@@ -395,12 +469,33 @@ namespace Fortificar.Controllers
                     await _context.SaveChangesAsync();
                 }
 
-                
-
-                // Salvando os ODS selecionados
-                if (viewmodelProjeto.ODS != null)
+                // Salvando a equipe encarregada
+                if (viewmodelProjeto.Projeto.EquipeEncarregada != null)
                 {
-                    foreach (var odsId in viewmodelProjeto.ODS.Where(ods => ods.IsSelected).Select(ods => ods.Id))
+                    foreach (var equipe in viewmodelProjeto.Projeto.EquipeEncarregada)
+                    {
+                        var _equipe = new EquipeExecucaoProjeto
+                        {
+                            Especificacao = equipe.Especificacao,
+                            Unidade = equipe.Unidade,
+                            Quantidade = equipe.Quantidade,
+                            ValorUnitario = equipe.ValorUnitario,
+                            ValorTotal = equipe.ValorTotal,
+                            ProjetoId = projeto.Id
+                        };
+                        _context.EquipeExecucaoProjeto.Add(_equipe);
+                    }
+                    await _context.SaveChangesAsync();
+                }
+
+                var ODSselecionadas = Request.Form["ODSSelecionadas"].ToString(); 
+
+                if (!string.IsNullOrEmpty(ODSselecionadas))
+                {
+                    var odsIds = ODSselecionadas.Split(',').Select(int.Parse).ToList();
+
+                    
+                    foreach (var odsId in odsIds)
                     {
                         var projetoODS = new ProjetoODS
                         {
@@ -413,6 +508,29 @@ namespace Fortificar.Controllers
 
                     await _context.SaveChangesAsync();
                 }
+
+                // PÚBLICO-ALVO
+                var PAselecionados = Request.Form["PASelecionados"].ToString(); 
+
+                if (!string.IsNullOrEmpty(PAselecionados))
+                {
+                    var paIds = PAselecionados.Split(',').Select(int.Parse).ToList();
+
+                    
+                    foreach (var paId in paIds)
+                    {
+                        var projetoPublicoBeneficiario = new ProjetoPublicoBeneficiario
+                        {
+                            ProjetoId = projeto.Id,
+                            PublicoBeneficiarioId = paId
+                        };
+
+                        _context.ProjetoPublicoBeneficiario.Add(projetoPublicoBeneficiario);
+                    }
+
+                    await _context.SaveChangesAsync();
+                }
+
 
                 // Salvando os PublicoBeneficiario selecionados
                 if (viewmodelProjeto.PublicoBeneficiario != null)
@@ -433,26 +551,6 @@ namespace Fortificar.Controllers
 
 
 
-                // Salvando o anexo, se existir
-                if (anexo != null)
-                {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        anexo.CopyTo(memoryStream);
-                        var arquivo = memoryStream.ToArray();
-
-                        var novoAnexo = new Anexo
-                        {
-                            Nome = anexo.FileName,
-                            Tipo = anexo.ContentType,
-                            ProjetoId = projeto.Id,
-                            Imagem = arquivo
-                        };
-
-                        _context.Anexo.Add(novoAnexo);
-                        await _context.SaveChangesAsync();
-                    }
-                }
 
                 return RedirectToAction(nameof(Index));
             }
@@ -466,6 +564,222 @@ namespace Fortificar.Controllers
             return View("Create", viewmodelProjeto);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UploadDocumento(IFormFile arquivo, string tipoDocumento, int projetoId)
+        {
+            if (arquivo == null || arquivo.Length == 0)
+            {
+                return Json(new { sucesso = false, mensagem = "Por favor, selecione um arquivo válido." });
+            }
+
+            // Caminho base da pasta 'uploads'
+            var pastaUploads = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+
+            // Cria a pasta 'uploads' caso ela não exista
+            if (!Directory.Exists(pastaUploads))
+            {
+                Directory.CreateDirectory(pastaUploads);
+            }
+
+            // Gera um nome para o arquivo com base no ID do projeto e no tipo de documento
+            var nomeArqUp = $"{projetoId}_{tipoDocumento}{Path.GetExtension(arquivo.FileName)}";
+            var caminhoArqUp = Path.Combine(pastaUploads, nomeArqUp);
+
+
+            // Salva o arquivo no diretório
+            using (var stream = new FileStream(caminhoArqUp, FileMode.Create))
+            {
+                await arquivo.CopyToAsync(stream);
+            }
+
+            // Monta o caminho relativo (que será salvo no banco)
+            var caminhoRelativo = $"/uploads/{nomeArqUp}";
+
+            // Atualiza o banco de dados na tabela `Anexo`
+            var anexo = _context.Anexo.FirstOrDefault();
+            
+
+            // Atualiza o campo correspondente ao tipo de documento
+            switch (tipoDocumento)
+            {
+                case "AtaEleicao":
+                    anexo.AprovadoAtaEleicao = "E";
+                    anexo.AtaEleicao = caminhoRelativo;
+                    break;
+                case "Estatuto":
+                    anexo.Estatuto = caminhoRelativo;
+                    anexo.AprovadoEstatuto = "E";
+                    break;
+                case "CNPJ":
+                    anexo.CNPJ = caminhoRelativo;
+                    anexo.AprovadoCNPJ = "E";
+                    break;
+                case "CPFRespLegal":
+                    anexo.CPFRespLegal = caminhoRelativo;
+                    anexo.AprovadoCPFRespLegal = "E";
+                    break;
+                case "RGRespLegal":
+                    anexo.RGRespLegal = caminhoRelativo;
+                    anexo.AprovadoRGRespLegal = "E";
+                    break;
+                case "DadosBancarios":
+                    anexo.DadosBancarios = caminhoRelativo;
+                    anexo.AprovadoDadosBancarios = "E";
+                    break;
+                default:
+                    return Json(new { sucesso = false, mensagem = "Tipo de documento inválido." });
+            }
+            _context.Anexo.Update(anexo);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao salvar no banco: {ex.Message}");
+                return Json(new { sucesso = false, mensagem = "Erro ao salvar no banco de dados." });
+            }
+
+
+            return Json(new { sucesso = true, mensagem = "Upload realizado com sucesso.", caminho = caminhoRelativo });
+        }
+
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> AprovarDocumento(int idProjeto, string tipoDocumento)
+        {
+            var projeto = _context.Projeto.Include(p => p.Anexo).FirstOrDefault(p => p.Id == idProjeto);
+
+            if (projeto != null && projeto.Anexo != null)
+            {
+                switch (tipoDocumento)
+                {
+                    case "AtaEleicao":
+                        projeto.Anexo.AprovadoAtaEleicao = "S";
+                        ViewData["AprovarAtaEleicao"] = 1;
+                        ViewData["StatusAtaEleicao"] = "Documento: Ata de eleição já aprovado!";
+                        break;
+                    case "Estatuto":
+                        projeto.Anexo.AprovadoEstatuto = "S";
+                        ViewData["AprovarEstatuto"] = 1;
+                        ViewData["StatusEstatuto"] = "Documento: Estatuto ou Contrato Social já aprovado!";
+                        break;
+                    case "CNPJ":
+                        projeto.Anexo.AprovadoCNPJ = "S";
+                        ViewData["AprovarCNPJ"] = 1;
+                        ViewData["StatusCNPJ"] = "Documento: Cartão do CNPJ já aprovado!";
+                        break;
+                    case "CPF":
+                        projeto.Anexo.AprovadoCPFRespLegal = "S";
+                        ViewData["AprovarCPF"] = 1;
+                        ViewData["StatusCPF"] = "Documento: Cópia do CPF do Responsável Legal já aprovado!";
+                        break;
+                    case "RG":
+                        projeto.Anexo.AprovadoRGRespLegal = "S";
+                        ViewData["AprovarRG"] = 1;
+                        ViewData["StatusRG"] = "Documento: Cópia do RG do Responsável Legal já aprovado!";
+                        break;
+                    case "DadosBancarios":
+                        projeto.Anexo.AprovadoDadosBancarios = "S";
+                        ViewData["AprovarDadosBancarios"] = 1;
+                        ViewData["StatusDadosBancarios"] = "Documento: Dados bancários já aprovado!";
+                        break;
+                    default:
+                        return BadRequest("Tipo de documento inválido.");
+                }
+
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Detalhes", new { id = idProjeto });
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> RecusarDoc(int idProjeto, string tipoDocumento)
+        {
+            var projeto = _context.Projeto.Include(p => p.Anexo).FirstOrDefault(p => p.Id == idProjeto);
+
+            if (projeto != null && projeto.Anexo != null)
+            {
+                switch (tipoDocumento)
+                {
+                    case "AtaEleicao":
+                        projeto.Anexo.AprovadoAtaEleicao = "N";
+                        ViewData["AprovarAtaEleicao"] = 0;
+                        ViewData["StatusAtaEleicao"] = "";
+                        break;
+                    case "Estatuto":
+                        projeto.Anexo.AprovadoEstatuto = "N";
+                        ViewData["AprovarEstatuto"] = 0;
+                        ViewData["StatusEstatuto"] = "";
+                        break;
+                    case "CNPJ":
+                        projeto.Anexo.AprovadoCNPJ = "N";
+                        ViewData["AprovarCNPJ"] = 0;
+                        ViewData["StatusCNPJ"] = "";
+                        break;
+                    case "CPF":
+                        projeto.Anexo.AprovadoCPFRespLegal = "N";
+                        ViewData["AprovarCPF"] = 0;
+                        ViewData["StatusCPF"] = "";
+                        break;
+                    case "RG":
+                        projeto.Anexo.AprovadoRGRespLegal = "N";
+                        ViewData["AprovarRG"] = 0;
+                        ViewData["StatusRG"] = "";
+                        break;
+                    case "DadosBancarios":
+                        projeto.Anexo.AprovadoDadosBancarios = "N";
+                        ViewData["AprovarDadosBancarios"] = 0;
+                        ViewData["StatusDadosBancarios"] = "";
+                        break;
+                    default:
+                        return BadRequest("Tipo de documento inválido.");
+                }
+                
+                var caminhoUpload = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+
+                
+                string nomePadrao = $"{idProjeto}_{tipoDocumento}.pdf"; // Adicione a extensão, se aplicável
+                string caminhoArqRecusado = Path.Combine(caminhoUpload, nomePadrao);
+
+
+                if (!string.IsNullOrEmpty(caminhoArqRecusado) && System.IO.File.Exists(caminhoArqRecusado))
+                {
+                    try
+                    {
+                        System.IO.File.Delete(caminhoArqRecusado);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Erro ao deletar arquivo: {ex.Message}");
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Detalhes", new { id = idProjeto });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConcluirProjeto(int idProjeto)
+        {
+            var projeto = _context.Projeto.FirstOrDefault(p => p.Id == idProjeto);
+
+            if (projeto != null)
+            {
+                projeto.SituacaoId = 6;
+            }
+            await _context.SaveChangesAsync();
+            
+
+            return RedirectToAction("Detalhes", new { id = idProjeto });
+        }
 
 
         [HttpGet]

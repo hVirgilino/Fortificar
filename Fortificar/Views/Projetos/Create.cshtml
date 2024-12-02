@@ -299,15 +299,18 @@
             <h5 class="font-weight-bold">6. PÚBLICO ALVO DE ATENDIMENTO DA PROPONENTE</h5>    
             <div class="form-group">
                 <div class="checkbox-grid">
-                    @foreach (var item in Model.PublicoBeneficiario)
+                    @for (int i = 0; i < Model.PublicoBeneficiario.Count; i++)
                     {
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" asp-for="@item.IsSelected" value="@item.Id" />
-                            <label class="form-check-label" for="@item.Id">@item.Nome</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input pa-checkbox" type="checkbox" data-id="@Model.PublicoBeneficiario[i].Id" id="PAcheckbox" />
+                            <label class="form-check-label" for="PAcheckbox">
+                                @Model.PublicoBeneficiario[i].Id - @Model.PublicoBeneficiario[i].Nome
+                            </label>
                         </div>
                     }
-
                 </div>
+
+                    <input type="hidden" id="PAselecionados" name="PASelecionados" />
             </div>
 
             <br>
@@ -623,19 +626,22 @@
             <br />
 
             <div class="form-group">
-                <h5 class="font-weight-bold">13. SELECIONE A(S) ODS DO PROJETO</h5>
-                <div class="checkbox-grid">
-                    @for (int i = 0; i < Model.ODS.Count; i++)
-                    {
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" asp-for="ODS[i].IsSelected" />
-                            <label class="form-check-label" for="odsCheckbox@Model.ODS[i].Id">
-                                @Model.ODS[i].Id - @Model.ODS[i].Nome
-                            </label>
-                        </div>
-                    }
-                </div>
+            <h5 class="font-weight-bold">13. SELECIONE A(S) ODS DO PROJETO</h5>
+            <div class="checkbox-grid">
+                @for (int i = 0; i < Model.ODS.Count; i++)
+                {
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input ods-checkbox" type="checkbox" data-id="@Model.ODS[i].Id" id="odsCheckbox@Model.ODS[i].Id" />
+                        <label class="form-check-label" for="odsCheckbox@Model.ODS[i].Id">
+                            @Model.ODS[i].Id - @Model.ODS[i].Nome
+                        </label>
+                    </div>
+                }
             </div>
+            <!-- Campo hidden para armazenar os IDs selecionados -->
+                <input type="hidden" id="ODSselecionadas" name="ODSSelecionadas" />
+        </div>
+
 
             
             <br />
@@ -663,6 +669,35 @@
         <partial name="_ValidationScriptsPartial" />
     
     <script>
+
+        $(document).ready(function () {
+
+            function atualizaODSselecionadas() {
+                let idsSelecionados = [];
+
+                $(".ods-checkbox:checked").each(function () {
+                    idsSelecionados.push($(this).data("id"));
+                });
+
+                $("#ODSselecionadas").val(idsSelecionados.join(","));
+            }
+
+            function atualizaPAselecionados() {
+                let idsSelecionados = [];
+
+                $(".pa-checkbox:checked").each(function () {
+                    idsSelecionados.push($(this).data("id"));
+                });
+
+                $("#PAselecionados").val(idsSelecionados.join(","));
+            }
+
+
+            $(".pa-checkbox").on("change", function () {
+                atualizaPAselecionados();
+            });
+        });
+
         function addEquipeProfissionais() {
             var container = document.getElementById("equipeProfissionaisTable").getElementsByTagName('tbody')[0];
             var row = container.insertRow();

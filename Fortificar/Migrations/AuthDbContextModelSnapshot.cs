@@ -101,20 +101,38 @@ namespace Fortificar.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<byte[]>("AtaEleicao")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("AprovadoAtaEleicao")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("CNPJ")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("AprovadoCNPJ")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("CPFRespLegal")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("AprovadoCPFRespLegal")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("DadosBancarios")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("AprovadoDadosBancarios")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Estatuto")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("AprovadoEstatuto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AprovadoRGRespLegal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AtaEleicao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CNPJ")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CPFRespLegal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DadosBancarios")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Estatuto")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Imagem")
                         .HasColumnType("varbinary(max)");
@@ -122,21 +140,15 @@ namespace Fortificar.Migrations
                     b.Property<string>("Nome")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProjetoId")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("RGRespLegal")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("RGRespLegal")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tipo")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjetoId")
-                        .IsUnique();
-
-                    b.ToTable("Anexo");
+                    b.ToTable("Anexo", (string)null);
                 });
 
             modelBuilder.Entity("Fortificar.Models.CronogramaMeta", b =>
@@ -166,7 +178,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ProjetoId");
 
-                    b.ToTable("CronogramaMeta");
+                    b.ToTable("CronogramaMeta", (string)null);
                 });
 
             modelBuilder.Entity("Fortificar.Models.EquipeExecucaoProjeto", b =>
@@ -199,7 +211,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ProjetoId");
 
-                    b.ToTable("EquipeExecucaoProjeto");
+                    b.ToTable("EquipeExecucaoProjeto", (string)null);
                 });
 
             modelBuilder.Entity("Fortificar.Models.MembroEquipe", b =>
@@ -232,7 +244,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ProjetoId");
 
-                    b.ToTable("MembroEquipe");
+                    b.ToTable("MembroEquipe", (string)null);
                 });
 
             modelBuilder.Entity("Fortificar.Models.ODS", b =>
@@ -259,7 +271,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ProjetoId");
 
-                    b.ToTable("ODS");
+                    b.ToTable("ODS", (string)null);
 
                     b.HasData(
                         new
@@ -411,7 +423,7 @@ namespace Fortificar.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Parametro");
+                    b.ToTable("Parametro", (string)null);
                 });
 
             modelBuilder.Entity("Fortificar.Models.PlanoAplicacaoItem", b =>
@@ -444,7 +456,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ProjetoId");
 
-                    b.ToTable("PlanoAplicacaoItem");
+                    b.ToTable("PlanoAplicacaoItem", (string)null);
                 });
 
             modelBuilder.Entity("Fortificar.Models.Projeto", b =>
@@ -454,6 +466,9 @@ namespace Fortificar.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AnexoId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Cronograma")
                         .HasColumnType("nvarchar(max)");
@@ -499,6 +514,8 @@ namespace Fortificar.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AnexoId");
+
                     b.HasIndex("ProponenteId");
 
                     b.HasIndex("ResponsavelLegalId");
@@ -507,7 +524,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("SituacaoId");
 
-                    b.ToTable("Projeto");
+                    b.ToTable("Projeto", (string)null);
                 });
 
             modelBuilder.Entity("Fortificar.Models.ProjetoODS", b =>
@@ -530,7 +547,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ProjetoId");
 
-                    b.ToTable("ProjetoODS");
+                    b.ToTable("ProjetoODS", (string)null);
                 });
 
             modelBuilder.Entity("Fortificar.Models.ProjetoPublicoBeneficiario", b =>
@@ -553,7 +570,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("PublicoBeneficiarioId");
 
-                    b.ToTable("ProjetoPublicoBeneficiario");
+                    b.ToTable("ProjetoPublicoBeneficiario", (string)null);
                 });
 
             modelBuilder.Entity("Fortificar.Models.Proponente", b =>
@@ -655,7 +672,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ResponsavelLegalId");
 
-                    b.ToTable("Proponente");
+                    b.ToTable("Proponente", (string)null);
                 });
 
             modelBuilder.Entity("Fortificar.Models.PublicoBeneficiario", b =>
@@ -679,7 +696,7 @@ namespace Fortificar.Migrations
 
                     b.HasIndex("ProjetoId");
 
-                    b.ToTable("PublicoBeneficiario");
+                    b.ToTable("PublicoBeneficiario", (string)null);
 
                     b.HasData(
                         new
@@ -790,7 +807,7 @@ namespace Fortificar.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ResponsavelLegal");
+                    b.ToTable("ResponsavelLegal", (string)null);
                 });
 
             modelBuilder.Entity("Fortificar.Models.ResponsavelTecnico", b =>
@@ -833,7 +850,7 @@ namespace Fortificar.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ResponsavelTecnico");
+                    b.ToTable("ResponsavelTecnico", (string)null);
                 });
 
             modelBuilder.Entity("Fortificar.Models.Situacao", b =>
@@ -852,7 +869,7 @@ namespace Fortificar.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Situacao");
+                    b.ToTable("Situacao", (string)null);
 
                     b.HasData(
                         new
@@ -1036,17 +1053,6 @@ namespace Fortificar.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Fortificar.Models.Anexo", b =>
-                {
-                    b.HasOne("Fortificar.Models.Projeto", "Projeto")
-                        .WithOne("Anexo")
-                        .HasForeignKey("Fortificar.Models.Anexo", "ProjetoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Projeto");
-                });
-
             modelBuilder.Entity("Fortificar.Models.CronogramaMeta", b =>
                 {
                     b.HasOne("Fortificar.Models.Projeto", "Projeto")
@@ -1061,7 +1067,7 @@ namespace Fortificar.Migrations
             modelBuilder.Entity("Fortificar.Models.EquipeExecucaoProjeto", b =>
                 {
                     b.HasOne("Fortificar.Models.Projeto", "Projeto")
-                        .WithMany()
+                        .WithMany("EquipeEncarregada")
                         .HasForeignKey("ProjetoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1099,6 +1105,12 @@ namespace Fortificar.Migrations
 
             modelBuilder.Entity("Fortificar.Models.Projeto", b =>
                 {
+                    b.HasOne("Fortificar.Models.Anexo", "Anexo")
+                        .WithMany()
+                        .HasForeignKey("AnexoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Fortificar.Models.Proponente", "Proponente")
                         .WithMany()
                         .HasForeignKey("ProponenteId")
@@ -1122,6 +1134,8 @@ namespace Fortificar.Migrations
                         .HasForeignKey("SituacaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Anexo");
 
                     b.Navigation("Proponente");
 
@@ -1241,9 +1255,9 @@ namespace Fortificar.Migrations
 
             modelBuilder.Entity("Fortificar.Models.Projeto", b =>
                 {
-                    b.Navigation("Anexo");
-
                     b.Navigation("CronogramaMeta");
+
+                    b.Navigation("EquipeEncarregada");
 
                     b.Navigation("EquipeExecucao");
 

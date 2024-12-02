@@ -54,6 +54,7 @@ namespace Fortificar.Models
         public Situacao? Situacao { get; set; }
         public int SituacaoId { get; set; }
 
+        public int AnexoId { get; set; }
         public Anexo? Anexo { get; set; }
 
         //Cronograma
@@ -141,6 +142,6 @@ namespace Fortificar.Models
         public float? ValorTotal { get; set; }
 
         public int ProjetoId { get; set; }
-        public Projeto Projeto { get; set; }
+        public Projeto? Projeto { get; set; }
     }
 }
