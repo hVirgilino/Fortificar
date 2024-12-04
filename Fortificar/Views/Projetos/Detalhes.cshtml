@@ -34,15 +34,15 @@
     <div class="row g-2">
         <div class="col-8">
             <div class="form-floating mb-3">
-                <input readonly asp-for="Projeto.Proponente.NomeFantasia" class="form-control" placeholder="Nome Fantasia da Empresa" />
-                <label asp-for="Projeto.Proponente.NomeFantasia">Nome Fantasia da Empresa</label>
+                <input readonly asp-for="Projeto.Proponente.NomeFantasia" class="form-control" placeholder="Nome Fantasia da Instituição" />
+                <label asp-for="Projeto.Proponente.NomeFantasia">Nome Fantasia da Instituição</label>
                 <span asp-validation-for="Projeto.Proponente.NomeFantasia" class="text-danger"></span>
             </div>
         </div>
         <div class="col-4">
             <div class="form-floating mb-3">
-                <input readonly asp-for="Projeto.Proponente.CNPJ" class="form-control" placeholder="CNPJ da Empresa" />
-                <label asp-for="Projeto.Proponente.CNPJ">CNPJ da Empresa</label>
+                <input readonly asp-for="Projeto.Proponente.CNPJ" class="form-control" placeholder="CNPJ da Instituição" />
+                <label asp-for="Projeto.Proponente.CNPJ">CNPJ da Instituição</label>
                 <span asp-validation-for="Projeto.Proponente.CNPJ" class="text-danger"></span>
             </div>
         </div>
@@ -82,7 +82,7 @@
         <div class="col-8">
             <div class="form-floating mb-3">
                 <input readonly asp-for="Projeto.Proponente.EmailEmpresa" class="form-control" placeholder="Email" />
-                <label asp-for="Projeto.Proponente.EmailEmpresa">Email da Empresa</label>
+                <label asp-for="Projeto.Proponente.EmailEmpresa">Email da Instituição</label>
                 <span asp-validation-for="Projeto.Proponente.EmailEmpresa" class="text-danger"></span>
             </div>
 
@@ -697,8 +697,8 @@ else
 }
 
 
-    @if(Tipo == 0){        
-        @if(_Situacao != 6){
+    @if(Tipo == 0){
+            @if (_Situacao != 6 && _Situacao != 2 && _Situacao  != 1  && _Situacao != 5 && _Situacao != 7){
             <h5 class="font-weight-bold">Ata de Eleição</h5>
             @if (ViewData["AprovarAtaEleicao"] == null || (int)ViewData["AprovarAtaEleicao"] == 0)
             {

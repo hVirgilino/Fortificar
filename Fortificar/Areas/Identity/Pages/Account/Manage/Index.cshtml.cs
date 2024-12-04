@@ -53,6 +53,8 @@ namespace Fortificar.Areas.Identity.Pages.Account.Manage
 
         [BindProperty]
         public Proponente Proponente { get; set; } = new();
+        [BindProperty]
+        public ResponsavelLegal ResponsavelLegal { get; set; } = new();
 
         [BindProperty]
         public Desembolso Desembolso { get; set; } = new();
@@ -149,20 +151,18 @@ namespace Fortificar.Areas.Identity.Pages.Account.Manage
         {
             foreach (var parametro in parametros)
             {
-                // Busca o parâmetro existente no banco
                 var parametroExistente = await _context.Parametro
                     .FirstOrDefaultAsync(p => p.Id == parametro.Id);
 
                 if (parametroExistente != null)
                 {
-                    // Atualiza os valores
                     parametroExistente.ValorMin = parametro.ValorMin;
                     parametroExistente.ValorMax = parametro.ValorMax;
                     parametroExistente.Ativo = parametro.Ativo;
                 }
             }
 
-            // Salva as alterações no banco
+            
             await _context.SaveChangesAsync();
 
             return Page();
@@ -200,8 +200,9 @@ namespace Fortificar.Areas.Identity.Pages.Account.Manage
             }
 
 
-            // Atualizar os dados do Proponente
+            
             var proponente = await _context.Proponente
+                .Include(p => p.ResponsavelLegal)
                 .FirstOrDefaultAsync(p => p.Id == user.ProponenteId);
 
             if (proponente != null)
@@ -209,14 +210,41 @@ namespace Fortificar.Areas.Identity.Pages.Account.Manage
                 proponente.NomeFantasia = Proponente.NomeFantasia;
                 proponente.CNPJ = Proponente.CNPJ;
                 proponente.Endereco = Proponente.Endereco;
-                // Atualize outros campos conforme necessário
+                proponente.Bairro = Proponente.Bairro;
+                proponente.Cidade = Proponente.Cidade;
+                proponente.CEP = Proponente.CEP;
+                proponente.InformacoesRelevantes = Proponente.InformacoesRelevantes;
+                proponente.EmailEmpresa = Proponente.EmailEmpresa;
+                proponente.Site = Proponente.Site;
+                proponente.Telefone1 = Proponente.Telefone1;
+                proponente.Telefone2 = Proponente.Telefone2;
+                proponente.Telefone3 = Proponente.Telefone3;
+
+                proponente.ResponsavelLegal.Nome = ResponsavelLegal.Nome;
+                proponente.ResponsavelLegal.CPF = ResponsavelLegal.CPF;
+                proponente.ResponsavelLegal.RG = ResponsavelLegal.RG;
+                proponente.ResponsavelLegal.OrgaoExpedidor = ResponsavelLegal.OrgaoExpedidor;
+                proponente.ResponsavelLegal.CargoOSC = ResponsavelLegal.CargoOSC;
+                proponente.ResponsavelLegal.MandatoVigente = ResponsavelLegal.MandatoVigente;
+                proponente.ResponsavelLegal.Endereco = ResponsavelLegal.Endereco;
+                proponente.ResponsavelLegal.Telefone1 = ResponsavelLegal.Telefone1;
+                proponente.ResponsavelLegal.Telefone2 = ResponsavelLegal.Telefone2;
+                proponente.ResponsavelLegal.Telefone3 = ResponsavelLegal.Telefone3;
+                
+                proponente.Historico = Proponente.Historico;
+                proponente.PrincipaisAcoes = Proponente.PrincipaisAcoes;
+                proponente.PublicoAlvo = Proponente.PublicoAlvo;
+                proponente.RegioesAtendimento = Proponente.RegioesAtendimento;
+                proponente.Infraestrutura = Proponente.Infraestrutura;
+                proponente.EquipeMultidisciplinar = Proponente.EquipeMultidisciplinar;
+
 
                 _context.Update(proponente);
                 await _context.SaveChangesAsync();
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Seu perfil foi atualizado";
             return RedirectToPage();
         }
     }

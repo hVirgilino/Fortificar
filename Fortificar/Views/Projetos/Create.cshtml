@@ -7,21 +7,21 @@
         <div class="marginB card-body">
             <form asp-action="SalvarProjeto" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <!-- 1. DADOS GERAIS DO PROPONENTE -->
-            <h5 class="font-weight-bold">1. DADOS GERAIS DO PROPONENTE</h5>     
+            <!-- 1. DADOS GERAIS DA INSTITUIÇÃO -->
+            <h5 class="font-weight-bold">1. DADOS GERAIS DA INSTITUIÇÃO</h5>     
 
             <div class="row g-2">
                 <div class="col-8">
                 <div class="form-floating mb-3">
-                    <input readonly asp-for="Projeto.Proponente.NomeFantasia"  class="form-control" placeholder="Nome Fantasia da Empresa" />
-                    <label asp-for="Projeto.Proponente.NomeFantasia">Nome Fantasia da Empresa</label>
+                    <input readonly asp-for="Projeto.Proponente.NomeFantasia"  class="form-control" placeholder="Nome Fantasia da Instituição" />
+                    <label asp-for="Projeto.Proponente.NomeFantasia">Nome Fantasia da Instituição</label>
                     <span asp-validation-for="Projeto.Proponente.NomeFantasia" class="text-danger"></span>
                 </div>
                 </div>
                 <div class="col-4">
                     <div class="form-floating mb-3">
-                        <input readonly asp-for="Projeto.Proponente.CNPJ" class="form-control" placeholder="CNPJ da Empresa" />
-                        <label asp-for="Projeto.Proponente.CNPJ">CNPJ da Empresa</label>
+                        <input readonly asp-for="Projeto.Proponente.CNPJ" class="form-control" placeholder="CNPJ da Instituição" />
+                        <label asp-for="Projeto.Proponente.CNPJ">CNPJ da Instituição</label>
                         <span asp-validation-for="Projeto.Proponente.CNPJ" class="text-danger"></span>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                 <div class="col-8">
                     <div class="form-floating mb-3">
                         <input readonly asp-for="Projeto.Proponente.EmailEmpresa" class="form-control" placeholder="Email" />
-                        <label asp-for="Projeto.Proponente.EmailEmpresa">Email da Empresa</label>
+                        <label asp-for="Projeto.Proponente.EmailEmpresa">Email da Instituição</label>
                         <span asp-validation-for="Projeto.Proponente.EmailEmpresa" class="text-danger"></span>
                     </div>
 
@@ -103,8 +103,8 @@
                 </div>
             </div>  
 
-            <!-- 2. IDENTIFICAÇÃO DO RESPONSÁVEL LEGAL PELO PROPONENTE -->
-            <h5 class="font-weight-bold">2. IDENTIFICAÇÃO DO RESPONSÁVEL LEGAL PELO PROPONENTE</h5> 
+            <!-- 2. IDENTIFICAÇÃO DO RESPONSÁVEL LEGAL PELA INSTITUIÇÃO -->
+            <h5 class="font-weight-bold">2. IDENTIFICAÇÃO DO RESPONSÁVEL LEGAL PELA INSTITUIÇÃO</h5> 
             <div class="row">
                 <div class="col-8">
                     <!-- Responsável Legal -->
@@ -279,24 +279,24 @@
                 </div>
             </div>
 
-            <!-- 4. CONHECENDO O PROPONENTE -->
-            <h5 class="font-weight-bold">4. CONHECENDO O PROPONENTE</h5>
+            <!-- 4. CONHECENDO A INSTITUIÇÃO -->
+            <h5 class="font-weight-bold">4. CONHECENDO A INSTITUIÇÃO</h5>
             <div class="form-floating mb-3">
                 <textarea readonly asp-for="Projeto.Proponente.Historico" class="form-control" placeholder="Breve histórico e finalidade da OSC" style="height: 150px;"></textarea>
                 <label asp-for="Projeto.Proponente.Historico">Breve histórico e finalidade da OSC</label>
                 <span asp-validation-for="Projeto.Proponente.Historico" class="text-danger"></span>
             </div>
 
-            <!-- 5. PRINCIPAIS AÇÕES DESENVOLVIDAS PELA PROPONENTE -->
-            <h5 class="font-weight-bold">5. PRINCIPAIS AÇÕES DESENVOLVIDAS PELA PROPONENTE</h5>
+            <!-- 5. PRINCIPAIS AÇÕES DESENVOLVIDAS PELA INSTITUIÇÃO -->
+            <h5 class="font-weight-bold">5. PRINCIPAIS AÇÕES DESENVOLVIDAS PELA INSTITUIÇÃO</h5>
             <div class="form-floating mb-3">
                 <textarea readonly asp-for="Projeto.Proponente.PrincipaisAcoes" class="form-control" placeholder="Principais Ações" style="height: 150px;"></textarea>
                 <label asp-for="Projeto.Proponente.PrincipaisAcoes">Principais Ações</label>
                 <span asp-validation-for="Projeto.Proponente.PrincipaisAcoes" class="text-danger"></span>
             </div>
 
-            <!-- 6. PÚBLICO ALVO DE ATENDIMENTO DA PROPONENTE -->
-            <h5 class="font-weight-bold">6. PÚBLICO ALVO DE ATENDIMENTO DA PROPONENTE</h5>    
+            <!-- 6. PÚBLICO ALVO DE ATENDIMENTO DA INSTITUIÇÃO -->
+            <h5 class="font-weight-bold">6. PÚBLICO ALVO DE ATENDIMENTO DA INSTITUIÇÃO</h5>    
             <div class="form-group">
                 <div class="checkbox-grid">
                     @for (int i = 0; i < Model.PublicoBeneficiario.Count; i++)
@@ -322,16 +322,16 @@
                 <span asp-validation-for="Projeto.Proponente.RegioesAtendimento" class="text-danger"></span>
             </div>
 
-            <!-- 8. INFRAESTRUTURA DA PROPONENTE -->
-            <h5 class="font-weight-bold">8. INFRAESTRUTURA DA PROPONENTE</h5>
+            <!-- 8. INFRAESTRUTURA DA INSTITUIÇÃO -->
+            <h5 class="font-weight-bold">8. INFRAESTRUTURA DA INSTITUIÇÃO</h5>
             <div class="form-floating mb-3">
                 <textarea readonly asp-for="Projeto.Proponente.Infraestrutura" class="form-control" placeholder="Infraestrutura" style="height: 150px;"></textarea>
                 <label asp-for="Projeto.Proponente.Infraestrutura">Infraestrutura</label>
                 <span asp-validation-for="Projeto.Proponente.Infraestrutura" class="text-danger"></span>
             </div>
 
-            <!-- 9. EQUIPE MULTIDISCIPLINAR DO PROPONENTE -->
-            <h5 class="font-weight-bold">9. EQUIPE MULTIDISCIPLINAR DO PROPONENTE</h5>
+            <!-- 9. EQUIPE MULTIDISCIPLINAR DA INSTITUIÇÃO -->
+            <h5 class="font-weight-bold">9. EQUIPE MULTIDISCIPLINAR DA INSTITUIÇÃO</h5>
             <div class="form-floating mb-3">
                 <textarea readonly asp-for="Projeto.Proponente.EquipeMultidisciplinar" class="form-control" placeholder="Equipe Multidisciplinar" style="height: 150px;"></textarea>
                 <label asp-for="Projeto.Proponente.EquipeMultidisciplinar">Equipe Multidisciplinar</label>

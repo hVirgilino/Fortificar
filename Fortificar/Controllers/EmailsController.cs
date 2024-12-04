@@ -21,16 +21,14 @@ namespace Fortificar.Controllers
             return View();
         }
 
-        // P
-
 
         [HttpPost]
-        public async Task<IActionResult> Enviar(string Destinatario, string Texto, string Assunto)
+        public async Task<IActionResult> Enviar(int Id, string Destinatario, string Texto, string Assunto)
         {
             try
             {
                 EmailDados _Email = new(Destinatario, Assunto, Texto);
-                await _emailService.EnviarEmail(_Email.Para, _Email.Assunto, _Email.Corpo);
+                await _emailService.EnviarEmail(Id, _Email.Para, _Email.Assunto, _Email.Corpo);
 
                 return Ok("Projeto aprovado.");
             }

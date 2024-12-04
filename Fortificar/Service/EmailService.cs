@@ -1,5 +1,8 @@
 ﻿using System.Net;
 using System.Net.Mail;
+using Fortificar.Data;
+using Fortificar.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Fortificar.Services
@@ -11,18 +14,30 @@ namespace Fortificar.Services
         private readonly string _smtpHost;
         private readonly int _smtpPort;
 
-        public EmailService(IConfiguration configuration)
+        private readonly AuthDbContext _context;
+        public EmailService(IConfiguration configuration, AuthDbContext context)
         {
             _fromEmail = "henriquevoliveira5@gmail.com";
             _fromPassword = "qnzz dtvc etmk bjge";
             _smtpHost = "smtp.gmail.com";
             _smtpPort = 587;
+
+            _context = context;
         }
 
-        public async Task EnviarEmail(string para, string assunto, string corpo)
+        public async Task EnviarEmail(int id, string para, string assunto, string corpo)
         {
             var fromAddress = new MailAddress(_fromEmail, "Fortificar");
             var toAddress = new MailAddress(para);
+
+            var projeto = _context.Projeto
+                    .Where(p => p.Id == id)
+                    .FirstOrDefault();
+
+            projeto.SituacaoId = 4;
+
+            _context.Projeto.Update(projeto);
+            await _context.SaveChangesAsync();
 
             var smtp = new SmtpClient
             {

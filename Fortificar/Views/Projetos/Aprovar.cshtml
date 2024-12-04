@@ -18,7 +18,7 @@
         </dd>
     </dl>
 
-
+    <input type="hidden" id="Id" asp-for="Id" class="form-control" placeholder="Email" />
     <hr />
     <div class="form-floating mb-3">
         <input readonly id="Destinatario" asp-for="Proponente.EmailEmpresa" class="form-control" placeholder="Email" />
@@ -47,6 +47,7 @@
             $('#Aprovar').attr('disabled', 'disabled');
             $("#RetornoMsg").html('');
 
+            var _Id = $('#Id').val();
             var _Destinatario = $('#Destinatario').val();
             console.log(_Destinatario);
             var _Texto = $('#Texto').val();
@@ -54,7 +55,8 @@
 
             $.ajax({
                 type: "POST",
-                url: "/Emails/Enviar?Destinatario=" + encodeURIComponent(_Destinatario) +
+                url: "/Emails/Enviar?Id="+ encodeURIComponent(_Id) +
+                    "&Destinatario=" + encodeURIComponent(_Destinatario) +
                     "&Texto=" + encodeURIComponent(_Texto) +
                     "&Assunto=" + encodeURIComponent(_Assunto)
                 ,

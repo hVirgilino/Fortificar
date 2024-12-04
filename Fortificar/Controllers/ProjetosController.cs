@@ -141,7 +141,7 @@ namespace Fortificar.Controllers
 
             // DOCUMENTOS
 
-            if (projeto.SituacaoId == 4 || projeto.SituacaoId == 2)
+            if (projeto.SituacaoId == 4)
             {
                 int ataEleicaoAprovada = 0;
                 int estatutoAprovado = 0;
@@ -151,6 +151,7 @@ namespace Fortificar.Controllers
                 int dadosBancariosAprovados = 0;
 
                 var anexo = await _context.Anexo
+            .Where(a => a.Id == projeto.AnexoId)
             .FirstOrDefaultAsync();
 
                 if (anexo != null)
@@ -377,7 +378,8 @@ namespace Fortificar.Controllers
                         PublicoAlvo = proponente.PublicoAlvo,
                         RegioesAtendimento = proponente.RegioesAtendimento,
                         Infraestrutura = proponente.Infraestrutura,
-                        EquipeMultidisciplinar = proponente.EquipeMultidisciplinar
+                        EquipeMultidisciplinar = proponente.EquipeMultidisciplinar,
+                        EmailEmpresa = proponente.EmailEmpresa
 
                     },
                     ResponsavelLegal = responsavelLegal != null ? new ResponsavelLegal

@@ -1,11 +1,11 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Registro";
     Layout = "~/Areas/Identity/Pages/_AuthLayout.cshtml";
 }
 
-<form id="registerForm" asp-route-returnUrl="@Model?.ReturnUrl" method="post">
+<form id="registerForm" asp-route-returnUrl="@Model?.ReturnUrl" method="post" enctype="multipart/form-data">
     <h2>Criar usuário</h2>
     <hr />
     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
@@ -30,84 +30,84 @@
     <hr />
     <!-- Informações Básicas da Empresa -->
     <div class="form-floating mb-3">
-        <input asp-for="Proponente.RazaoSocial" class="form-control" placeholder="Razão Social da Empresa" />
-        <label asp-for="Proponente.RazaoSocial">Razão Social da Empresa</label>
-        <span asp-validation-for="Proponente.RazaoSocial" class="text-danger"></span>
+        <input asp-for="Input.Proponente.RazaoSocial" class="form-control" placeholder="Razão Social da Empresa" />
+        <label asp-for="Input.Proponente.RazaoSocial">Razão Social da Empresa</label>
+        <span asp-validation-for="Input.Proponente.RazaoSocial" class="text-danger"></span>
     </div>
 
     <div class="form-floating mb-3">
-        <input asp-for="Proponente.NomeFantasia" class="form-control" placeholder="Nome Fantasia" />
-        <label asp-for="Proponente.NomeFantasia">Nome Fantasia</label>
-        <span asp-validation-for="Proponente.NomeFantasia" class="text-danger"></span>
+        <input asp-for="Input.Proponente.NomeFantasia" class="form-control" placeholder="Nome Fantasia" />
+        <label asp-for="Input.Proponente.NomeFantasia">Nome Fantasia</label>
+        <span asp-validation-for="Input.Proponente.NomeFantasia" class="text-danger"></span>
     </div>
 
     <div class="form-floating mb-3">
-        <input asp-for="Proponente.CNPJ" class="form-control" placeholder="CNPJ" />
-        <label asp-for="Proponente.CNPJ">CNPJ</label>
-        <span asp-validation-for="Proponente.CNPJ" class="text-danger"></span>
+        <input asp-for="Input.Proponente.CNPJ" class="form-control" placeholder="CNPJ" />
+        <label asp-for="Input.Proponente.CNPJ">CNPJ</label>
+        <span asp-validation-for="Input.Proponente.CNPJ" class="text-danger"></span>
     </div>
 
     <div class="form-floating mb-3">
-        <input asp-for="Proponente.InscricaoEstadual" class="form-control" placeholder="Inscrição Estadual" />
-        <label asp-for="Proponente.InscricaoEstadual">Inscrição Estadual</label>
-        <span asp-validation-for="Proponente.InscricaoEstadual" class="text-danger"></span>
+        <input asp-for="Input.Proponente.InscricaoEstadual" class="form-control" placeholder="Inscrição Estadual" />
+        <label asp-for="Input.Proponente.InscricaoEstadual">Inscrição Estadual</label>
+        <span asp-validation-for="Input.Proponente.InscricaoEstadual" class="text-danger"></span>
     </div>
 
     <div class="form-floating mb-3">
-        <input asp-for="Proponente.InscricaoMunicipal" class="form-control" placeholder="Inscrição Municipal" />
-        <label asp-for="Proponente.InscricaoMunicipal">Inscrição Municipal</label>
-        <span asp-validation-for="Proponente.InscricaoMunicipal" class="text-danger"></span>
+        <input asp-for="Input.Proponente.InscricaoMunicipal" class="form-control" placeholder="Inscrição Municipal" />
+        <label asp-for="Input.Proponente.InscricaoMunicipal">Inscrição Municipal</label>
+        <span asp-validation-for="Input.Proponente.InscricaoMunicipal" class="text-danger"></span>
     </div>
 
     <h3>Endereço da empresa:</h3>
     <hr />
     <!-- Endereço -->
     <div class="form-floating mb-3">
-        <input asp-for="Proponente.Endereco" class="form-control" placeholder="Endereço" />
-        <label asp-for="Proponente.Endereco">Endereço</label>
-        <span asp-validation-for="Proponente.Endereco" class="text-danger"></span>
+        <input asp-for="Input.Proponente.Endereco" class="form-control" placeholder="Endereço" />
+        <label asp-for="Input.Proponente.Endereco">Endereço</label>
+        <span asp-validation-for="Input.Proponente.Endereco" class="text-danger"></span>
     </div>    
 
     <div class="row g-2">
         <div class="col-md">
 			<div class="form-floating mb-3">
-				<input asp-for="Proponente.Numero" class="form-control" placeholder="Número" />
-				<label asp-for="Proponente.Numero">Número</label>
-				<span asp-validation-for="Proponente.Numero" class="text-danger"></span>
+				<input asp-for="Input.Proponente.Numero" class="form-control" placeholder="Número" />
+				<label asp-for="Input.Proponente.Numero">Número</label>
+				<span asp-validation-for="Input.Proponente.Numero" class="text-danger"></span>
 			</div>
         </div>
         <div class="col-md">
 			<div class="form-floating mb-3">
-				<input asp-for="Proponente.Complemento" class="form-control" placeholder="Complemento" />
-				<label asp-for="Proponente.Complemento">Complemento</label>
-				<span asp-validation-for="Proponente.Complemento" class="text-danger"></span>
+				<input asp-for="Input.Proponente.Complemento" class="form-control" placeholder="Complemento" />
+				<label asp-for="Input.Proponente.Complemento">Complemento</label>
+				<span asp-validation-for="Input.Proponente.Complemento" class="text-danger"></span>
 			</div>
         </div>
     </div>
 
     <div class="form-floating mb-3">
-        <input asp-for="Proponente.Bairro" class="form-control" placeholder="Bairro" />
-        <label asp-for="Proponente.Bairro">Bairro</label>
-        <span asp-validation-for="Proponente.Bairro" class="text-danger"></span>
+        <input asp-for="Input.Proponente.Bairro" class="form-control" placeholder="Bairro" />
+        <label asp-for="Input.Proponente.Bairro">Bairro</label>
+        <span asp-validation-for="Input.Proponente.Bairro" class="text-danger"></span>
     </div>
 
     <div class="form-floating mb-3">
-        <input asp-for="Proponente.Cidade" class="form-control" placeholder="Cidade" />
-        <label asp-for="Proponente.Cidade">Cidade</label>
-        <span asp-validation-for="Proponente.Cidade" class="text-danger"></span>
+        <input asp-for="Input.Proponente.Cidade" class="form-control" placeholder="Cidade" />
+        <label asp-for="Input.Proponente.Cidade">Cidade</label>
+        <span asp-validation-for="Input.Proponente.Cidade" class="text-danger"></span>
     </div> 
 
     <div class="row g-2">
         <div class="form-floating mb-3">
-            <input asp-for="Proponente.Estado" class="form-control" placeholder="Estado" />
-            <label asp-for="Proponente.Estado">Estado</label>
-            <span asp-validation-for="Proponente.Estado" class="text-danger"></span>
+            <input asp-for="Input.Proponente.Estado" class="form-control" placeholder="Estado" />
+            <label asp-for="Input.Proponente.Estado">Estado</label>
+            <span asp-validation-for="Input.Proponente.Estado" class="text-danger"></span>
         </div>
         <div class="col-md">
             <div class="form-floating mb-3">
-                <input asp-for="Proponente.CEP" class="form-control" placeholder="CEP" />
-                <label asp-for="Proponente.CEP">CEP</label>
-                <span asp-validation-for="Proponente.CEP" class="text-danger"></span>
+                <input asp-for="Input.Proponente.CEP" class="form-control" placeholder="CEP" />
+                <label asp-for="Input.Proponente.CEP">CEP</label>
+                <span asp-validation-for="Input.Proponente.CEP" class="text-danger"></span>
             </div>
         </div>
     </div>
@@ -116,32 +116,32 @@
     <hr />
     <!-- Informações de Contato -->
     <div class="form-floating mb-3">
-        <input asp-for="Proponente.Telefone1" class="form-control" placeholder="Telefone" />
-        <label asp-for="Proponente.Telefone1">Telefone 1</label>
-        <span asp-validation-for="Proponente.Telefone1" class="text-danger"></span>
+        <input asp-for="Input.Proponente.Telefone1" class="form-control" placeholder="Telefone" />
+        <label asp-for="Input.Proponente.Telefone1">Telefone 1</label>
+        <span asp-validation-for="Input.Proponente.Telefone1" class="text-danger"></span>
     </div>
 
     <div class="row g-2">
         <div class="col-md">
 			<div class="form-floating mb-3">
-				<input asp-for="Proponente.Telefone2" class="form-control" placeholder="Telefone" />
-				<label asp-for="Proponente.Telefone2">Telefone 2 </label>
-				<span asp-validation-for="Proponente.Telefone2" class="text-danger"></span>
+				<input asp-for="Input.Proponente.Telefone2" class="form-control" placeholder="Telefone" />
+				<label asp-for="Input.Proponente.Telefone2">Telefone 2 </label>
+				<span asp-validation-for="Input.Proponente.Telefone2" class="text-danger"></span>
 			</div>
         </div>
         <div class="col-md">
             <div class="form-floating mb-3">
-				<input asp-for="Proponente.Telefone3" class="form-control" placeholder="Telefone Secundário" />
-				<label asp-for="Proponente.Telefone3">Telefone 3</label>
-				<span asp-validation-for="Proponente.Telefone3" class="text-danger"></span>
+				<input asp-for="Input.Proponente.Telefone3" class="form-control" placeholder="Telefone Secundário" />
+				<label asp-for="Input.Proponente.Telefone3">Telefone 3</label>
+				<span asp-validation-for="Input.Proponente.Telefone3" class="text-danger"></span>
 			</div>
         </div>
     </div>
     
 	<div class="form-floating mb-3">
-		<input asp-for="Proponente.Site" class="form-control" placeholder="site.com" />
-		<label asp-for="Proponente.Site">Site</label>
-		<span asp-validation-for="Proponente.Site" class="text-danger"></span>
+		<input asp-for="Input.Proponente.Site" class="form-control" placeholder="site.com" />
+		<label asp-for="Input.Proponente.Site">Site</label>
+		<span asp-validation-for="Input.Proponente.Site" class="text-danger"></span>
 	</div>
 
     <h3>Informações financeiras da empresa:</h3>
@@ -150,16 +150,16 @@
     <div class="row g-2">
         <div class="col-md">
             <div class="form-floating mb-3">
-                <input asp-for="Proponente.Agencia" class="form-control" placeholder="Agência" />
-                <label asp-for="Proponente.Agencia">Agência</label>
-                <span asp-validation-for="Proponente.Agencia" class="text-danger"></span>
+                <input asp-for="Input.Proponente.Agencia" class="form-control" placeholder="Agência" />
+                <label asp-for="Input.Proponente.Agencia">Agência</label>
+                <span asp-validation-for="Input.Proponente.Agencia" class="text-danger"></span>
             </div>
         </div>
         <div class="col-md">
             <div class="form-floating mb-3">
-                <input asp-for="Proponente.Conta" class="form-control" placeholder="Conta" />
-                <label asp-for="Proponente.Conta">Conta </label>
-                <span asp-validation-for="Proponente.Conta" class="text-danger"></span>
+                <input asp-for="Input.Proponente.Conta" class="form-control" placeholder="Conta" />
+                <label asp-for="Input.Proponente.Conta">Conta </label>
+                <span asp-validation-for="Input.Proponente.Conta" class="text-danger"></span>
             </div>
         </div>
     </div>
@@ -167,16 +167,16 @@
     <div class="row g-2">
         <div class="col-md">
             <div class="form-floating mb-3">
-                <input asp-for="Proponente.Banco" class="form-control" placeholder="Banco" />
-                <label asp-for="Proponente.Banco">Banco</label>
-                <span asp-validation-for="Proponente.Banco" class="text-danger"></span>
+                <input asp-for="Input.Proponente.Banco" class="form-control" placeholder="Banco" />
+                <label asp-for="Input.Proponente.Banco">Banco</label>
+                <span asp-validation-for="Input.Proponente.Banco" class="text-danger"></span>
             </div>
         </div>
         <div class="col-md">
             <div class="form-floating mb-3">
-                <input asp-for="Proponente.TipoConta" class="form-control" placeholder="Tipo de Conta" />
-                <label asp-for="Proponente.TipoConta">Tipo de Conta</label>
-                <span asp-validation-for="Proponente.TipoConta" class="text-danger"></span>
+                <input asp-for="Input.Proponente.TipoConta" class="form-control" placeholder="Tipo de Conta" />
+                <label asp-for="Input.Proponente.TipoConta">Tipo de Conta</label>
+                <span asp-validation-for="Input.Proponente.TipoConta" class="text-danger"></span>
             </div>
         </div>
     </div> 
@@ -186,51 +186,51 @@
     <hr />
     <!-- 5. Representante Legal -->
     <div class="form-floating mb-3">
-        <label asp-for="Proponente.ResponsavelLegal.Nome" class="control-label"></label>
-        <input asp-for="Proponente.ResponsavelLegal.Nome" class="form-control" />
-        <span asp-validation-for="Proponente.ResponsavelLegal.Nome" class="text-danger"></span>
+        <label asp-for="Input.Proponente.ResponsavelLegal.Nome" class="control-label"></label>
+        <input asp-for="Input.Proponente.ResponsavelLegal.Nome" class="form-control" />
+        <span asp-validation-for="Input.Proponente.ResponsavelLegal.Nome" class="text-danger"></span>
     </div>
     
     <div class="form-floating mb-3">
-        <label asp-for="Proponente.ResponsavelLegal.CPF" class="control-label"></label>
-        <input asp-for="Proponente.ResponsavelLegal.CPF" class="form-control" />
-        <span asp-validation-for="Proponente.ResponsavelLegal.CPF" class="text-danger"></span>
+        <label asp-for="Input.Proponente.ResponsavelLegal.CPF" class="control-label"></label>
+        <input asp-for="Input.Proponente.ResponsavelLegal.CPF" class="form-control" />
+        <span asp-validation-for="Input.Proponente.ResponsavelLegal.CPF" class="text-danger"></span>
     </div>
 
     <div class="form-floating mb-3">
-        <label asp-for="Proponente.ResponsavelLegal.RG" class="control-label"></label>
-        <input asp-for="Proponente.ResponsavelLegal.RG" class="form-control" />
-        <span asp-validation-for="Proponente.ResponsavelLegal.RG" class="text-danger"></span>
+        <label asp-for="Input.Proponente.ResponsavelLegal.RG" class="control-label"></label>
+        <input asp-for="Input.Proponente.ResponsavelLegal.RG" class="form-control" />
+        <span asp-validation-for="Input.Proponente.ResponsavelLegal.RG" class="text-danger"></span>
     </div>
 
     <div class="form-floating mb-3">
-        <label asp-for="Proponente.ResponsavelLegal.OrgaoExpedidor" class="control-label"></label>
-        <input asp-for="Proponente.ResponsavelLegal.OrgaoExpedidor" class="form-control" />
-        <span asp-validation-for="Proponente.ResponsavelLegal.OrgaoExpedidor" class="text-danger"></span>
+        <label asp-for="Input.Proponente.ResponsavelLegal.OrgaoExpedidor" class="control-label"></label>
+        <input asp-for="Input.Proponente.ResponsavelLegal.OrgaoExpedidor" class="form-control" />
+        <span asp-validation-for="Input.Proponente.ResponsavelLegal.OrgaoExpedidor" class="text-danger"></span>
     </div>
 
     <div class="form-floating mb-3">
-        <label asp-for="Proponente.ResponsavelLegal.CargoOSC" class="control-label"></label>
-        <input asp-for="Proponente.ResponsavelLegal.CargoOSC" class="form-control" />
-        <span asp-validation-for="Proponente.ResponsavelLegal.CargoOSC" class="text-danger"></span>
+        <label asp-for="Input.Proponente.ResponsavelLegal.CargoOSC" class="control-label"></label>
+        <input asp-for="Input.Proponente.ResponsavelLegal.CargoOSC" class="form-control" />
+        <span asp-validation-for="Input.Proponente.ResponsavelLegal.CargoOSC" class="text-danger"></span>
     </div>
 
     <div class="form-floating mb-3">
-        <label asp-for="Proponente.ResponsavelLegal.MandatoVigente" class="control-label"></label>
-        <input asp-for="Proponente.ResponsavelLegal.MandatoVigente" class="form-control" />
-        <span asp-validation-for="Proponente.ResponsavelLegal.MandatoVigente" class="text-danger"></span>
+        <label asp-for="Input.Proponente.ResponsavelLegal.MandatoVigente" class="control-label"></label>
+        <input asp-for="Input.Proponente.ResponsavelLegal.MandatoVigente" class="form-control" />
+        <span asp-validation-for="Input.Proponente.ResponsavelLegal.MandatoVigente" class="text-danger"></span>
     </div>
 
     <div class="form-floating mb-3">
-        <label asp-for="Proponente.ResponsavelLegal.Endereco" class="control-label"></label>
-        <input asp-for="Proponente.ResponsavelLegal.Endereco" class="form-control" />
-        <span asp-validation-for="Proponente.ResponsavelLegal.Endereco" class="text-danger"></span>
+        <label asp-for="Input.Proponente.ResponsavelLegal.Endereco" class="control-label"></label>
+        <input asp-for="Input.Proponente.ResponsavelLegal.Endereco" class="form-control" />
+        <span asp-validation-for="Input.Proponente.ResponsavelLegal.Endereco" class="text-danger"></span>
     </div>
 
     <div class="form-floating mb-3">
-        <label asp-for="Proponente.ResponsavelLegal.Telefone1" class="control-label"></label>
-        <input asp-for="Proponente.ResponsavelLegal.Telefone1" class="form-control" />
-        <span asp-validation-for="Proponente.ResponsavelLegal.Telefone1" class="text-danger"></span>
+        <label asp-for="Input.Proponente.ResponsavelLegal.Telefone1" class="control-label"></label>
+        <input asp-for="Input.Proponente.ResponsavelLegal.Telefone1" class="form-control" />
+        <span asp-validation-for="Input.Proponente.ResponsavelLegal.Telefone1" class="text-danger"></span>
     </div> 
 
     
@@ -238,16 +238,16 @@
     <div class="row g-2">
         <div class="col-md">
 			<div class="form-floating mb-3">
-				<label asp-for="Proponente.ResponsavelLegal.Telefone2" class="control-label"></label>
-				<input asp-for="Proponente.ResponsavelLegal.Telefone2" class="form-control" />
-				<span asp-validation-for="Proponente.ResponsavelLegal.Telefone2" class="text-danger"></span>
+				<label asp-for="Input.Proponente.ResponsavelLegal.Telefone2" class="control-label"></label>
+				<input asp-for="Input.Proponente.ResponsavelLegal.Telefone2" class="form-control" />
+				<span asp-validation-for="Input.Proponente.ResponsavelLegal.Telefone2" class="text-danger"></span>
 			</div>
         </div>
         <div class="col-md">
 			<div class="form-floating mb-3">
-				<label asp-for="Proponente.ResponsavelLegal.Telefone3" class="control-label"></label>
-				<input asp-for="Proponente.ResponsavelLegal.Telefone3" class="form-control" />
-				<span asp-validation-for="Proponente.ResponsavelLegal.Telefone3" class="text-danger"></span>
+				<label asp-for="Input.Proponente.ResponsavelLegal.Telefone3" class="control-label"></label>
+				<input asp-for="Input.Proponente.ResponsavelLegal.Telefone3" class="form-control" />
+				<span asp-validation-for="Input.Proponente.ResponsavelLegal.Telefone3" class="text-danger"></span>
 			</div>
         </div>
     </div>
