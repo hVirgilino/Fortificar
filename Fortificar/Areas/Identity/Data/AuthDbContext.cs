@@ -36,6 +36,7 @@ public class AuthDbContext : IdentityDbContext<FortificarUser>
     protected override void OnModelCreating(ModelBuilder builder)
 	{
 
+
 		builder.Entity<Projeto>()
 			.HasMany(p => p.EquipeExecucao)
 			.WithOne(m => m.Projeto)
@@ -75,6 +76,11 @@ public class AuthDbContext : IdentityDbContext<FortificarUser>
             .WithMany()
             .HasForeignKey(p => p.ResponsavelTecnicoId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<ProjetoODS>()
+        .HasOne(p => p.ODS)
+        .WithMany()
+        .HasForeignKey(p => p.ODSId);
 
         base.OnModelCreating(builder);
         builder.Entity<ODS>().HasData(
@@ -118,14 +124,130 @@ public class AuthDbContext : IdentityDbContext<FortificarUser>
             new Situacao { Id = 5, Nome = "Recusado", Descricao = "O projeto foi recusado."},
             new Situacao { Id = 6, Nome = "Concluido", Descricao = "O projeto foi concluído."},
             new Situacao { Id = 7, Nome = "Em análise", Descricao = "O projeto está em análise."}
-        );    
-        
+        );
+
+        builder.Entity<Anexo>().HasData(
+            new Anexo
+            {
+                Id = -1,
+                Nome = "Teste",
+                Tipo = "Teste",
+                Imagem = null,
+                AtaEleicao = "Teste",
+                AprovadoAtaEleicao = "Teste",
+                Estatuto = "Teste",
+                AprovadoEstatuto = "Teste",
+                CNPJ = "Teste",
+                AprovadoCNPJ = "Teste",
+                CPFRespLegal = "Teste",
+                AprovadoCPFRespLegal = "Teste",
+                RGRespLegal = "Teste",
+                AprovadoRGRespLegal = "Teste",
+                DadosBancarios = "Teste",
+                AprovadoDadosBancarios = "Teste"
+            }
+        );
 
 
-       
+        builder.Entity<ResponsavelLegal>().HasData(
+            new ResponsavelLegal
+            {
+                Id = -1,
+                Nome = "Teste",
+                CPF = "Teste",
+                RG = "Teste",
+                OrgaoExpedidor = "Teste",
+                CargoOSC = "Teste",
+                MandatoVigente = DateTime.MinValue,
+                Endereco = "Teste",
+                Telefone1 = "Teste",
+                Telefone2 = "Teste",
+                Telefone3 = "Teste"
+            }
+        );
+
+        builder.Entity<Proponente>().HasData(
+            new Proponente
+            {
+                Id = -1,
+                NomeFantasia = "Teste",
+                RazaoSocial = "Teste",
+                CNPJ = "Teste",
+                InscricaoEstadual = "Teste",
+                InscricaoMunicipal = "Teste",
+                Endereco = "Teste",
+                Numero = "Teste",
+                Complemento = "Teste",
+                Bairro = "Teste",
+                Cidade = "Teste",
+                Estado = "Teste",
+                CEP = "Teste",
+                EmailEmpresa = "Teste",
+                Site = "Teste",
+                Telefone1 = "Teste",
+                Telefone2 = "Teste",
+                Telefone3 = "Teste",
+                Banco = "Teste",
+                Agencia = "Teste",
+                Conta = "Teste",
+                TipoConta = "Teste",
+                ResponsavelLegalId = -1,
+                Historico = "Teste",
+                PrincipaisAcoes = "Teste",
+                PublicoAlvo = "Teste",
+                RegioesAtendimento = "Teste",
+                Infraestrutura = "Teste",
+                EquipeMultidisciplinar = "Teste",
+                InformacoesRelevantes = "Teste"
+            }
+        );
+
+        builder.Entity<ResponsavelTecnico>().HasData(
+            new ResponsavelTecnico
+            {
+                Id = -1,
+                Nome = "Teste",
+                CPF = "Teste",
+                RG = "Teste",
+                OrgaoExpedidor = "Teste",
+                CargoOSC = "Teste",
+                MandatoVigente = DateTime.MinValue,
+                Endereco = "Teste",
+                Telefone1 = "Teste",
+                Telefone2 = "Teste",
+                Telefone3 = "Teste"
+            }
+        );
+
+        builder.Entity<Projeto>().HasData(
+            new Projeto
+            {
+                Id = -1,
+                ProponenteId = -1,
+                ResponsavelLegalId = -1,
+                ResponsavelTecnicoId = -1,
+                Objeto = "Teste",
+                ObjetivoGeral = "Teste",
+                ObjetivosEspecificos = "Teste",
+                Justificativa = "Teste",
+                InicioExecucao = DateTime.MinValue,
+                TerminoExecucao = DateTime.MinValue,
+                Orcamento = 0f,
+                SituacaoId = 1,
+                AnexoId = -1,
+                Cronograma = "Teste",
+                ValorMeta = 0f,
+                Indicadores = "Teste"
+            }
+        );
+
+
+
+
+
     }
 
- 
+
 
 
 

@@ -22,14 +22,14 @@
 <div class="marginB card-body">
     <h5 class="font-weight-bold">SITUAÇÃO DO PROJETO:</h5>
     <div class="form-floating mb-3">
-                <input readonly asp-for="Projeto.Situacao.Nome" class="form-control" placeholder="Status do projeto" />
-                <label asp-for="Projeto.Situacao.Nome">Status do projeto</label>
-                <span asp-validation-for="Projeto.Situacao.Nome" class="text-danger"></span>
+        <input readonly asp-for="Projeto.Situacao.Nome" class="form-control" placeholder="Status do projeto" />
+        <label asp-for="Projeto.Situacao.Nome">Status do projeto</label>
+        <span asp-validation-for="Projeto.Situacao.Nome" class="text-danger"></span>
     </div>
 
     <input type="hidden" id="ProjetoId" name="ProjetoId" value="@Model.Projeto.Id" />
-    <!-- 1. DADOS GERAIS DO PROPONENTE -->
-    <h5 class="font-weight-bold">1. DADOS GERAIS DO PROPONENTE</h5>
+    <!-- 1. DADOS GERAIS DA INSTITUIÇÃO -->
+    <h5 class="font-weight-bold">1. DADOS GERAIS DA INSTITUIÇÃO</h5>
 
     <div class="row g-2">
         <div class="col-8">
@@ -124,8 +124,8 @@
         </div>
     </div>
 
-    <!-- 2. IDENTIFICAÇÃO DO RESPONSÁVEL LEGAL PELO PROPONENTE -->
-    <h5 class="font-weight-bold">2. IDENTIFICAÇÃO DO RESPONSÁVEL LEGAL PELO PROPONENTE</h5>
+    <!-- 2. IDENTIFICAÇÃO DO RESPONSÁVEL LEGAL PELA INSTITUIÇÃO -->
+    <h5 class="font-weight-bold">2. IDENTIFICAÇÃO DO RESPONSÁVEL LEGAL PELA INSTITUIÇÃO</h5>
     <div class="row">
         <div class="col-8">
             <!-- Responsável Legal -->
@@ -300,36 +300,34 @@
         </div>
     </div>
 
-    <!-- 4. CONHECENDO O PROPONENTE -->
-    <h5 class="font-weight-bold">4. CONHECENDO O PROPONENTE</h5>
+    <!-- 4. CONHECENDO A INSTITUIÇÃO -->
+    <h5 class="font-weight-bold">4. CONHECENDO A INSTITUIÇÃO</h5>
     <div class="form-floating mb-3">
         <textarea readonly asp-for="Projeto.Proponente.Historico" class="form-control" placeholder="Breve histórico e finalidade da OSC" style="height: 150px;"></textarea>
         <label asp-for="Projeto.Proponente.Historico">Breve histórico e finalidade da OSC</label>
         <span asp-validation-for="Projeto.Proponente.Historico" class="text-danger"></span>
     </div>
 
-    <!-- 5. PRINCIPAIS AÇÕES DESENVOLVIDAS PELA PROPONENTE -->
-    <h5 class="font-weight-bold">5. PRINCIPAIS AÇÕES DESENVOLVIDAS PELA PROPONENTE</h5>
+    <!-- 5. PRINCIPAIS AÇÕES DESENVOLVIDAS PELA INSTITUIÇÃO -->
+    <h5 class="font-weight-bold">5. PRINCIPAIS AÇÕES DESENVOLVIDAS PELA INSTITUIÇÃO</h5>
     <div class="form-floating mb-3">
         <textarea readonly asp-for="Projeto.Proponente.PrincipaisAcoes" class="form-control" placeholder="Principais Ações" style="height: 150px;"></textarea>
         <label asp-for="Projeto.Proponente.PrincipaisAcoes">Principais Ações</label>
         <span asp-validation-for="Projeto.Proponente.PrincipaisAcoes" class="text-danger"></span>
     </div>
 
-    <!-- 6. PÚBLICO ALVO DE ATENDIMENTO DA PROPONENTE -->
-    <h5 class="font-weight-bold">6. PÚBLICO ALVO DE ATENDIMENTO DA PROPONENTE</h5>
+    <!-- 6. PÚBLICO ALVO DE ATENDIMENTO DA INSTITUIÇÃO -->
+    <h5 class="font-weight-bold">6. PÚBLICO ALVO DE ATENDIMENTO DA INSTITUIÇÃO</h5>
     <div class="form-group">
         <div class="checkbox-grid">
             <div class="form-check">
-                <input disabled class="form-check-input" checked type="checkbox" />
-                    <label class="form-check-label">Criança</label>
-                </div>
             @foreach (var item in Model.PublicoBeneficiario)
             {
                 <div class="form-check">
-                    <input class="form-check-input" selected type="checkbox"/>
+                        <input class="form-check-input" disabled checked type="checkbox" />
                     <label class="form-check-label" for="@item.Id">@item.Nome</label>
                 </div>
+                <br />
             }
         </div>
     </div>
@@ -343,16 +341,16 @@
         <span asp-validation-for="Projeto.Proponente.RegioesAtendimento" class="text-danger"></span>
     </div>
 
-    <!-- 8. INFRAESTRUTURA DA PROPONENTE -->
-    <h5 class="font-weight-bold">8. INFRAESTRUTURA DA PROPONENTE</h5>
+    <!-- 8. INFRAESTRUTURA DA INSTITUIÇÃO -->
+    <h5 class="font-weight-bold">8. INFRAESTRUTURA DA INSTITUIÇÃO</h5>
     <div class="form-floating mb-3">
         <textarea readonly asp-for="Projeto.Proponente.Infraestrutura" class="form-control" placeholder="Infraestrutura" style="height: 150px;"></textarea>
         <label asp-for="Projeto.Proponente.Infraestrutura">Infraestrutura</label>
         <span asp-validation-for="Projeto.Proponente.Infraestrutura" class="text-danger"></span>
     </div>
 
-    <!-- 9. EQUIPE MULTIDISCIPLINAR DO PROPONENTE -->
-    <h5 class="font-weight-bold">9. EQUIPE MULTIDISCIPLINAR DO PROPONENTE</h5>
+    <!-- 9. EQUIPE MULTIDISCIPLINAR DA INSTITUIÇÃO -->
+    <h5 class="font-weight-bold">9. EQUIPE MULTIDISCIPLINAR DA INSTITUIÇÃO</h5>
     <div class="form-floating mb-3">
         <textarea readonly asp-for="Projeto.Proponente.EquipeMultidisciplinar" class="form-control" placeholder="Equipe Multidisciplinar" style="height: 150px;"></textarea>
         <label asp-for="Projeto.Proponente.EquipeMultidisciplinar">Equipe Multidisciplinar</label>
@@ -392,11 +390,11 @@
 
     <h6 class="font-weight-bold">10.4 Público Beneficiário do Projeto</h6>
     <div class="form-floating mb-3">
-        <select asp-for="Projeto.PublicoBeneficiario" class="form-control">
-            <option selected value="CRI">Criança</option>
+        <select readonly asp-for="PublicoBeneficiarioSelect.Nome" class="form-select">
+            <option readonly selected>@Model.PublicoBeneficiarioSelect.Nome</option>
         </select>
-        <label asp-for="Projeto.PublicoBeneficiario">Público Beneficiário</label>
-        <span asp-validation-for="Projeto.PublicoBeneficiario" class="text-danger"></span>
+        <label asp-for="PublicoBeneficiarioSelect.Nome">Público Beneficiário</label>
+        <span asp-validation-for="PublicoBeneficiarioSelect.Nome" class="text-danger"></span>
     </div>
 
 
@@ -422,43 +420,27 @@
         </thead>
         <tbody>
             <tr>
-                <td>
-                    <input readonly class="form-control" value="Fulano"/>
-                </td>
-                <td>
-                    <input readonly class="form-control" value="12345678952"/>
-                </td>
-                <td>
-                    <input readonly class="form-control" value="Exemplo"/>
-                </td>
-                <td>
-                    <input readonly class="form-control" value="Exemplo"/>
-                </td>
-                <td>
-                    <input readonly class="form-control" value="5"/>
-                </td>
-
                 @foreach (var item in Model.Projeto.EquipeExecucao)
                 {
                     <td>
-                        <input readonly asp-for="Projeto.EquipeExecucao[@item.Id].Nome" class="form-control" />
-                        <span asp-validation-for="Projeto.EquipeExecucao[@item.Id].Nome" class="text-danger"></span>
+                        <input readonly asp-for="@item.Nome" class="form-control" />
+                        <span asp-validation-for="@item.Nome" class="text-danger"></span>
                     </td>
                     <td>
-                        <input readonly asp-for="Projeto.EquipeExecucao[@item.Id].CPF" class="form-control" />
-                        <span asp-validation-for="Projeto.EquipeExecucao[@item.Id].CPF" class="text-danger"></span>
+                        <input readonly asp-for="@item.CPF" class="form-control" />
+                        <span asp-validation-for="@item.CPF" class="text-danger"></span>
                     </td>
                     <td>
-                        <input readonly asp-for="Projeto.EquipeExecucao[@item.Id].Formacao" class="form-control" />
-                        <span asp-validation-for="Projeto.EquipeExecucao[@item.Id].Formacao" class="text-danger"></span>
+                        <input readonly asp-for="@item.Formacao" class="form-control" />
+                        <span asp-validation-for="@item.Formacao" class="text-danger"></span>
                     </td>
                     <td>
-                        <input readonly asp-for="Projeto.EquipeExecucao[@item.Id].Funcao" class="form-control" />
-                        <span asp-validation-for="Projeto.EquipeExecucao[@item.Id].Funcao" class="text-danger"></span>
+                        <input readonly asp-for="@item.Funcao" class="form-control" />
+                        <span asp-validation-for="@item.Funcao" class="text-danger"></span>
                     </td>
                     <td>
-                        <input readonly asp-for="Projeto.EquipeExecucao[@item.Id].CargaHorariaSemanal" class="form-control" />
-                        <span asp-validation-for="Projeto.EquipeExecucao[@item.Id].CargaHorariaSemanal" class="text-danger"></span>
+                        <input readonly asp-for="@item.CargaHorariaSemanal" class="form-control" />
+                        <span asp-validation-for="@item.CargaHorariaSemanal" class="text-danger"></span>
                     </td>
                 }
 
@@ -521,36 +503,23 @@
                 <th></th>
             </tr>
             <tr>
-                <td>
-                    <input readonly value="Exemplo" class="form-control" />
-                </td>
-                <td>
-                    <input readonly value="50" class="form-control" />
-                </td>
-                <td>
-                    <input readonly value="01/01/2020" class="form-control" type="date" />
-                </td>
-                <td>
-                    <input readonly value="31/12/2024" class="form-control" type="date" />
-                </td>
-
                 @foreach (var item in Model.Projeto.CronogramaMeta)
                 {
                     <td>
-                        <input readonly asp-for="Projeto.CronogramaMeta[@item.Id].Etapas" class="form-control" />
+                        <input readonly asp-for="@item.Etapas" class="form-control" />
                         <span  class="text-danger"></span>
                     </td>
                     <td>
-                        <input readonly asp-for="Projeto.CronogramaMeta[@item.Id].ValorEtapa" class="form-control" />
-                        <span asp-validation-for="Projeto.CronogramaMeta[@item.Id].ValorEtapa" class="text-danger"></span>
+                        <input readonly asp-for="@item.ValorEtapa" class="form-control" />
+                        <span asp-validation-for="@item.ValorEtapa" class="text-danger"></span>
                     </td>
                     <td>
-                        <input readonly asp-for="Projeto.CronogramaMeta[@item.Id].Inicio" class="form-control" type="date" />
-                        <span asp-validation-for="Projeto.CronogramaMeta[@item.Id].Inicio" class="text-danger"></span>
+                        <input readonly asp-for="@item.Inicio" class="form-control" type="date" />
+                        <span asp-validation-for="@item.Inicio" class="text-danger"></span>
                     </td>
                     <td>
-                        <input readonly asp-for="Projeto.CronogramaMeta[@item.Id].Termino" class="form-control" type="date" />
-                        <span asp-validation-for="Projeto.CronogramaMeta[@item.Id].Termino" class="text-danger"></span>
+                        <input readonly asp-for="@item.Termino" class="form-control" type="date" />
+                        <span asp-validation-for="@item.Termino" class="text-danger"></span>
                     </td>
                 }
 
@@ -575,42 +544,27 @@
         </thead>
         <tbody>
             <tr>
-                <td>
-                    <input readonly  class="form-control" value="Teste" />
-                </td>
-                <td>
-                    <input readonly class="form-control" value="1" />
-                </td>
-                <td>
-                    <input readonly class="form-control" value="1" />
-                </td>
-                <td>
-                    <input readonly  class="form-control" value="1" />
-                </td>
-                <td>
-                    <input readonly class="form-control" value="1" />
-                </td>
                 @foreach (var item in Model.Projeto.PlanoAplicacao)
                 {
                     <td>
-                        <input readonly asp-for="Projeto.PlanoAplicacao[@item.Id].Especificacao" class="form-control" />
-                        <span asp-validation-for="Projeto.PlanoAplicacao[@item.Id].Especificacao" class="text-danger"></span>
+                        <input readonly asp-for="@item.Especificacao" class="form-control" />
+                        <span asp-validation-for="@item.Especificacao" class="text-danger"></span>
                     </td>
                     <td>
-                        <input readonly asp-for="Projeto.PlanoAplicacao[@item.Id].Unidade" class="form-control" />
-                        <span asp-validation-for="Projeto.PlanoAplicacao[@item.Id].Unidade" class="text-danger"></span>
+                        <input readonly asp-for="@item.Unidade" class="form-control" />
+                        <span asp-validation-for="@item.Unidade" class="text-danger"></span>
                     </td>
                     <td>
-                        <input readonly asp-for="Projeto.PlanoAplicacao[@item.Id].Quantidade" class="form-control" />
-                        <span asp-validation-for="Projeto.PlanoAplicacao[@item.Id].Quantidade" class="text-danger"></span>
+                        <input readonly asp-for="@item.Quantidade" class="form-control" />
+                        <span asp-validation-for="@item.Quantidade" class="text-danger"></span>
                     </td>
                     <td>
-                        <input readonly asp-for="Projeto.PlanoAplicacao[@item.Id].ValorUnitario" class="form-control" />
-                        <span asp-validation-for="Projeto.PlanoAplicacao[@item.Id].ValorUnitario" class="text-danger"></span>
+                        <input readonly asp-for="@item.ValorUnitario" class="form-control" />
+                        <span asp-validation-for="@item.ValorUnitario" class="text-danger"></span>
                     </td>
                     <td>
-                        <input readonly asp-for="Projeto.PlanoAplicacao[@item.Id].ValorTotal" class="form-control" />
-                        <span asp-validation-for="Projeto.PlanoAplicacao[@item.Id].ValorTotal" class="text-danger"></span>
+                        <input readonly asp-for="@item.ValorTotal" class="form-control" />
+                        <span asp-validation-for="@item.ValorTotal" class="text-danger"></span>
                     </td>
                 }
 
@@ -636,43 +590,28 @@
         </thead>
         <tbody>
             <tr>
-                <td>
-                    <input readonly class="form-control" value="Teste" />
-                </td>
-                <td>
-                    <input readonly class="form-control" value="1" />
-                </td>
-                <td>
-                    <input readonly class="form-control" value="1" />
-                </td>
-                <td>
-                    <input readonly class="form-control" value="1" />
-                </td>
-                <td>
-                    <input readonly class="form-control" value="1" />
-                </td>
 
-                @foreach (var item in Model.Projeto.PlanoAplicacao)
+                @foreach (var item in Model.Projeto.EquipeEncarregada)
                 {
                     <td>
-                        <input readonly asp-for="Projeto.PlanoAplicacao[@item.Id].Especificacao" class="form-control" />
-                        <span asp-validation-for="Projeto.PlanoAplicacao[@item.Id].Especificacao" class="text-danger"></span>
+                        <input readonly asp-for="@item.Especificacao" class="form-control" />
+                        <span asp-validation-for="@item.Especificacao" class="text-danger"></span>
                     </td>
                     <td>
-                        <input readonly asp-for="Projeto.PlanoAplicacao[@item.Id].Unidade" class="form-control" />
-                        <span asp-validation-for="Projeto.PlanoAplicacao[@item.Id].Unidade" class="text-danger"></span>
+                        <input readonly asp-for="@item.Unidade" class="form-control" />
+                        <span asp-validation-for="@item.Unidade" class="text-danger"></span>
                     </td>
                     <td>
-                        <input readonly asp-for="Projeto.PlanoAplicacao[@item.Id].Quantidade" class="form-control" />
-                        <span asp-validation-for="Projeto.PlanoAplicacao[@item.Id].Quantidade" class="text-danger"></span>
+                        <input readonly asp-for="@item.Quantidade" class="form-control" />
+                        <span asp-validation-for="@item.Quantidade" class="text-danger"></span>
                     </td>
                     <td>
-                        <input readonly asp-for="Projeto.PlanoAplicacao[@item.Id].ValorUnitario" class="form-control" />
-                        <span asp-validation-for="Projeto.PlanoAplicacao[@item.Id].ValorUnitario" class="text-danger"></span>
+                        <input readonly asp-for="@item.ValorUnitario" class="form-control" />
+                        <span asp-validation-for="@item.ValorUnitario" class="text-danger"></span>
                     </td>
                     <td>
-                        <input readonly asp-for="Projeto.PlanoAplicacao[@item.Id].ValorTotal" class="form-control" />
-                        <span asp-validation-for="Projeto.PlanoAplicacao[@item.Id].ValorTotal" class="text-danger"></span>
+                        <input readonly asp-for="@item.ValorTotal" class="form-control" />
+                        <span asp-validation-for="@item.ValorTotal" class="text-danger"></span>
                     </td>
                 }
 
@@ -695,16 +634,10 @@
     <div class="form-group">
         <h5 class="font-weight-bold">13. A(S) ODS DO PROJETO</h5>
         <div class="checkbox-grid">
-            <div class="form-check form-check-inline">
-                    <input disabled class="form-check-input" type="checkbox" checked />
-                    <label class="form-check-label">
-                        1 - Erradicação da pobreza
-                    </label>
-                </div>
             @for (int i = 0; i < Model.ODS.Count; i++)
             {
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" selected" />
+                        <input class="form-check-input" disabled type="checkbox" checked />
                     <label class="form-check-label" for="odsCheckbox@Model.ODS[i].Id">
                         @Model.ODS[i].Id - @Model.ODS[i].Nome
                     </label>
@@ -717,8 +650,8 @@
 
     <h5 class="font-weight-bold">14. ORÇAMENTO PEDIDO PARA O PROJETO</h5>
     <div class="w-25 form-group">
-        <label for="orcamento">Orçamento:</label>
-        <input readonly asp-for="Projeto.Orcamento" type="number" name="orcamento" id="orcamento" class="form-control" />
+        <input readonly asp-for="Projeto.Orcamento" class="form-control" placeholder="Orçamento" />
+        <label asp-for="Projeto.Orcamento">Orçamento</label>
         <span asp-validation-for="Projeto.Orcamento" class="text-danger"></span>
     </div>
 
@@ -754,7 +687,7 @@ else
         {
                 
             <div>
-                <a asp-action="EnviarProjeto" asp-route-id="@Model.Projeto.Id" class="btn btn-success">Enviar</a> |
+                <button class="btn btn-success" onclick="enviarProjeto(@Model.Projeto.Id)">Enviar projeto</button> |
                 <a asp-action="Delete" asp-route-id="@Model.Projeto.Id" class="btn btn-danger">Excluir</a> |
             </div>
         }
@@ -1064,6 +997,20 @@ else
     }
 
 
+    function enviarProjeto(idProjeto) {
+        $.ajax({
+            url: `/Projetos/EnviarProjeto`,
+            type: "POST",
+            data: { idProjeto: idProjeto},
+            success: function () {
+                location.reload();
+            },
+            error: function (err) {
+                alert("Erro ao enviar o projeto: " + err.responseText);
+            }
+        });
+    }
+
     function aprovarDocumento(idProjeto, tipoDocumento) {
         $.ajax({
             url: `/Projetos/AprovarDocumento`,
@@ -1089,10 +1036,11 @@ else
                 location.reload();
             },
             error: function (err) {
-                alert("Erro ao aprovar o documento: " + err.responseText);
+                alert("Erro ao recusar o documento: " + err.responseText);
             }
         });
     }
+
     function concluirProjeto(idProjeto) {
 
         $.ajax({

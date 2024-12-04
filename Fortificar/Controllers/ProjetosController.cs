@@ -11,6 +11,7 @@ using Fortificar.Areas.Identity.Data;
 using System;
 using Microsoft.Build.Evaluation;
 using System.Reflection.Metadata;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Fortificar.Controllers
 {
@@ -67,7 +68,7 @@ namespace Fortificar.Controllers
 
 
 
-        // GET: Projetos/Details/5
+        // GET: Projetos/Details
         public async Task<IActionResult> Detalhes(int id)
         {
 
@@ -81,21 +82,73 @@ namespace Fortificar.Controllers
                 .Include(p => p.Anexo)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-
             if (projeto == null)
             {
                 return NotFound();
             }
 
-            int ataEleicaoAprovada = 0;
-            int estatutoAprovado = 0;
-            int cnpjAprovado = 0;
-            int cpfAprovado = 0;
-            int rgAprovado = 0;
-            int dadosBancariosAprovados = 0;
+
+            var ODSselec = _context.ProjetoODS
+                        .Where(pD => pD.ProjetoId == projeto.Id)
+                        .Join(
+                            _context.ODS.Select(ods => new ODS
+                            {
+                                Id = ods.Id,
+                                Nome = ods.Nome,
+                                Descricao = ods.Descricao,
+                                IsSelected = ods.IsSelected
+                            }),
+                            projetoODS => projetoODS.ODSId,
+                            odsA => odsA.Id,
+                            (projetoODS, odsA) => odsA
+                        )
+                        .ToList();
+
+
+            // PÚBLICO BENEFICIÁRIO
+            var PublicoBeneficiarioprep = _context.ProjetoPublicoBeneficiario
+            .Where(pb => pb.ProjetoId == projeto.Id)
+            .Select(pb => pb.PublicoBeneficiarioId)
+            .ToList();
+
+            var PublicoBeneficiarioselec = new List<PublicoBeneficiario>();
+
+            foreach (var item in PublicoBeneficiarioprep)
+            {
+                var pb = _context.PublicoBeneficiario
+                    .Where(pb => pb.Id == item)
+                    .FirstOrDefault();
+
+                if (pb != null)
+                {
+                    PublicoBeneficiarioselec.Add(pb);
+                }
+            }
+
+            // PÚBLICO BENEFICIÁRIO DO SELECT
+            var publicoBeneficiarioSelect = _context.PublicoBeneficiario
+                                        .Where(pb => pb.ProjetoId == projeto.Id)
+                                        .FirstOrDefault();
+            if (publicoBeneficiarioSelect == null)
+            {
+                publicoBeneficiarioSelect = new PublicoBeneficiario
+                {
+                    Nome = "Selecione o Público Beneficiário",
+                    IsSelected = false,
+                    ProjetoId = projeto.Id
+                };
+            }
+
+            // DOCUMENTOS
 
             if (projeto.SituacaoId == 4 || projeto.SituacaoId == 2)
             {
+                int ataEleicaoAprovada = 0;
+                int estatutoAprovado = 0;
+                int cnpjAprovado = 0;
+                int cpfAprovado = 0;
+                int rgAprovado = 0;
+                int dadosBancariosAprovados = 0;
 
                 var anexo = await _context.Anexo
             .FirstOrDefaultAsync();
@@ -109,38 +162,71 @@ namespace Fortificar.Controllers
                     rgAprovado = anexo.AprovadoRGRespLegal == "S" ? 1 : 0;
                     dadosBancariosAprovados = anexo.AprovadoDadosBancarios == "S" ? 1 : 0;
                 }
-            }
 
-            // Preenche os valores no ViewData
-            ViewData["AprovarAtaEleicao"] = ataEleicaoAprovada;
-            ViewData["AprovarEstatuto"] = estatutoAprovado;
-            ViewData["AprovarCNPJ"] = cnpjAprovado;
-            ViewData["AprovarCPF"] = cpfAprovado;
-            ViewData["AprovarRG"] = rgAprovado;
-            ViewData["AprovarDadosBancarios"] = dadosBancariosAprovados;
+                // Preenche os valores no ViewData
+                ViewData["AprovarAtaEleicao"] = ataEleicaoAprovada;
+                ViewData["AprovarEstatuto"] = estatutoAprovado;
+                ViewData["AprovarCNPJ"] = cnpjAprovado;
+                ViewData["AprovarCPF"] = cpfAprovado;
+                ViewData["AprovarRG"] = rgAprovado;
+                ViewData["AprovarDadosBancarios"] = dadosBancariosAprovados;
+            }
 
             ViewData["_Situacao"] = projeto.SituacaoId;
 
             ViewData["Tipo"] = user.Tipo;
 
-            /*
-            var odsDisponiveis = await (from po in _context.ProjetoODS
-                                        join ods in _context.ODS on po.ODSId equals ods.Id
-                                        where po.ProjetoId == id
-                                        select ods)
-                                        .ToListAsync();
 
-            var pbDisponiveis = await (from ppb in _context.ProjetoPublicoBeneficiario
-                                       join pb in _context.PublicoBeneficiario on ppb.PublicoBeneficiarioId equals pb.Id
-                                       where ppb.ProjetoId == id
-                                       select pb)
-                                        .ToListAsync();
-            */
+
+            // VIEWMODEL
             var detalhesViewModel = new ProjetoViewModel
             {
-                Projeto = projeto,
-                //ODS = odsDisponiveis,
-                //PublicoBeneficiario = pbDisponiveis
+                Projeto = new Projeto
+                {
+                    Id = projeto.Id,
+                    ProponenteId = projeto.ProponenteId,
+                    ResponsavelLegalId = projeto.ResponsavelLegalId,
+                    ResponsavelTecnicoId = projeto.ResponsavelTecnicoId,
+                    Objeto = projeto.Objeto,
+                    ObjetivoGeral = projeto.ObjetivoGeral,
+                    ObjetivosEspecificos = projeto.ObjetivosEspecificos,
+                    Justificativa = projeto.Justificativa,
+                    InicioExecucao = projeto.InicioExecucao,
+                    TerminoExecucao = projeto.TerminoExecucao,
+                    Orcamento = projeto.Orcamento,
+                    SituacaoId = projeto.SituacaoId,
+                    AnexoId = projeto.AnexoId,
+                    Cronograma = projeto.Cronograma,
+                    ValorMeta = projeto.ValorMeta,
+                    Indicadores = projeto.Indicadores,
+                    Anexo = projeto.Anexo,
+                    Proponente = projeto.Proponente,
+                    ResponsavelLegal = projeto.ResponsavelLegal,
+                    ResponsavelTecnico = projeto.ResponsavelTecnico,
+                    Situacao = projeto.Situacao,
+
+
+
+                    // LISTAS
+                    CronogramaMeta = _context.CronogramaMeta
+                    .Where(cm => cm.ProjetoId == projeto.Id)
+                    .ToList(),
+
+                    PlanoAplicacao = _context.PlanoAplicacaoItem
+                    .Where(pa => pa.ProjetoId == projeto.Id)
+                    .ToList(),
+
+                    EquipeExecucao = _context.MembroEquipe
+                    .Where(ex => ex.ProjetoId == projeto.Id)
+                    .ToList(),
+
+                    EquipeEncarregada = _context.EquipeExecucaoProjeto
+                    .Where(en => en.ProjetoId == projeto.Id)
+                    .ToList()
+        },
+                ODS = ODSselec,
+                PublicoBeneficiario = PublicoBeneficiarioselec,
+                PublicoBeneficiarioSelect = publicoBeneficiarioSelect
             };
 
             var pastaDoc = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
@@ -213,9 +299,7 @@ namespace Fortificar.Controllers
             }
 
             return View(detalhesViewModel);
-        }
-
-        
+        }    
 
 		public async Task<IActionResult> Create(ProjetoViewModel viewmodelCreate)
 		{
@@ -244,7 +328,7 @@ namespace Fortificar.Controllers
                 .FirstOrDefault(rl => rl.Id == proponente.ResponsavelLegalId);
 
             var ods = _context.ODS.OrderBy(a => a.Id);
-            var pb = _context.PublicoBeneficiario.OrderBy(a => a.Id);
+            var pb = _context.PublicoBeneficiario.Where(p => p.ProjetoId == -1).OrderBy(a => a.Id);
 
             // Preenche o ViewModel com os dados do proponente
             viewmodelCreate = new ProjetoViewModel
@@ -402,6 +486,8 @@ namespace Fortificar.Controllers
                     Cronograma = viewmodelProjeto.Projeto.Cronograma,
                     ValorMeta = viewmodelProjeto.Projeto.ValorMeta,
                     Indicadores = viewmodelProjeto.Projeto.Indicadores,
+                    InicioExecucao = viewmodelProjeto.Projeto.InicioExecucao,
+                    TerminoExecucao = viewmodelProjeto.Projeto.TerminoExecucao,
                     Orcamento = viewmodelProjeto.Projeto.Orcamento,
                     SituacaoId = 1,
 
@@ -527,6 +613,25 @@ namespace Fortificar.Controllers
 
                         _context.ProjetoPublicoBeneficiario.Add(projetoPublicoBeneficiario);
                     }
+
+                    var auxPB = new PublicoBeneficiario
+                    {
+                        Nome = viewmodelProjeto.PublicoBeneficiarioSelect.Nome,
+                        ProjetoId = projeto.Id,
+                        IsSelected = false
+                    };
+                    _context.PublicoBeneficiario.Add(auxPB);
+                    await _context.SaveChangesAsync();
+
+                    var PBSelect = new ProjetoPublicoBeneficiario
+                    {
+                        ProjetoId = projeto.Id,
+                        PublicoBeneficiarioId = auxPB.Id
+                    };
+
+                    _context.ProjetoPublicoBeneficiario.Add(PBSelect);
+
+
 
                     await _context.SaveChangesAsync();
                 }
@@ -769,16 +874,47 @@ namespace Fortificar.Controllers
         [HttpPost]
         public async Task<IActionResult> ConcluirProjeto(int idProjeto)
         {
-            var projeto = _context.Projeto.FirstOrDefault(p => p.Id == idProjeto);
+            var projeto = _context.Projeto.Where(p => p.Id == idProjeto).FirstOrDefault();
 
             if (projeto != null)
             {
                 projeto.SituacaoId = 6;
             }
             await _context.SaveChangesAsync();
-            
 
-            return RedirectToAction("Detalhes", new { id = idProjeto });
+
+            return RedirectToAction("Detalhes", new { id = projeto.Id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EnviarProjeto(int idProjeto)
+        {
+            var projeto = _context.Projeto.Where(p => p.Id == idProjeto).FirstOrDefault();
+            var _situacao = 2;
+
+            if (projeto != null)
+            {
+				var parametroOrcamento = _context.Parametro
+					.FirstOrDefault(p => p.Nome == "Orçamento");
+
+				if (parametroOrcamento.Ativo == "S")
+				{
+					bool abaixoMin = parametroOrcamento.ValorMin is not null && projeto.Orcamento < parametroOrcamento.ValorMin;
+					bool acimaMax = parametroOrcamento.ValorMax is not null && projeto.Orcamento > parametroOrcamento.ValorMax;
+
+					if (abaixoMin || acimaMax)
+					{
+						_situacao = 7;
+					}
+
+				}
+
+				projeto.SituacaoId = _situacao;
+            }
+            await _context.SaveChangesAsync();
+
+
+            return RedirectToAction("Detalhes", new { id = projeto.Id });
         }
 
 
@@ -896,41 +1032,6 @@ namespace Fortificar.Controllers
 
         
 
-        
-
-
-        [HttpPost]
-        public async Task<IActionResult> EnviarProjeto(int id)
-        {
-            var projeto = _context.Projeto
-                    .FirstOrDefault(p => p.Id == id);
-            var _situacao = 2;
-
-            //Aqui os parâmetros vão analisar 
-            //Se ok = 2 (Enviado), senão = 7 (Em análise)
-
-            var parametroOrcamento = _context.Parametro
-                    .FirstOrDefault(p => p.Nome == "Orçamento");
-
-            if (parametroOrcamento.Ativo == "S")
-            {
-                bool abaixoMin = parametroOrcamento.ValorMin is not null && projeto.Orcamento < parametroOrcamento.ValorMin;
-                bool acimaMax = parametroOrcamento.ValorMax is not null && projeto.Orcamento > parametroOrcamento.ValorMax;
-
-                if (abaixoMin || acimaMax)
-                {
-                    _situacao = 7;
-                }
-
-            }
-
-            ViewData["Situacao"] = _situacao;
-
-            await MudarSituacaoProjeto(id, _situacao);
-
-
-            return RedirectToAction("Detalhes");
-        }
 
         [HttpGet]
         public async Task<IActionResult> Aprovar(int id)

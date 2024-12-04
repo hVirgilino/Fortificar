@@ -5,7 +5,7 @@
 
     <div class="row justify-content-center">
         <div class="marginB card-body">
-        <form asp-action="SalvarProjeto" method="post" enctype="multipart/form-data">
+            <form asp-action="SalvarProjeto" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <!-- 1. DADOS GERAIS DO PROPONENTE -->
             <h5 class="font-weight-bold">1. DADOS GERAIS DO PROPONENTE</h5>     
@@ -371,22 +371,22 @@
 
             <h6 class="font-weight-bold">10.4 Público Beneficiário do Projeto</h6>
             <div class="form-floating mb-3">
-                <select asp-for="PublicoBeneficiario" class="form-control">
-                    <option value="">Selecione o Público Beneficiário</option>
-                    <option value="CRI">Criança</option>
-                    <option value="ADO">Adolescente</option>
-                    <option value="JOV">Jovens</option>
-                    <option value="ADU">Adultos</option>
-                    <option value="IDO">Idosos</option>
-                    <option value="CAE">Criança e Adolescente</option>
-                    <option value="CAJ">Criança, adolescentes, Jovens, adultos e idosos</option>
-                    <option value="ADI">Adultos e Idosos</option>
-                    <option value="MUL">Mulheres</option>
-                    <option value="PCD">PCD</option>
-                    <option value="DSA">Dependentes de substâncias psicoativas</option>
+                <select asp-for="PublicoBeneficiarioSelect.Nome" class="form-select">
+                    <option asp-for="PublicoBeneficiarioSelect.Nome">Selecione o Público Beneficiário</option>
+                    <option asp-for="PublicoBeneficiarioSelect.Nome">Criança</option>
+                    <option asp-for="PublicoBeneficiarioSelect.Nome">Adolescente</option>
+                    <option asp-for="PublicoBeneficiarioSelect.Nome">Jovens</option>
+                    <option asp-for="PublicoBeneficiarioSelect.Nome">Adultos</option>
+                    <option asp-for="PublicoBeneficiarioSelect.Nome">Idosos</option>
+                    <option asp-for="PublicoBeneficiarioSelect.Nome">Criança e Adolescente</option>
+                    <option asp-for="PublicoBeneficiarioSelect.Nome">Criança, adolescentes, Jovens, adultos e idosos</option>
+                    <option asp-for="PublicoBeneficiarioSelect.Nome">Adultos e Idosos</option>
+                    <option asp-for="PublicoBeneficiarioSelect.Nome">Mulheres</option>
+                    <option asp-for="PublicoBeneficiarioSelect.Nome">PCD</option>
+                    <option asp-for="PublicoBeneficiarioSelect.Nome">Dependentes de substâncias psicoativas</option>
                 </select>
-                <label asp-for="PublicoBeneficiario">Público Beneficiário</label>
-                <span asp-validation-for="PublicoBeneficiario" class="text-danger"></span>
+                <label asp-for="PublicoBeneficiarioSelect.Nome">Público Beneficiário</label>
+                <span asp-validation-for="PublicoBeneficiarioSelect.Nome" class="text-danger"></span>
             </div>
 
 
@@ -626,21 +626,21 @@
             <br />
 
             <div class="form-group">
-            <h5 class="font-weight-bold">13. SELECIONE A(S) ODS DO PROJETO</h5>
-            <div class="checkbox-grid">
-                @for (int i = 0; i < Model.ODS.Count; i++)
-                {
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input ods-checkbox" type="checkbox" data-id="@Model.ODS[i].Id" id="odsCheckbox@Model.ODS[i].Id" />
-                        <label class="form-check-label" for="odsCheckbox@Model.ODS[i].Id">
-                            @Model.ODS[i].Id - @Model.ODS[i].Nome
-                        </label>
-                    </div>
-                }
-            </div>
-            <!-- Campo hidden para armazenar os IDs selecionados -->
+                <h5 class="font-weight-bold">13. SELECIONE A(S) ODS DO PROJETO</h5>
+                <div class="checkbox-grid">
+                    @for (int i = 0; i < Model.ODS.Count; i++)
+                    {
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input ods-checkbox" type="checkbox" data-id="@Model.ODS[i].Id" id="ODScheckbox" />
+                            <label class="form-check-label" for="ODScheckbox">
+                                @Model.ODS[i].Id - @Model.ODS[i].Nome
+                            </label>
+                        </div>
+                    }
+                </div>
+                <!-- Campo hidden para armazenar os IDs selecionados -->
                 <input type="hidden" id="ODSselecionadas" name="ODSSelecionadas" />
-        </div>
+            </div>
 
 
             
@@ -648,18 +648,20 @@
             
             <h5 class="font-weight-bold">14. ORÇAMENTO PEDIDO PARA O PROJETO</h5>
             <div class="w-25 form-group">
-                <label for="orcamento">Orçamento:</label>
-                <input asp-for="Projeto.Orcamento" type="number" name="orcamento" id="orcamento" class="form-control" />
-        <span asp-validation-for="Projeto.Orcamento" class="text-danger"></span>
+                <input asp-for="Projeto.Orcamento" class="form-control" placeholder="Orçamento" />
+                <label asp-for="Projeto.Orcamento">Orçamento</label>
+                <span asp-validation-for="Projeto.Orcamento" class="text-danger"></span>
             </div>
             <br /><br />
+
+
             <!-- Botão de Envio -->
             <div class="form-group">
                 <button type="submit" value="Create" class="btn btn-primary btn-lg btn-block">Criar Projeto</button>
             </div>
             <br />
             <a asp-action="Index" asp-route-id="Id" class="btn btn-primary">Voltar</a>
-    </form>
+        </form>
         </div>
     </div>
 
@@ -673,13 +675,13 @@
         $(document).ready(function () {
 
             function atualizaODSselecionadas() {
-                let idsSelecionados = [];
+                let idsSelecionadosODS = [];
 
                 $(".ods-checkbox:checked").each(function () {
-                    idsSelecionados.push($(this).data("id"));
+                    idsSelecionadosODS.push($(this).data("id"));
                 });
 
-                $("#ODSselecionadas").val(idsSelecionados.join(","));
+                $("#ODSselecionadas").val(idsSelecionadosODS.join(","));
             }
 
             function atualizaPAselecionados() {
@@ -695,6 +697,11 @@
 
             $(".pa-checkbox").on("change", function () {
                 atualizaPAselecionados();
+            });
+
+            
+            $(".ods-checkbox").on("change", function () {
+                atualizaODSselecionadas();
             });
         });
 

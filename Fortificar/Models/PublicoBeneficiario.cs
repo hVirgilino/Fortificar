@@ -4,7 +4,9 @@
     {
         public int Id { get; set; }
         public string? Nome { get; set; }
-        public bool IsSelected { get; set; } 
+        public bool IsSelected { get; set; }
+        public int ProjetoId { get; set; }
+        public Projeto? Projeto { get; set; }
     }
 
     public class ProjetoPublicoBeneficiario
