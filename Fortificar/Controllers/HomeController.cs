@@ -23,7 +23,7 @@ namespace Fortificar.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public async Task<IActionResult> index()
+        public async Task<IActionResult> Index()
         {
             // Resgata o nome do usuário conectado
             var userName = _userManager.GetUserName(this.User);
